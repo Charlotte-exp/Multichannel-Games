@@ -22,7 +22,7 @@ class Decision(Page):
             return ['decision_low']
 
     def is_displayed(self):
-        if self.round_number <= Constants.num_rounds:
+        if self.round_number <= self.participant.vars['last_round']:
             return True
 
     def vars_for_template(self):
@@ -60,10 +60,20 @@ class ResultsWaitPage(WaitPage):
         for p in self.group.get_players():
             p.set_payoff()
 
+    def is_displayed(self):
+        """ Probabilistic display! """
+        if self.subsession.round_number <= self.participant.vars['last_round']:
+            return True
+
     body_text = "Please wait while the other participant makes their decision."
 
 
 class Results(Page):
+
+    def is_displayed(self):
+        """ Probabilistic display! """
+        if self.subsession.round_number <= self.participant.vars['last_round']:
+            return True
 
     def vars_for_template(self):
         me = self.player
@@ -87,9 +97,11 @@ class Results(Page):
 
 
 class End(Page):
-    """ This function makes the page appear only on the last round """
+    """ This page is for final combined results """
+
     def is_displayed(self):
-        return self.round_number == Constants.num_rounds
+        """ This function makes the page appear only on the last random-ish round """
+        return self.round_number == self.participant.vars['last_round']
 
     def vars_for_template(self):
         me = self.player
@@ -107,12 +119,16 @@ class Demographics(Page):
     form_fields = ['age', 'gender', 'income', 'education', 'ethnicity']
 
     def is_displayed(self):
-        return self.round_number == Constants.num_rounds
+        """ This function makes the page appear only on the last random-ish round """
+        return self.round_number == self.participant.vars['last_round']
 
 
 class Payment(Page):
+    """ This page is for final payment in GBP """
+
     def is_displayed(self):
-        return self.round_number == Constants.num_rounds
+        """ This function makes the page appear only on the last random-ish round """
+        return self.round_number == self.participant.vars['last_round']
 
     def vars_for_template(self):
         participant = self.participant
@@ -133,7 +149,7 @@ class Payment(Page):
 
 class ProlificLink(Page):
     def is_displayed(self):
-        return self.round_number == Constants.num_rounds
+        return self.round_number == self.participant.vars['last_round']
 
 
 page_sequence = [

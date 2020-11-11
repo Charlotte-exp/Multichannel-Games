@@ -64,9 +64,9 @@ class Subsession(BaseSubsession):
     We create a list of different number of rounds that is as long as there are groups.
     """
     def get_random_number_of_rounds(self):
-        num_groups = int(self.session.num_participants / 2)
+        arbitrary_high_number = 100
         list_num_rounds = []
-        for _ in range(num_groups):
+        for _ in range(arbitrary_high_number):
             number = Constants.min_rounds
             while Constants.proba_next_round < random.random():
                 number += 1

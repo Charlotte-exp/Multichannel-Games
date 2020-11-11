@@ -40,7 +40,7 @@ SESSION_CONFIGS = [
         'display_name': "PD fro testing",
         'num_demo_participants': 4,
         'app_sequence': ['introduction_control', 'control_PD_test'],
-        'use_browser_bots': False
+        'use_browser_bots': True
     },
     {
         'name': 'introduction_control',
@@ -59,37 +59,6 @@ SESSION_CONFIGS = [
         'display_name': "Intro Crosstalk",
         'num_demo_participants': 2,
         'app_sequence': ['introduction_cross'],
-    },
-    dict(
-        name="twopd",
-        display_name="Two simultaneous PD",
-        num_demo_participants=4,
-        app_sequence=['twopd'],
-        use_browser_bots=False
-    ),
-    {
-        'name': 'finitely_repeated_PD',
-        'display_name': "Fendi PD",
-        'num_demo_participants': 2,
-        'app_sequence': ['finitely_repeated_PD'],
-    },
-    {
-        'name': 'prisoner',
-        'display_name': "Prionser's Dilemma",
-        'num_demo_participants': 2,
-        'app_sequence': ['prisoner', 'payment_info'],
-    },
-    {
-        'name': 'survey',
-        'display_name': "Survey",
-        'num_demo_participants': 1,
-        'app_sequence': ['survey', 'payment_info'],
-    },
-    {
-        'name': 'quiz',
-        'display_name': "Quiz",
-        'num_demo_participants': 1,
-        'app_sequence': ['quiz'],
     },
 ]
 # see the end of this file for the inactive session configs
@@ -152,6 +121,37 @@ INSTALLED_APPS = ['otree']
 
 # inactive session configs
 
+# dict(
+#     name="twopd",
+#     display_name="Two simultaneous PD",
+#     num_demo_participants=4,
+#     app_sequence=['twopd'],
+#     use_browser_bots=False
+# ),
+# {
+#     'name': 'finitely_repeated_PD',
+#     'display_name': "Fendi PD",
+#     'num_demo_participants': 2,
+#     'app_sequence': ['finitely_repeated_PD'],
+# },
+# {
+#     'name': 'prisoner',
+#     'display_name': "Prionser's Dilemma",
+#     'num_demo_participants': 2,
+#     'app_sequence': ['prisoner', 'payment_info'],
+# },
+# {
+#     'name': 'survey',
+#     'display_name': "Survey",
+#     'num_demo_participants': 1,
+#     'app_sequence': ['survey', 'payment_info'],
+# },
+# {
+#     'name': 'quiz',
+#     'display_name': "Quiz",
+#     'num_demo_participants': 1,
+#     'app_sequence': ['quiz'],
+# },
 # {
 #     'name': 'centipede',
 #     'display_name': "Baseline Centipede",
