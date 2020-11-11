@@ -1,0 +1,99 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+<style>
+div {
+  width: 300px;
+  border: 5px solid black;
+  padding: 20px;
+  margin: 10px;
+}
+
+</style>
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+
+<div class="card-body"> <!-- creates indentation -->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'global/matrix.css' %}"/>
+
+    <p>You are <b>Participant 1</b> in this study. The other Participant is <b>Participant 2.</b></p>
+    <p>
+        In each round, you and Participant 2 will simultaneously interact with each other in two tasks, Task A and Task B.
+        In each task, both of you must choose between two options.
+        The points you earn in each round will depend on what you and Participant 2 independently decide for each task.
+        The two tasks are independent. The points you earn in either task do not depend on the decisions made in the other.
+    </p>
+    <p>
+        Below you can see the outcomes of each option that you and Participant 2 can choose from in each task in each round,
+        depending on your own decision as well as Participant 2's decision.
+    </p>
+</div>
+
+<div class="card bg-light instructions"> <!-- Makes the para a box -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+            <h4>
+                Task A
+            </h4>
+            <ul>
+                <li>
+                    You <b>pay {{ Constants.c_high }}</b> points in order for Participant 2 to <b>receive {{ Constants.b_high }}</b> points.
+                </li>
+                <li>
+                    You <b>pay 0</b> points in order for Participant 2 to <b>receive 0</b> points.
+                </li>
+            </ul>
+            <p>
+                Participant 2 face exactly the same Task A with <b>you</b> as the recipient.
+                You and Participant 2 have to choose simultaneously between these two options
+            </p>
+            </div>
+            <div class="col">
+            <h4>
+                Task B
+            </h4>
+            <ul>
+                <li>
+                    You <b>pay {{ Constants.c_high }}</b> points in order for Participant 2 to <b>receive {{ Constants.b_high }}</b> points.
+                </li>
+                <li>
+                    You <b>pay 0</b> points in order for Participant 2 to <b>receive 0</b> points.
+                </li>
+            </ul>
+            <p>
+                Participant 2 face exactly the same Task B with <b>you</b> as the recipient.
+                You and Participant 2 have to choose simultaneously between these two options
+            </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-body">
+    <p>
+        The session will last for multiple rounds. There will be at least 20 rounds.
+        After the 20th round, there will be a 50% chance of another round.
+        After that round, there will again be a 50% chance of another round,
+        and after that round, there will again be another 50% chance of another round, and so on until the tasks end.
+    </p>
+</div>
+
+<div class="card-body">
+    <h4>Please answer the following questions to continue:</h4>
+    {% for field in form %}
+        {% formfield field %}
+    {% endfor %}
+</div>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+{% endblock %}

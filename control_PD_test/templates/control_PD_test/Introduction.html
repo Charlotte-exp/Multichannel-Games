@@ -1,0 +1,43 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Introduction
+{% endblock %}
+
+
+{% block content %}
+
+    {% next_button %}
+
+   {% include Constants.instructions_template %}
+
+<!---
+<div>
+    <table class='table table-bordered text-center'
+           style='width: auto; margin: auto'>
+        <tr>
+            <th colspan=2 rowspan=2></th>
+            <th colspan=2><font color="blue">The Other Participant</font></th>
+        </tr>
+        <tr>
+            <th>Cooperate</th>
+            <th>Defect</th>
+        </tr>
+        <tr>
+            <th rowspan=2><span class="rotate90"><font color="red">You</font></span></th>
+            <th>Cooperate</th>
+            <td><font color="red">{{ Constants.both_cooperate_payoff }}</font>, <font color="blue">{{ Constants.both_cooperate_payoff }}</font></td>
+            <td><font color="red">0</font>, <font color="blue">{{ Constants.betray_payoff }}</font></td>
+        </tr>
+        <tr>
+            <th>Defect</th>
+            <td><font color="red">{{ Constants.betray_payoff }}</font>, <font color="blue">0</font></td>
+            <td><font color="red">{{ Constants.both_defect_payoff }}</font>, <font color="blue">{{ Constants.both_defect_payoff }}</font></td>
+        </tr>
+    </table>
+</div>
+--->
+
+
+{% endblock %}

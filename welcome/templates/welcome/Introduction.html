@@ -1,0 +1,33 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Introduction
+{% endblock %}
+
+{% block content %}
+
+<p>
+    Thank you for taking part in this experiment.
+</p>
+<p>
+    You are about to participate in an experiment on decision-making with monetary payoffs.
+    What you earn depends partly on your decisions, partly on the decisions of others, and partly on chance.
+    Please turn off mobile phones and similar devices now.
+</p>
+
+<p>
+    Throughout this experiment, you are not allowed to go back the previous page.
+    Mention:
+    - time
+    - payments
+</p>
+
+<p>
+    Press the 'Next' button to proceed.
+</p>
+
+    {% next_button %}
+{% endblock %}
+
+

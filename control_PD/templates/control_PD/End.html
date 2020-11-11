@@ -1,0 +1,47 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Final results
+{% endblock %}
+
+{% block content %}
+
+    <table class="table">
+        <tr>
+            <th>Round</th>
+            <th>My choice</th>
+            <th>Opponent's choice</th>
+            <th>My outcome</th>
+            <th>Opponent's outcome</th>
+
+        </tr>
+        {% for p in player_in_all_rounds %}
+            <tr>
+                <td>{{ p.round_number }}</td>
+                {% if my_treatment == 'high' %}
+                <td>{{ p.decision_high }}</td>
+                <td>{{ p.other_player.decision_high }}</td>
+                {% else %}
+                <td>{{ p.decision_low }}</td>
+                <td>{{ p.other_player.decision_low }}</td>
+                {% endif %}
+                <td>{{ p.payoff }}</td>
+                <td>{{ p.other_player.payoff}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <p>
+        Your total payoff is <b>{{ total_payoff }}</b>.
+    </p>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+{% endblock %}
+
+

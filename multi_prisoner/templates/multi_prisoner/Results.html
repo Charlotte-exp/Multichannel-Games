@@ -1,0 +1,229 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Round Results
+{% endblock %}
+
+{% block styles %}
+
+    <script>
+        setTimeout(
+        function () {
+            alert("The other participant is waiting. Please advance to the next page.");
+        },
+        45*1000 // 45 seconds
+    );
+    </script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col">
+        <p>
+            <h4>Task A:</h4>
+        </p>
+        {% if my_high_decision == 1 %}
+        <ul>
+            <li>
+                <i>You</i> chose to <b>pay {{ cost_high }}</b> in order for Participant 2 to <b>receive {{ benefit_high }}</b>.
+            </li>
+            {% if opponent_high_decision == 1 %}
+            <li>
+                <i>Participant 2</i> chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>.
+            </li>
+            {% else %}
+            <li>
+                <i>Participant 2</i> chose to <b>pay 0</b> in order for you to <b>receive 0</b>.
+            </li>
+            {% endif %}
+        </ul>
+        {% else %}
+        <ul>
+            <li>
+                <i>You</i> chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>.
+            </li>
+            {% if opponent_high_decision == 1 %}
+            <li>
+                <i>Participant 2</i> chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>.
+            </li>
+            {% else %}
+            <li>
+                <i>Participant 2</i> chose to <b>pay 0</b> in order for you to <b>receive 0</b>.
+            </li>
+            {% endif %}
+        </ul>
+        {% endif %}
+        <p>
+            As a result, in Task A in this round, you earned a total of <b>{{ my_high_payoff }}</b>.
+        </p>
+    </div>
+    <div class="col">
+        <p>
+            <h4>Task B:</h4>
+        </p>
+        {% if my_low_decision == 3 %}
+        <ul>
+            <li>
+                <i>You</i> chose to <b>pay {{ cost_low }}</b> in order for Participant 2 to <b>receive {{ benefit_low }}</b>.
+            </li>
+            {% if opponent_low_decision == 3 %}
+            <li>
+                <i>Participant 2</i> chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>.
+            </li>
+            {% else %}
+            <li>
+                <i>Participant 2</i> chose to <b>pay 0</b> in order for you to <b>receive 0</b>.
+            </li>
+            {% endif %}
+        </ul>
+        {% else %}
+        <ul>
+            <li>
+                <i>You</i> chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>.
+            </li>
+            {% if opponent_low_decision == 3 %}
+            <li>
+                <i>Participant 2</i> chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>.
+            </li>
+            {% else %}
+            <li>
+                <i>Participant 2</i> chose to <b>pay 0</b> in order for you to <b>receive 0</b>.
+            </li>
+            {% endif %}
+        </ul>
+        {% endif %}
+        <p>
+            As a result, in Task B in this round, you earned a total of <b>{{ my_low_payoff }}</b>.
+        </p>
+    </div>
+</div>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+<h2>
+    How do I enlarge this???? --> write it smaller!!
+</h2>
+
+
+{% endblock %}
+
+
+
+<!--- Text display PD
+<div class="row">
+    <div class="col">
+    <p>
+        <font size="5px">Task A</font>
+    </p>
+    <p>
+        {% if same_high_choice %}
+        Both of you chose to <b>{{ my_high_decision }}</b>.
+        {% else %}
+        You chose to <b>{{ my_high_decision }}</b> and the other participant chose to <b>{{ opponent_high_decision }}</b>.
+        {% endif %}
+    </p>
+
+    <p>
+        As a result, you earned <b>{{ player.payoff_high }}</b>.
+    </p>
+    </div>
+    <div class="col">
+    <p>
+        <font size="5px">Task B</font>
+    </p>
+    <p>
+        {% if same_low_choice %}
+        Both of you chose to <b>{{ my_low_decision }}</b>.
+        {% else %}
+        You chose to <b>{{ my_low_decision }}</b> and the other participant chose to <b>{{ opponent_low_decision }}</b>.
+        {% endif %}
+    </p>
+
+    <p>
+        As a result, you earned <b>{{ player.payoff_low }}</b>.
+    </p>
+    </div>
+</div>
+--->
+
+
+<!--- on table display PD
+<div class="row">
+    <div class="col">
+        <table class="table">
+        <tr>
+            <th>Task</th>
+            <th>My choice</th>
+            <th>Participant 2's choice</th>
+            <th>My outcome</th>
+            <th>Participant 2's outcome</th>
+        </tr>
+            <tr>
+                <td>A</td>
+                <td>{{ my_high_decision }}</td>
+                <td>{{ opponent_high_decision }}</td>
+                <td>{{ my_high_payoff }}</td>
+                <td>{{ opponent_high_payoff }}</td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td>{{ my_low_decision }}</td>
+                <td>{{ opponent_low_decision }}</td>
+                <td>{{ my_low_payoff }}</td>
+                <td>{{ opponent_low_payoff }}</td>
+            </tr>
+        </table>
+   </div>
+</div>
+
+
+<div class="row">
+    <div class="col">
+        <p><font size="5px">Task A</font></p>
+        <table class="table">
+        <tr>
+            <td></td>
+            <th scope="col">Decision</th>
+            <th scope="col">Payoff</th>
+        </tr>
+            <tr>
+                <th scope="row">Me</th>
+                <td>{{ my_high_decision }}</td>
+                <td>{{ my_high_payoff }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Participant 2</th>
+                <td>{{ opponent_high_decision }}</td>
+                <td>{{ opponent_high_payoff }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col">
+        <p><font size="5px">Task B</font></p>
+        <table class="table">
+        <tr>
+            <td></td>
+            <th scope="col">Decision</th>
+            <th scope="col">Payoff</th>
+        </tr>
+            <tr>
+                <th scope="row">Me</th>
+                <td>{{ my_low_decision }}</td>
+                <td>{{ my_low_payoff }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Participant 2</th>
+                <td>{{ opponent_low_decision }}</td>
+                <td>{{ opponent_low_payoff }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+--->

@@ -1,0 +1,224 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+
+{% block title %}
+    Round Decision {{ subsession.round_number }} of {{ Constants.num_rounds }}
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'global/matrix.css' %}" />
+
+    <script>
+        setTimeout(
+        function () {
+            alert("The other participant is waiting. Please make your decision.");
+        },
+        60*1000 // 60 seconds
+    );
+    </script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="card-body">
+    <p>
+        Below are your two options for <b>Task A</b> and <b>Task B</b>, respectively. You need to make a choice for each task to continue.
+    </p>
+    <div class="row">
+        <div class="col">
+            {% if round_number > 1 %}
+            <div class="card-body text-center">
+                <p><u>In the previous round in Task A:</u></p>
+                {% if previous_decision_high == 1 %}
+                <p>Participant 2 chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>.
+                {% else %}
+                <p>Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>.
+                {% endif %}
+                {% if opponent_previous_decision_high == 1 %}
+                <p>You chose to <b>pay {{ cost_high }}</b> in order for Participant 2 to <b>receive {{ benefit_high }}</b>.
+                {% else %}
+                <p>You chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>.
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="col">
+            {% if round_number > 1 %}
+            <div class="card-body text-center">
+                <p><u>In the previous round in Task B:</u></p>
+                {% if previous_decision_low == 3 %}
+                <p>Participant 2 chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>.
+                {% else %}
+                <p>Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>.
+                {% endif %}
+                {% if opponent_previous_decision_low == 1 %}
+                <p>You chose to <b>pay {{ cost_low }}</b> in order for Participant to <b>receive {{ benefit_low }}</b>.
+                {% else %}
+                <p>You chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>.
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<div class="card bg-light instructions">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <h4>Task A:</h4>
+            <p>
+                {% formfield player.decision_high label='' %}
+            </p>
+            </div>
+            <div class="col">
+                <h4>Task B:</h4>
+            <p>
+                {% formfield player.decision_low label='' %}
+            </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+
+{% endblock %}
+
+<!---
+
+<div class="card-body">
+    <p>
+        Below are your two options for <b>Task A</b> and <b>Task B</b>, respectively. You need to make a choice for each task to continue.
+    </p>
+    <div class="row">
+        <div class="col">
+            {% if round_number > 1 %}
+            <div class="card-body text-center"> In the previous round, Participant 2 chose to {{ previous_decision_high }}</div>
+            {% endif %}
+        </div>
+        <div class="col">
+            {% if round_number > 1 %}
+            <div class="card-body text-center"> In the previous round, Participant 2 chose to {{ previous_decision_high }}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<div class="card bg-light instructions">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <h4>Task A</h4>
+                <ul>
+                    <li>
+                        You pay {{ cost_high }} points for Participant 2 to receive {{ benefit_high }} points.
+                    </li>
+                    <li>
+                        You pay 0 points for Participant 2 to receive 0 points.
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <h4>Task B</h4>
+                <ul>
+                    <li>
+                        You pay {{ cost_low }} points for Participant 2 to receive {{ benefit_low }} points.
+                    </li>
+                    <li>
+                        You pay 0 points for Participant 2 to receive 0 points.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-body">
+    <div class="row">
+        <div class="col">
+            <p>
+                {% formfield player.decision_high label='Your decision for Task A:' %}
+            </p>
+        </div>
+        <div class="col">
+            <p>
+                {% formfield player.decision_low label='Your decision for Task B:' %}
+            </p>
+        </div>
+    </div>
+</div>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+
+<div class="card-body">
+    <p>
+        Below are your two options for <b>Task A</b> and <b>Task B</b>, respectively. You need to make a choice for each task to continue.
+    </p>
+    <div class="row">
+        <div class="col">
+            {% if round_number > 1 %}
+            <div class="card-body text-center"> In the previous round, Participant 2 chose to {{ previous_decision_high }}</div>
+            {% endif %}
+        </div>
+        <div class="col">
+            {% if round_number > 1 %}
+            <div class="card-body text-center"> In the previous round, Participant 2 chose to {{ previous_decision_high }}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<p> some weird attempt with a table</p>
+
+<div class="card bg-light instructions">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <h4>Task A</h4>
+                <table class="table">
+                    <tr>
+                        <td colspan="2" rowspan="2">{% formfield player.decision_high label='' %}</td>
+                        <td colspan="2">You pay {{ cost_high }} points for Participant 2 to receive {{ benefit_high }} points.</td>
+                    </tr>
+                    <tr>
+                        <td>You pay 0 points for Participant 2 to receive 0 points.</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col">
+                <h4>Task B</h4>
+                <table class="table">
+                    <tr>
+                        <td colspan="2" rowspan="2">{% formfield player.decision_low label='' %}</td>
+                        <td colspan="2">You pay {{ cost_low }} points for Participant 2 to receive {{ benefit_low }} points.</td>
+                    </tr>
+                    <tr>
+                        <td>You pay 0 points for Participant 2 to receive 0 points.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+--->

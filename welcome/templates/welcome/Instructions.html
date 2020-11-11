@@ -1,0 +1,60 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+
+    <div class="card bg-light instructions">
+        <div class="card-body">
+
+        <h3>
+            The Game
+        </h3>
+
+        <link rel="stylesheet" type="text/css"
+              href="{% static 'global/matrix.css' %}"/>
+
+        <p>
+            Each game lasts for at least <b>20 rounds</b>.
+            After that, there is a ....% chance of another round
+            (explain that better)
+        </p>
+        <p>
+            The game structure is as follows: At each round, both players get a choice of two actions: cooperate or defect.
+            <b>Explain the matrix payoffs</b>
+        </p>
+
+        <p>
+            The colours signals the different players.
+        </p>
+            <ul>
+                <li>
+                    <font color="blue">Blue</font> signals <font color="blue">player 1</font>
+                </li>
+                <li>
+                    <font color="red">Red</font> signals <font color="red">player 2</font>
+                </li>
+            </ul>
+
+
+        <p>
+            The game ends on the last round, which ever it is. You have no way of knowing for sure.
+            One round will then be randomly selected and you will be paid that amount.
+        </p>
+        </div>
+    </div>
+
+
+
+    <p>
+        After you press the next button, the game will start only after the other player has arrived.
+    </p>
+
+    {% next_button %}
+{% endblock %}
+
+
+

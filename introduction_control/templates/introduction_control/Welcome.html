@@ -1,0 +1,38 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Introduction
+{% endblock %}
+
+{% block content %}
+
+    <p><b>Thank you for taking part in this study!</b></p>
+
+    <p>
+        In this study, you are about to engage in <b>a task with another participant</b> who is also taking part in the same session as you.
+        You will be interacting in real time with this participant.
+        The task consists of many interactive rounds; in each round you will always be playing with the same participant.
+        Your bonus payment will depend on the decisions you and the other participant make in this task.
+    </p>
+    <p>
+        During this study, you will accumulate points.
+        At the end of the study, all the points you have earned will be converted to GBP at a rate of ... points = £1 and paid as a bonus to you 3-5 days after completing the study.
+        The bonus can range between ... and ... . You must stay on task at all times, otherwise you will automatically be disconnected and get £0.
+        The Prolific link for the payment will be displayed at the end of the study.
+    </p>
+    <p>
+        <b>Please answer the following questions to continue:</b>
+    </p>
+
+    {% for field in form %}
+        {% formfield field %}
+    {% endfor %}
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+{% endblock %}

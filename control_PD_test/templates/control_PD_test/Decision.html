@@ -1,0 +1,88 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+
+{% block title %}
+    Round {{ subsession.round_number }} of {{ Constants.num_rounds }}
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'global/matrix.css' %}" />
+
+    <script>
+        setTimeout(
+        function () {
+            alert("The other participant is waiting. Please make your decision.");
+        },
+        60*1000 // 60 seconds
+    );
+    </script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="card-body">
+    <p>
+        Below are your two options for the task. You need to make a choice to continue.
+    </p>
+    {% if round_number > 1 %}
+    <div class="card-body text-center">
+        <p><u>In the previous round:</u></p>
+        {% if my_treatment == 'high' %}
+            {% if previous_decision_high == 1 %}
+            <p><i>Participant 2</i> chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>.
+            {% else %}
+            <p><i>Participant 2</i> chose to <b>pay</b> 0 in order for you to <b>receive 0</b>.
+            {% endif %}
+            {% if opponent_previous_decision_high == 1 %}
+            <p><i>You</i> chose to <b>pay {{ cost_high }}</b> in order for Participant 2 to <b>receive {{ benefit_high }}</b>.
+            {% else %}
+            <p><i>You</i> chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>.
+            {% endif %}
+        {% endif %}
+        {% if my_treatment == 'low' %}
+            {% if previous_decision_low == 3 %}
+            <p><i>Participant 2</i> chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>.
+            {% else %}
+            <p><i>Participant 2</i> chose to <b>pay</b> 0 in order for you to <b>receive 0</b>.
+            {% endif %}
+            {% if opponent_previous_decision_low == 3 %}
+            <p><i>You</i> chose to <b>pay {{ cost_low }}</b> in order for Participant 2 to <b>receive {{ benefit_low }}</b>.
+            {% else %}
+            <p><i>You</i> chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>.
+            {% endif %}
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+
+<div class="card bg-light instructions">
+    <div class="card-body">
+        {% if my_treatment == 'high' %}
+            <p>
+                {% formfield player.decision_high label='' %}
+            </p>
+        {% endif %}
+        {% if my_treatment == 'low' %}
+            <p>
+                {% formfield player.decision_low label='' %}
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+{% endblock %}
+
+{% block scripts %}
+
+
+
+{% endblock %}

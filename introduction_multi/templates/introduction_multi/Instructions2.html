@@ -1,0 +1,109 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+<style>
+
+
+</style>
+
+{% block title %}
+    Example
+{% endblock %}
+
+{% block content %}
+
+
+<div class="card-body"> <!-- creates indentation -->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'global/matrix.css' %}"/>
+
+    <p>Recall the outcomes for Task A and Task B:</p>
+</div>
+
+<div class="card bg-light instructions"> <!-- Makes the para a box -->
+    <div class="card-body"> <!-- creates indentation -->
+    <div class="row">
+        <div class="col">
+        <h4>
+            Task A:
+        </h4>
+        <ul>
+            <li>
+                You <b>pay {{ Constants.c_high }}</b> points in order for Participant 2 to <b>receive {{ Constants.b_high }}</b> points.
+            </li>
+            <li>
+                You <b>pay 0</b> points in order for Participant 2 to <b>receive 0</b> points.
+            </li>
+        </ul>
+        </div>
+        <div class="col">
+        <h4>
+            Task B:
+        </h4>
+        <ul>
+            <li>
+                You <b>pay {{ Constants.c_low }}</b> points in order for Participant 2 to <b>receive {{ Constants.b_low }}</b> points.
+            </li>
+            <li>
+                You <b>pay 0</b> points in order for Participant 2 to <b>receive 0</b> points.
+            </li>
+        </ul>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="card-body"> <!-- creates indentation -->
+    <h4><u>Example</u></h4>
+    <p>Consider a scenario where Participant 1 and Participant 2 made the following decisions:</p>
+    <div class="row">
+        <div class="col">
+        <h5>
+            Task A:
+        </h5>
+        <ul>
+            <li>
+                Participant 1 chose to <b>pay {{ Constants.c_high }}</b> in order for Participant 2 to <b>receive {{ Constants.b_high }}</b>.
+            </li>
+            <li>
+                Participant 2 chose to <b>pay 0</b> in order for Participant 1 to <b>receive 0</b>.
+            </li>
+        </ul>
+        <p>
+            As a result, in Task A in this round, Participant 1 earned <b>{{ total_high_p1 }}</b> points and Participant 2 earned <b>{{ total_high_p2 }}</b> points.
+        </p>
+        </div>
+        <div class="col">
+        <h5>
+            Task B:
+        </h5>
+        <ul>
+            <li>
+                Participant 1 chose to <b>pay {{ Constants.c_low }}</b> in order for Participant 2 to <b>receive {{ Constants.b_low }}</b>.
+            </li>
+            <li>
+                Participant 2 chose to <b>pay {{ Constants.c_low }}</b>in order for Participant 1 to <b>receive {{ Constants.b_low }}</b>.
+            </li>
+        </ul>
+        <p>
+            As a result, in Task B in this round, Participant 1 earned <b>{{ total_low_p1 }}</b> points and Participant 2 earned <b>{{ total_low_p2 }}</b> points.
+        </p>
+        </div>
+    </div>
+    <p>In total across both tasks, Participant 1 earned <b>{{ sum_p1 }}</b> points and Participant 2 earned <b>{{ sum_p2 }}</b> points.</p>
+</div>
+
+<div class="card-body">
+    <h4><b>Please answer the following questions to continue:</b></h4>
+
+    {% for field in form %}
+        {% formfield field %}
+    {% endfor %}
+</div>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+{% endblock %}

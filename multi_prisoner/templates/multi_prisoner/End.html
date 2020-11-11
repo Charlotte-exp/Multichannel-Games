@@ -1,0 +1,68 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Final results
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col">
+        <p>
+            <h4>Task A:</h4>
+        </p>
+        <table class="table">
+            <tr>
+                <th>Round</th>
+                <th>My outcome</th>
+                <th>Opponent's outcome</th>
+
+            </tr>
+            {% for p in player_in_all_rounds %} <!-- that loops the stuff below for each round so we have the results in all rounds! -->
+                <tr>
+                    <td>{{ p.round_number }}</td> <!-- don't forget the p. for the looping -->
+                    <td>{{ p.payoff_high }}</td>
+                    <td>{{ p.other_player.payoff_high}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    <p>
+        Your total payoff in Task A is <b>{{ total_payoff_high }}</b>.
+    </p>
+    </div>
+    <div class="col">
+        <p>
+            <h4>Task B:</h4>
+        </p>
+        <table class="table">
+            <tr>
+                <th>Round</th>
+                <th>My outcome</th>
+                <th>Opponent's outcome</th>
+
+            </tr>
+            {% for p in player_in_all_rounds %} <!-- that loops the stuff below for each round so we have the results in all rounds! -->
+                <tr>
+                    <td>{{ p.round_number }}</td> <!-- don't forget the p. for the looping -->
+                    <td>{{ p.payoff_low }}</td>
+                    <td>{{ p.other_player.payoff_low}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    <p>
+        Your total payoff in Task B is <b>{{ total_payoff_low }}</b>.
+    </p>
+    </div>
+</div>
+
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+{% endblock %}
+
+

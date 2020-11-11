@@ -1,0 +1,66 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Final results
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col">
+        <p>
+            <h4>Task A:</h4>
+        </p>
+    <table class="table">
+        <tr>
+            <th>Round</th>
+            <th>My outcome</th>
+            <th>Opponent's outcome</th>
+
+        </tr>
+        {% for p in player_in_all_rounds %} <!-- that loops the stuff below for each round so we have the results in all rounds! -->
+            {% for q in p.get_opponent %}
+        <tr>
+            <td>{{ p.round_number }}</td> <!-- don't forget the p. for the looping -->
+            <td>{{ p.payoff_high }}</td>
+            <td>{{ q.payoff_high }}</td>
+        </tr>
+            {% endfor %}
+    </table>
+    <p>
+        Your total payoff is <b>{{ total_payoff_high }}</b>.
+    </p>
+
+    </div>
+    <div class="col">
+        <p>
+            <h4>Task B:</h4>
+        </p>
+    <table class="table">
+        <tr>
+            <th>Round</th>
+            <th>My outcome</th>
+            <th>Opponent's outcome</th>
+
+        </tr>
+            {% for q in p.get_opponent %}
+        <tr>
+            <td>{{ p.round_number }}</td>
+            <td>{{ p.payoff_low }}</td>
+            <td>{{ q.payoff_low }}</td>
+        </tr>
+            {% endfor %}
+        {% endfor %}
+    </table>
+    <p>
+        Your total payoff is <b>{{ total_payoff_low }}</b>
+    </p>
+    </div>
+</div>
+
+    {% next_button %}
+
+{% endblock %}
+
+
