@@ -5,13 +5,13 @@ from decimal import *
 getcontext().rounding = ROUND_CEILING  # is this for rounding up the payment?
 
 
-# class PairingWaitPage(WaitPage):
-#     group_by_arrival_time = True # this code keeps the groups the same across all rounds automatically
-#
-#     def is_displayed(self):
-#         return self.round_number == 1
-#
-#     template_name = 'multi_prisoner/Waitroom.html'
+class PairingWaitPage(WaitPage):
+    group_by_arrival_time = True  # this code keeps the groups the same across all rounds automatically
+
+    def is_displayed(self):
+        return self.round_number == 1
+
+    template_name = 'multi_prisoner/Waitroom.html'
 
 
 class Decision(Page):
@@ -20,7 +20,7 @@ class Decision(Page):
 
     def is_displayed(self):
         """ Probabilistic display! """
-        if self.subsession.round_number <= self.group.last_round:
+        if self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
     def vars_for_template(self):
@@ -61,7 +61,7 @@ class ResultsWaitPage(WaitPage):
 
     def is_displayed(self):
         """ Probabilistic display! """
-        if self.subsession.round_number <= self.group.last_round:
+        if self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
     # body_text = "Please wait while the other participant makes their decision."
@@ -73,7 +73,7 @@ class Results(Page):
 
     def is_displayed(self):
         """ Probabilistic display! """
-        if self.subsession.round_number <= self.group.last_round:
+        if self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
     def vars_for_template(self):
@@ -102,7 +102,7 @@ class End(Page):
 
     def is_displayed(self):
         """ This function makes the page appear only on the last random-ish round """
-        return self.round_number == self.group.last_round
+        return self.round_number == self.participant.vars['last_round']
 
     def vars_for_template(self):
         me = self.player
@@ -120,7 +120,7 @@ class Demographics(Page):
 
     def is_displayed(self):
         """ This function makes the page appear only on the last random-ish round """
-        return self.round_number == self.group.last_round
+        return self.round_number == self.participant.vars['last_round']
 
 
 class Payment(Page):
@@ -128,7 +128,7 @@ class Payment(Page):
 
     def is_displayed(self):
         """ This function makes the page appear only on the last random-ish round """
-        return self.round_number == self.group.last_round
+        return self.round_number == self.participant.vars['last_round']
 
     def vars_for_template(self):
         return {
@@ -148,11 +148,11 @@ class Payment(Page):
 
 class ProlificLink(Page):
     def is_displayed(self):
-        return self.round_number == self.group.last_round
+        return self.round_number == self.participant.vars['last_round']
 
 
 page_sequence = [
-    # PairingWaitPage,
+    PairingWaitPage,
     Decision,
     ResultsWaitPage,
     Results,

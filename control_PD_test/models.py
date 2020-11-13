@@ -3,10 +3,6 @@ from otree.api import (
     Currency as c, currency_range
 )
 
-import random
-import itertools
-import numpy as np
-
 author = 'Charlotte'
 
 doc = """

@@ -25,8 +25,8 @@ SESSION_CONFIGS = [
         'name': 'multi_prisoner',
         'display_name': "Multichannel Game",
         'num_demo_participants': 4,
-        'app_sequence': ['multi_prisoner'],
-        'use_browser_bots': True
+        'app_sequence': ['introduction_multi', 'multi_prisoner'],
+        'use_browser_bots': False
     },
     {
         'name': 'control_PD',

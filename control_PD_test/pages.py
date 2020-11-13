@@ -4,7 +4,7 @@ from .models import Constants
 
 
 class PairingWaitPage(WaitPage):
-    group_by_arrival_time = True
+    group_by_arrival_time = True  # this code keeps the groups the same across all rounds automatically
 
     def is_displayed(self):
         return self.round_number == 1
