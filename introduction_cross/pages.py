@@ -1,8 +1,8 @@
 from otree.api import Currency as c, currency_range
-from ._builtin import Page, WaitPage
+from ._builtin import Page
 from .models import Constants
 from decimal import *
-getcontext().rounding = ROUND_CEILING # is this for rounding up the payment?
+getcontext().rounding = ROUND_CEILING  # is this for rounding up the payment?
 
 
 class Welcome(Page):
@@ -56,7 +56,7 @@ class Instructions2(Page):
         reward_low = Constants.b_low-Constants.c_low
         temptation_high = Constants.b_high
         sucker_high = -Constants.c_high
-        punishment = Constants.dd_low
+        # punishment = Constants.dd_low
         return{
             'total_high_p1': sucker_high,
             'total_high_p2': temptation_high,
