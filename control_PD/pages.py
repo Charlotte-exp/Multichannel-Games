@@ -3,13 +3,13 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
-# class PairingWaitPage(WaitPage):
-#     group_by_arrival_time = True  # this code keeps the groups the same across all rounds automatically
-#
-#     def is_displayed(self):
-#         return self.round_number == 1
-#
-#     template_name = 'control_PD/Waitroom.html'
+class PairingWaitPage(WaitPage):
+    group_by_arrival_time = True  # this code keeps the groups the same across all rounds automatically
+
+    def is_displayed(self):
+        return self.round_number == 1
+
+    template_name = 'control_PD/Waitroom.html'
 
 
 class Decision(Page):
@@ -20,6 +20,10 @@ class Decision(Page):
             return ['decision_high']
         else:
             return ['decision_low']
+
+    def is_displayed(self):
+        if self.round_number <= self.participant.vars['last_round']:
+            return True
 
     def vars_for_template(self):
         me = self.player
@@ -50,11 +54,6 @@ class Decision(Page):
                 'benefit_low': Constants.b_low,
             }
 
-    def is_displayed(self):
-        """ Probabilistic display! """
-        if self.subsession.round_number <= self.group.last_round:
-            return True
-
 
 class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
@@ -63,17 +62,18 @@ class ResultsWaitPage(WaitPage):
 
     def is_displayed(self):
         """ Probabilistic display! """
-        if self.subsession.round_number <= self.group.last_round:
+        if self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
-    # body_text = "Please wait while the other participant makes their decision."
-    template_name = 'control_PD/Dropout.html'
+    body_text = "Please wait while the other participant makes their decision."
+    # template_name = 'control_PD/Dropout.html'
 
 
 class Results(Page):
-    """ Probabilistic display! """
+
     def is_displayed(self):
-        if self.subsession.round_number <= self.group.last_round:
+        """ Probabilistic display! """
+        if self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
     def vars_for_template(self):
@@ -98,9 +98,11 @@ class Results(Page):
 
 
 class End(Page):
-    """ This function makes the page appear only on the last round """
+    """ This page is for final combined results """
+
     def is_displayed(self):
-        return self.round_number == self.group.last_round
+        """ This function makes the page appear only on the last round """
+        return self.round_number == self.participant.vars['last_round']
 
     def vars_for_template(self):
         me = self.player
@@ -118,12 +120,16 @@ class Demographics(Page):
     form_fields = ['age', 'gender', 'income', 'education', 'ethnicity']
 
     def is_displayed(self):
-        return self.round_number == self.group.last_round
+        """ This function makes the page appear only on the last random-ish round """
+        return self.round_number == self.participant.vars['last_round']
 
 
 class Payment(Page):
+    """ This page is for final payment in GBP """
+
     def is_displayed(self):
-        return self.round_number == self.group.last_round
+        """ This function makes the page appear only on the last random-ish round """
+        return self.round_number == self.participant.vars['last_round']
 
     def vars_for_template(self):
         participant = self.participant
@@ -144,11 +150,11 @@ class Payment(Page):
 
 class ProlificLink(Page):
     def is_displayed(self):
-        return self.round_number == self.group.last_round
+        return self.round_number == self.participant.vars['last_round']
 
 
 page_sequence = [
-    # PairingWaitPage,
+    PairingWaitPage,
     Decision,
     ResultsWaitPage,
     Results,

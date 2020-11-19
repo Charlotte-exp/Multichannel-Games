@@ -17,21 +17,6 @@ doc = """
         """
 
 
-def pair_randomly(l):
-    """
-    This code comes from Ty in my centipede game. it partitions list l into random pairs
-    It must be used with the section below in Constants class
-    """
-    if len(l) < 2:
-        return
-    return_value = []
-    shuffled_l = l[:]
-    random.shuffle(shuffled_l)
-    for i in range(0, len(shuffled_l), 2):
-        return_value.append(shuffled_l[i:i + 2])
-    return return_value
-
-
 class Constants(BaseConstants):
     name_in_url = 'multi_prisoner'
     players_per_group = 2
@@ -42,11 +27,8 @@ class Constants(BaseConstants):
 
     currency_per_point = 0.01
 
-    instructions_template = 'multi_prisoner/OldInstructions.html'
-    results_previous_round_template = 'multi_prisoner/Results.html'
-
     """
-    if I want to do it with just b, c, and 0 
+    Donation game payoffs
     b = benefit, c = cost, dd = both defect
     """
     b_high = c(500)
@@ -59,63 +41,30 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
+
     """
-    This is for the 50% chance of another round. We create a function for clarity below in the creating_session().
-    We create a list of different number of rounds that is as long as there are groups.
+       Instead of creating_session() we need to use group_by_arrival_time_method().
+       The function makes sure that only players with the same last_round will be paired up.
+       I could only implement that retroactively though and assign last_round in the intro app.
+       The inconveninent is that if 3 people read the instructions, 2 get 5 and 1 gets 6,
+       if one of the 5 one gives up and quits the other two cannot play together. So not ideal
     """
-    def get_random_number_of_rounds(self):
-        num_groups = int(self.session.num_participants / 2)
-        list_num_rounds = []
-        for _ in range(num_groups):
-            number = Constants.min_rounds
-            while Constants.proba_next_round < random.random():
-                number += 1
-            list_num_rounds.append(number)
-        return list_num_rounds
-
-    def creating_session(self):
-        """
-        creating_session is an otree function??
-        Here we define the pairing/randomising of participants in this session/game
-        And how the treatments need to be assigned to each group.
-        Here itertools means 1st pair gets high, 2nd pair low, 3rd pair high, 4th pair low, etc.
-        Use get_groups() so that the treatment is assigned to pairs, not individual players, otherwise write get_players()
-        Don't forget to set group_like_round(1) if you want them to keep the same opponent!
-        """
-        if self.round_number == 1:
-            all_players = []
-            for g in self.get_groups():
-                all_players.extend(g.get_players())
-
-            group_matrix = []
-            group_matrix.extend(pair_randomly(all_players))
-            print(all_players)
-            print(group_matrix)
-            self.group_randomly()  # that's the key bit!
-
-        if self.round_number <= Constants.num_rounds:
-            self.group_like_round(1)
-
-            """ random last round code. With the function from above, 
-                    we attribute the different elements in the list to each group."""
-            if self.round_number == 1:
-                list_num_rounds = self.get_random_number_of_rounds()
-                group_number_of_rounds = itertools.cycle(list_num_rounds)
-                for g in self.get_groups():
-                    g.last_round = next(group_number_of_rounds)
-                    print('New number of rounds', g.last_round)
-            else:
-                """ This bit ensures the round number are the same for each rounds rather
-                 than generating a new one each time."""
-                previous_groups = self.in_previous_rounds()[-1].get_groups()
-                for g, previous_g in zip(self.get_groups(), previous_groups):
-                    g.last_round = previous_g.last_round
-                    print('New number of rounds', g.last_round)
+    def group_by_arrival_time_method(self, waiting_players):
+        print("starting group_by_arrival_time_method")
+        from collections import defaultdict
+        d = defaultdict(list)
+        for p in waiting_players:
+            category = p.participant.vars['last_round']
+            players_with_this_category = d[category]
+            players_with_this_category.append(p)
+            if len(players_with_this_category) == 2:
+                print("forming group", players_with_this_category)
+                print('last_round is', p.participant.vars['last_round'])
+                return players_with_this_category
 
 
 class Group(BaseGroup):
-    """Field of the number of rounds. Each group gets attributed a number of rounds"""
-    last_round = models.IntegerField()
+    pass
 
 
 class Player(BasePlayer):
@@ -147,7 +96,7 @@ class Player(BasePlayer):
 
     ethnicity = models.StringField(
         choices=['Asian/Asian British', 'Black/African/Caribbean/Black British', 'Mixed/Multiple Ethnic groups',
-                 'White', 'Prefer not to say'],
+                 'White', 'Other'],
         verbose_name='What is your ethnicity?',
         widget=widgets.RadioSelect)
 
@@ -182,9 +131,9 @@ class Player(BasePlayer):
     def set_payoff(self):
         """
         The payoff function layout is from the prisoner template.
-        there is one matrix per game using two separate decision variables.
+        There is one matrix per game using two separate decision variables.
         Bottom lines calculate the payoff based on actual choices, again, one for each game.
-        They are added for the round total.
+        They are added for the round total (self.payment).
         """
         payoff_matrix_high = {
             1:
@@ -198,6 +147,7 @@ class Player(BasePlayer):
                     2: Constants.dd_high
                 }
         }
+        self.payoff_high = payoff_matrix_high[self.decision_high][self.other_player().decision_high]
 
         payoff_matrix_low = {
             3:
@@ -214,13 +164,12 @@ class Player(BasePlayer):
 
         """
         The payoff variable alone can be used as such if the whole game is in the same app.
-        If using multiple apps or setting hte payment on another app, then one must use the participant.vars
+        If using multiple apps or setting the payment on another app, then one must use the participant.vars
         I could have written participant.vars = payoff matrix directly,
         but then it means I need to use the participant.vars code everywhere I call the payoff!
         Here only the combined payoffs of the two games together is stored
         """
         self.payoff_low = payoff_matrix_low[self.decision_low][self.other_player().decision_low]
-        self.payoff_high = payoff_matrix_high[self.decision_high][self.other_player().decision_high]
         self.payment = self.payoff_high + self.payoff_low
         self.participant.vars['payment'] = self.payment
         # print('self.payment', self.payment)

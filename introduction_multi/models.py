@@ -3,6 +3,8 @@ from otree.api import (
     Currency as c, currency_range
 )
 
+import random
+import itertools
 
 author = 'Charlotte'
 
@@ -16,11 +18,14 @@ doc = """
 
 class Constants(BaseConstants):
     name_in_url = 'introduction_multi'
-    players_per_group = None
+    players_per_group = 2
     num_rounds = 1
 
+    min_rounds = 2
+    proba_next_round = 0.5
+
     """
-    Donation game payoff matrix
+    Donation game payoff
     """
     b_high = c(500)
     c_high = c(200)
@@ -32,11 +37,36 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    pass
+    """
+        This is for the 50% chance of another round. We create a function for clarity below in the creating_session().
+        We create a list of different number of rounds that is as long as there are groups.
+    """
+    def get_random_number_of_rounds(self):
+        num_groups = int(self.session.num_participants / 2)
+        list_num_rounds = []
+        for _ in range(num_groups):
+            number = Constants.min_rounds
+            while Constants.proba_next_round < random.random():
+                number += 1
+            list_num_rounds.append(number)
+        return list_num_rounds
+
+    def creating_session(self):
+        """ random last round code. With the function from above,
+                we attribute the different elements in the list to each group."""
+        list_num_rounds = self.get_random_number_of_rounds()
+        group_number_of_rounds = itertools.cycle(list_num_rounds)
+        for g in self.get_groups():
+            g.last_round = next(group_number_of_rounds)
+            print('New number of rounds', g.last_round)
+        for p in self.get_players():
+            p.participant.vars['last_round'] = p.group.last_round
+            print('vars last_round is', p.participant.vars['last_round'])
 
 
 class Group(BaseGroup):
-    pass
+    """Field of the number of rounds. Each group gets attributed a number of rounds"""
+    last_round = models.IntegerField()
 
 
 class Player(BasePlayer):

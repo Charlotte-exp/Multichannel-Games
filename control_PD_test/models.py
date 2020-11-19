@@ -3,10 +3,6 @@ from otree.api import (
     Currency as c, currency_range
 )
 
-import random
-import itertools
-import numpy as np
-
 author = 'Charlotte'
 
 doc = """
@@ -18,7 +14,7 @@ doc = """
 class Constants(BaseConstants):
     name_in_url = 'control_PD_test'
     players_per_group = 2
-    num_rounds = 2
+    num_rounds = 100
 
     min_rounds = 5
     proba_next_round = 0.5
@@ -45,7 +41,6 @@ class Subsession(BaseSubsession):
        The inconveninent is that if 3 people read the instructions, 2 become high and 1 becomes low,
        if one of the high one gives and quits the other two cannot play together.
     """
-
     def group_by_arrival_time_method(self, waiting_players):
         print("starting group_by_arrival_time_method")
         from collections import defaultdict
@@ -57,15 +52,20 @@ class Subsession(BaseSubsession):
             if len(players_with_this_category) == 2:
                 print("forming group...")
                 return players_with_this_category
+        for p in waiting_players:
+            category = p.participant.vars['last_round']
+            players_with_this_category = d[category]
+            players_with_this_category.append(p)
+            if len(players_with_this_category) == 2:
+                print("forming group", players_with_this_category)
+                print('last_round is', p.participant.vars['last_round'])
+                return players_with_this_category
+
+# Can this be merged?
 
 
 class Group(BaseGroup):
-    """ treatment needs to be defined at the group level so that both player in the group have the same.
-        if defined at the player level, then each player will have a different one regardless of pairs/groups """
-    treatment = models.StringField()
-
-    """Field of the number of rounds. Each group gets attributed a number of rounds"""
-    last_round = models.IntegerField()
+    pass
 
 
 class Player(BasePlayer):

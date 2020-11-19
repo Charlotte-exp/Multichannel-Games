@@ -4,6 +4,7 @@ from otree.api import (
 )
 
 import itertools
+import random
 
 author = 'Charlotte'
 
@@ -20,6 +21,9 @@ class Constants(BaseConstants):
     players_per_group = 2
     num_rounds = 1
 
+    min_rounds = 2
+    proba_next_round = 0.5
+
     b_high = c(500)
     c_high = c(200)
     dd_high = c(0)
@@ -30,6 +34,20 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
+    """
+        This is for the 50% chance of another round. We create a function for clarity below in the creating_session().
+        We create a list of different number of rounds that is as long as there are groups.
+    """
+    def get_random_number_of_rounds(self):
+        arbitrary_high_number = int(self.session.num_participants / 2)
+        list_num_rounds = []
+        for _ in range(arbitrary_high_number):
+            number = Constants.min_rounds
+            while Constants.proba_next_round < random.random():
+                number += 1
+            list_num_rounds.append(number)
+        return list_num_rounds
+
     """
     Assigns treatments to pairs of two. First create the treatments (high, low),
     for each groups, assign one treatment to a pair, then the other, then the first one again.
@@ -44,11 +62,27 @@ class Subsession(BaseSubsession):
             print('vars treatment is', p.participant.vars['treatment'])
             # print('id in session', p.participant.id_in_session)  # what the hell does that print??
 
+        """ random last round code. With the function from above, 
+                we attribute the different elements in the list to each group."""
+        list_num_rounds = self.get_random_number_of_rounds()
+        group_number_of_rounds = itertools.cycle(list_num_rounds)
+        for g in self.get_groups():
+            g.last_round = next(group_number_of_rounds)
+            print('New number of rounds', g.last_round)
+        for p in self.get_players():
+            p.participant.vars['last_round'] = p.group.last_round
+            print('vars last_round is', p.participant.vars['last_round'])
+
+# when this is finalised merge together treatment and last_round as they are the same
+
 
 class Group(BaseGroup):
     """ treatment needs to be defined at the group level so that both player in the group have the same.
        if defined at the player level, then each player will have a different one regardless of pairs/groups """
     treatment = models.StringField()
+
+    """Field of the number of rounds. Each group gets attributed a number of rounds"""
+    last_round = models.IntegerField()
 
 
 class Player(BasePlayer):

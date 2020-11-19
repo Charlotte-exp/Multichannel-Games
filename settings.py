@@ -18,21 +18,21 @@ SESSION_CONFIGS = [
         'name': 'crosstalk',
         'display_name': "Crosstalk game",
         'num_demo_participants': 4,
-        'app_sequence': ['crosstalk'],
-        'use_browser_bots': False
+        'app_sequence': ['introduction_cross', 'crosstalk'],
+        'use_browser_bots': True
     },
     {
         'name': 'multi_prisoner',
         'display_name': "Multichannel Game",
         'num_demo_participants': 4,
-        'app_sequence': ['multi_prisoner'],
-        'use_browser_bots': True
+        'app_sequence': ['introduction_multi', 'multi_prisoner'],
+        'use_browser_bots': False
     },
     {
         'name': 'control_PD',
         'display_name': "Control group",
         'num_demo_participants': 2,
-        'app_sequence': ['control_PD'],
+        'app_sequence': ['introduction_control', 'control_PD'],
         'use_browser_bots': True
     },
     {
@@ -40,7 +40,7 @@ SESSION_CONFIGS = [
         'display_name': "PD fro testing",
         'num_demo_participants': 4,
         'app_sequence': ['introduction_control', 'control_PD_test'],
-        'use_browser_bots': False
+        'use_browser_bots': True
     },
     {
         'name': 'introduction_control',
@@ -59,37 +59,6 @@ SESSION_CONFIGS = [
         'display_name': "Intro Crosstalk",
         'num_demo_participants': 2,
         'app_sequence': ['introduction_cross'],
-    },
-    dict(
-        name="twopd",
-        display_name="Two simultaneous PD",
-        num_demo_participants=4,
-        app_sequence=['twopd'],
-        use_browser_bots=False
-    ),
-    {
-        'name': 'finitely_repeated_PD',
-        'display_name': "Fendi PD",
-        'num_demo_participants': 2,
-        'app_sequence': ['finitely_repeated_PD'],
-    },
-    {
-        'name': 'prisoner',
-        'display_name': "Prionser's Dilemma",
-        'num_demo_participants': 2,
-        'app_sequence': ['prisoner', 'payment_info'],
-    },
-    {
-        'name': 'survey',
-        'display_name': "Survey",
-        'num_demo_participants': 1,
-        'app_sequence': ['survey', 'payment_info'],
-    },
-    {
-        'name': 'quiz',
-        'display_name': "Quiz",
-        'num_demo_participants': 1,
-        'app_sequence': ['quiz'],
     },
 ]
 # see the end of this file for the inactive session configs
@@ -152,6 +121,37 @@ INSTALLED_APPS = ['otree']
 
 # inactive session configs
 
+# dict(
+#     name="twopd",
+#     display_name="Two simultaneous PD",
+#     num_demo_participants=4,
+#     app_sequence=['twopd'],
+#     use_browser_bots=False
+# ),
+# {
+#     'name': 'finitely_repeated_PD',
+#     'display_name': "Fendi PD",
+#     'num_demo_participants': 2,
+#     'app_sequence': ['finitely_repeated_PD'],
+# },
+# {
+#     'name': 'prisoner',
+#     'display_name': "Prisoner's Dilemma",
+#     'num_demo_participants': 2,
+#     'app_sequence': ['prisoner', 'payment_info'],
+# },
+# {
+#     'name': 'survey',
+#     'display_name': "Survey",
+#     'num_demo_participants': 1,
+#     'app_sequence': ['survey', 'payment_info'],
+# },
+# {
+#     'name': 'quiz',
+#     'display_name': "Quiz",
+#     'num_demo_participants': 1,
+#     'app_sequence': ['quiz'],
+# },
 # {
 #     'name': 'centipede',
 #     'display_name': "Baseline Centipede",
@@ -202,130 +202,3 @@ INSTALLED_APPS = ['otree']
 #     'num_demo_participants': 3,
 #     'app_sequence': ['guess_two_thirds', 'payment_info'],
 # },
-
-### {
-###     'name': 'trust',
-###     'display_name': "Trust Game",
-###     'num_demo_participants': 2,
-###     'app_sequence': ['trust', 'payment_info'],
-### },
-### {
-###     'name': 'prisoner',
-###     'display_name': "Prisoner's Dilemma",
-###     'num_demo_participants': 2,
-###     'app_sequence': ['prisoner', 'payment_info'],
-### },
-### {
-###     'name': 'ultimatum',
-###     'display_name': "Ultimatum (randomized: strategy vs. direct response)",
-###     'num_demo_participants': 2,
-###     'app_sequence': ['ultimatum', 'payment_info'],
-### },
-### {
-###     'name': 'ultimatum_strategy',
-###     'display_name': "Ultimatum (strategy method treatment)",
-###     'num_demo_participants': 2,
-###     'app_sequence': ['ultimatum', 'payment_info'],
-###     'use_strategy_method': True,
-### },
-### {
-###     'name': 'ultimatum_non_strategy',
-###     'display_name': "Ultimatum (direct response treatment)",
-###     'num_demo_participants': 2,
-###     'app_sequence': ['ultimatum', 'payment_info'],
-###     'use_strategy_method': False,
-### },
-### {
-###     'name': 'vickrey_auction',
-###     'display_name': "Vickrey Auction",
-###     'num_demo_participants': 3,
-###     'app_sequence': ['vickrey_auction', 'payment_info'],
-### },
-### {
-###     'name': 'volunteer_dilemma',
-###     'display_name': "Volunteer's Dilemma",
-###     'num_demo_participants': 3,
-###     'app_sequence': ['volunteer_dilemma', 'payment_info'],
-### },
-### {
-###     'name': 'cournot',
-###     'display_name': "Cournot Competition",
-###     'num_demo_participants': 2,
-###     'app_sequence': [
-###         'cournot', 'payment_info'
-###     ],
-### },
-### {
-###     'name': 'principal_agent',
-###     'display_name': "Principal Agent",
-###     'num_demo_participants': 2,
-###     'app_sequence': ['principal_agent', 'payment_info'],
-### },
-### {
-###     'name': 'dictator',
-###     'display_name': "Dictator Game",
-###     'num_demo_participants': 2,
-###     'app_sequence': ['dictator', 'payment_info'],
-### },
-### {
-###     'name': 'matching_pennies',
-###     'display_name': "Matching Pennies",
-###     'num_demo_participants': 2,
-###     'app_sequence': [
-###         'matching_pennies',
-###     ],
-### },
-### {
-###     'name': 'traveler_dilemma',
-###     'display_name': "Traveler's Dilemma",
-###     'num_demo_participants': 2,
-###     'app_sequence': ['traveler_dilemma', 'payment_info'],
-### },
-### {
-###     'name': 'bargaining',
-###     'display_name': "Bargaining Game",
-###     'num_demo_participants': 2,
-###     'app_sequence': ['bargaining', 'payment_info'],
-### },
-### {
-###     'name': 'common_value_auction',
-###     'display_name': "Common Value Auction",
-###     'num_demo_participants': 3,
-###     'app_sequence': ['common_value_auction', 'payment_info'],
-### },
-### {
-###     'name': 'bertrand',
-###     'display_name': "Bertrand Competition",
-###     'num_demo_participants': 2,
-###     'app_sequence': [
-###         'bertrand', 'payment_info'
-###     ],
-### },
-### {
-###     'name': 'real_effort',
-###     'display_name': "Real-effort transcription task",
-###     'num_demo_participants': 1,
-###     'app_sequence': [
-###         'real_effort',
-###     ],
-### },
-### {
-###     'name': 'lemon_market',
-###     'display_name': "Lemon Market Game",
-###     'num_demo_participants': 3,
-###     'app_sequence': [
-###         'lemon_market', 'payment_info'
-###     ],
-### },
-### {
-###     'name': 'public_goods_simple',
-###     'display_name': "Public Goods (simple version from tutorial)",
-###     'num_demo_participants': 3,
-###     'app_sequence': ['public_goods_simple', 'payment_info'],
-### },
-### {
-###     'name': 'trust_simple',
-###     'display_name': "Trust Game (simple version from tutorial)",
-###     'num_demo_participants': 2,
-###     'app_sequence': ['trust_simple'],
-### },

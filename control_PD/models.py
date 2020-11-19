@@ -3,10 +3,6 @@ from otree.api import (
     Currency as c, currency_range
 )
 
-import random
-import itertools
-import numpy as np
-
 author = 'Charlotte'
 
 doc = """
@@ -17,19 +13,6 @@ doc = """
         
         You can also use cmd+/ to comment out an entire section!!
         """
-
-
-def pair_randomly(l):
-    """ This code comes from Ty in my centipede game. it partitions list l into random pairs
-        It must be used with the section below in Constants class = does it? """
-    if len(l) < 2:
-        return
-    return_value = []
-    shuffled_l = l[:]
-    random.shuffle(shuffled_l)
-    for i in range(0, len(shuffled_l), 2):
-        return_value.append(shuffled_l[i:i + 2])
-    return return_value
 
 
 class Constants(BaseConstants):
@@ -55,78 +38,38 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-
     """
-    This is for the 50% chance of another round. We create a function for clarity below in the creating_session().
-    We create a list of different number of rounds that is as long as there are groups.
+       Instead of creating_session() we need to use group_by_arrival_time_method().
+       The function makes sure that only high players play with high players.
+       I could only implement that retroactively though and assign treatment in the intro app.
+       The inconveninent is that if 3 people read the instructions, 2 become high and 1 becomes low,
+       if one of the high one gives and quits the other two cannot play together.
     """
-    def get_random_number_of_rounds(self):
-        num_groups = int(self.session.num_participants / 2)
-        list_num_rounds = []
-        for _ in range(num_groups):
-            number = Constants.min_rounds
-            while Constants.proba_next_round < random.random():
-                number += 1
-            list_num_rounds.append(number)
-        return list_num_rounds
+    def group_by_arrival_time_method(self, waiting_players):
+        print("starting group_by_arrival_time_method")
+        from collections import defaultdict
+        d = defaultdict(list)
+        for p in waiting_players:
+            category = p.participant.vars['treatment']
+            players_with_this_category = d[category]
+            players_with_this_category.append(p)
+            if len(players_with_this_category) == 2:
+                print("forming group...")
+                return players_with_this_category
+        for p in waiting_players:
+            category = p.participant.vars['last_round']
+            players_with_this_category = d[category]
+            players_with_this_category.append(p)
+            if len(players_with_this_category) == 2:
+                print("forming group", players_with_this_category)
+                print('last_round is', p.participant.vars['last_round'])
+                return players_with_this_category
 
-    """
-        creating_session is an otree function.
-        Here we define the pairing/randomising of participants in this session/game
-        And how the treatments need to be assigned to each group.
-        Here itertools means 1st pair gets high, 2nd pair low, 3rd pair high, 4th pair low, etc.
-        Use get_groups() so that the treatment is assigned to pairs, not individual players, otherwise write get_players()
-        """
-    def creating_session(self):
-        if self.round_number == 1:
-            all_players = []
-            for g in self.get_groups():
-                all_players.extend(g.get_players())
-
-            group_matrix = []
-            group_matrix.extend(pair_randomly(all_players))
-            # print(all_players)
-            # print(group_matrix)
-            self.group_randomly()
-
-        if self.round_number <= Constants.num_rounds:
-            self.group_like_round(1)
-
-        # this might be problematic depending on how prolific works... everyone could end up witht he first treatment
-        treatments = itertools.cycle(['high', 'low'])
-        for g in self.get_groups():
-            g.treatment = next(treatments)
-
-        """ self.get_players() used to store the group level treatment at the participant level in participant.vars
-            It loops through all the player and stores group treatment in participant.vars """
-        for p in self.get_players():
-            p.participant.vars['treatment'] = p.group.treatment
-            # print('vars treatment is', p.participant.vars['treatment'])
-
-        """ random last round code. With the function from above, 
-        we attribute the different elements in the list to each group."""
-        if self.round_number == 1:
-            list_num_rounds = self.get_random_number_of_rounds()
-            group_number_of_rounds = itertools.cycle(list_num_rounds)
-            for g in self.get_groups():
-                g.last_round = next(group_number_of_rounds)
-                print('New number of rounds', g.last_round)
-        else:
-            """ This bit ensures the round number are the same for each rounds rather
-             than generating a new one each time."""
-            previous_groups = self.in_previous_rounds()[-1].get_groups()
-            for g, previous_g in zip(self.get_groups(), previous_groups):
-                g.last_round = previous_g.last_round
-                print('New number of rounds', g.last_round)
+# Can this be merged?
 
 
 class Group(BaseGroup):
-    """ treatment needs to be defined at the group level so that both player in the group have the same.
-        if defined at the player level, then each player will have a different one regardless of pairs/groups """
-    treatment = models.StringField()
-
-    """Field of the number of rounds. Each group gets attributed a number of rounds"""
-    last_round = models.IntegerField()
+    pass
 
 
 class Player(BasePlayer):
@@ -235,4 +178,3 @@ class Player(BasePlayer):
 
         # print('treatment is', self.group.treatment)
         # print('Player ID', self.id_in_group) # I need participant ID to check the random pairing is working
-
