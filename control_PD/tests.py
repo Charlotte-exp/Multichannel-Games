@@ -6,11 +6,7 @@ from .models import Constants
 
 class PlayerBot(Bot):
     def play_round(self):
-        # if self.round_number == 1:
-        #     yield pages.Introduction
-        #     yield pages.Consent
-
-        if self.round_number <= self.group.last_round:
+        if self.round_number <= self.participant.vars['last_round']:
             if self.participant.vars['treatment'] == 'high':
                 yield pages.Decision, dict(decision_high=1)
             else:
@@ -25,7 +21,7 @@ class PlayerBot(Bot):
             # yield pages.Decision, dict(decision_high="defect", decision_low="defect")
             yield pages.Results
 
-        if self.round_number == self.group.last_round:
+        if self.round_number == self.participant.vars['last_round']:
             yield pages.End
             # yield pages.Demographics, {"age": '22', "gender": 'Female', "income": '£10.000 - £29.999',
             #                            "education": 'Postgraduate degree', "ethnicity": 'White'}

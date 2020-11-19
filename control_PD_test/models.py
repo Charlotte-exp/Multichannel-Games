@@ -65,12 +65,6 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    # """ treatment needs to be defined at the group level so that both player in the group have the same.
-    #     if defined at the player level, then each player will have a different one regardless of pairs/groups """
-    # treatment = models.StringField()
-
-    # """Field of the number of rounds. Each group gets attributed a number of rounds"""
-    # last_round = models.IntegerField()
     pass
 
 
