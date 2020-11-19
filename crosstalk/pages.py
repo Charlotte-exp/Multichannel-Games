@@ -5,13 +5,13 @@ from decimal import *
 getcontext().rounding = ROUND_CEILING  # is this for rounding up the payment?
 
 
-# class PairingWaitPage(WaitPage):
-#     group_by_arrival_time = True # this code keeps the groups the same across all rounds automatically
-#
-#     def is_displayed(self):
-#         return self.round_number == 1
-#
-#     template_name = 'crosstalk/Waitroom.html'
+class PairingWaitPage(WaitPage):
+    group_by_arrival_time = True  # this code keeps the groups the same across all rounds automatically
+
+    def is_displayed(self):
+        return self.round_number == 1
+
+    template_name = 'crosstalk/Waitroom.html'
 
 
 class Decision(Page):
@@ -20,11 +20,11 @@ class Decision(Page):
 
     def is_displayed(self):
         """ Probabilistic display! """
-        if self.subsession.round_number <= self.group.last_round:
+        if self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
     # player id for for troubleshooting. If I want to display the player in the group of four though I can keep it.
-    # Check that I actually call
+
     def vars_for_template(self):
         """ This function is for displaying variables in the HTML file (with Django I believe)
             The variables are inserted into calculation or specifications if needed and given a display name """
@@ -71,7 +71,7 @@ class ResultsWaitPage(WaitPage):
 
     def is_displayed(self):
         """ Probabilistic display! """
-        if self.subsession.round_number <= self.group.last_round:
+        if self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
     # body_text = "Please wait while the other participant makes their decision."
@@ -79,9 +79,11 @@ class ResultsWaitPage(WaitPage):
 
 
 class Results(Page):
-    """ Probabilistic display! """
+    """ This page is for round results """
+
     def is_displayed(self):
-        if self.subsession.round_number <= self.group.last_round:
+        """ Probabilistic display! """
+        if self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
     def vars_for_template(self):
@@ -115,8 +117,8 @@ class End(Page):
     """ This page is for final combined round results """
 
     def is_displayed(self):
-        """ This function makes the page appear only on the last round """
-        return self.round_number == self.group.last_round
+        """ This function makes the page appear only on the last random-ish round """
+        return self.round_number == self.participant.vars['last_round']
 
     def vars_for_template(self):
         me = self.player
@@ -145,7 +147,7 @@ class Demographics(Page):
 
     def is_displayed(self):
         """ This function makes the page appear only on the last random-ish round """
-        return self.round_number == self.group.last_round
+        return self.round_number == self.participant.vars['last_round']
 
 
 class Payment(Page):
@@ -153,10 +155,9 @@ class Payment(Page):
 
     def is_displayed(self):
         """ This function makes the page appear only on the last round """
-        return self.round_number == self.group.last_round
+        return self.round_number == self.participant.vars['last_round']
 
     def vars_for_template(self):
-        participant = self.participant
         return {
             # 'vars_payment': sum([p.participant.vars['payment'] for p in self.player.in_all_rounds()]),
             # participant.vars is not summing... so if I were to use it below it would not work...
@@ -164,18 +165,21 @@ class Payment(Page):
             'total_payoff_high': sum([p.payoff_high for p in self.player.in_all_rounds()]),
             'total_payoff_low': sum([p.payoff_low for p in self.player.in_all_rounds()]),
             'total_payoff': sum([p.payment for p in self.player.in_all_rounds()]),  # same as End page
-            'participation_fee': self.session.config['participation_fee'],  # set it in the settings along with the currency
-            'payment': (sum([p.payment.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]) * Constants.currency_per_point),
-            'final_payment': ((sum([p.payment.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]) * Constants.currency_per_point) + self.session.config['participation_fee'])
+            'participation_fee': self.session.config['participation_fee'],  # set it in the settings like the currency
+            'payment': (sum([p.payment.to_real_world_currency(self.session) for p in self.player.in_all_rounds()])
+                        * Constants.currency_per_point),
+            'final_payment': ((sum([p.payment.to_real_world_currency(self.session) for p in self.player.in_all_rounds()])
+                               * Constants.currency_per_point) + self.session.config['participation_fee'])
         }
 
 
 class ProlificLink(Page):
     def is_displayed(self):
-        return self.round_number == self.group.last_round
+        return self.round_number == self.participant.vars['last_round']
 
 
 page_sequence = [
+    PairingWaitPage,
     Decision,
     ResultsWaitPage,
     Results,

@@ -27,11 +27,8 @@ class Constants(BaseConstants):
 
     currency_per_point = 0.01
 
-    instructions_template = 'multi_prisoner/OldInstructions.html'
-    results_previous_round_template = 'multi_prisoner/Results.html'
-
     """
-    if I want to do it with just b, c, and 0 
+    Donation game payoffs
     b = benefit, c = cost, dd = both defect
     """
     b_high = c(500)
@@ -44,19 +41,6 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    # """
-    # This is for the 50% chance of another round. We create a function for clarity below in the creating_session().
-    # We create a list of different number of rounds that is as long as there are groups.
-    # """
-    # def get_random_number_of_rounds(self):
-    #     arbitrary_high_number = 100
-    #     list_num_rounds = []
-    #     for _ in range(arbitrary_high_number):
-    #         number = Constants.min_rounds
-    #         while Constants.proba_next_round < random.random():
-    #             number += 1
-    #         list_num_rounds.append(number)
-    #     return list_num_rounds
 
     """
        Instead of creating_session() we need to use group_by_arrival_time_method().
@@ -80,8 +64,6 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    # """Field of the number of rounds. Each group gets attributed a number of rounds"""
-    # last_round = models.IntegerField()
     pass
 
 
@@ -114,7 +96,7 @@ class Player(BasePlayer):
 
     ethnicity = models.StringField(
         choices=['Asian/Asian British', 'Black/African/Caribbean/Black British', 'Mixed/Multiple Ethnic groups',
-                 'White', 'Prefer not to say'],
+                 'White', 'Other'],
         verbose_name='What is your ethnicity?',
         widget=widgets.RadioSelect)
 
@@ -149,9 +131,9 @@ class Player(BasePlayer):
     def set_payoff(self):
         """
         The payoff function layout is from the prisoner template.
-        there is one matrix per game using two separate decision variables.
+        There is one matrix per game using two separate decision variables.
         Bottom lines calculate the payoff based on actual choices, again, one for each game.
-        They are added for the round total.
+        They are added for the round total (self.payment).
         """
         payoff_matrix_high = {
             1:
@@ -165,6 +147,7 @@ class Player(BasePlayer):
                     2: Constants.dd_high
                 }
         }
+        self.payoff_high = payoff_matrix_high[self.decision_high][self.other_player().decision_high]
 
         payoff_matrix_low = {
             3:
@@ -181,13 +164,12 @@ class Player(BasePlayer):
 
         """
         The payoff variable alone can be used as such if the whole game is in the same app.
-        If using multiple apps or setting hte payment on another app, then one must use the participant.vars
+        If using multiple apps or setting the payment on another app, then one must use the participant.vars
         I could have written participant.vars = payoff matrix directly,
         but then it means I need to use the participant.vars code everywhere I call the payoff!
         Here only the combined payoffs of the two games together is stored
         """
         self.payoff_low = payoff_matrix_low[self.decision_low][self.other_player().decision_low]
-        self.payoff_high = payoff_matrix_high[self.decision_high][self.other_player().decision_high]
         self.payment = self.payoff_high + self.payoff_low
         self.participant.vars['payment'] = self.payment
         # print('self.payment', self.payment)

@@ -98,7 +98,7 @@ class Results(Page):
 
 
 class End(Page):
-    """ This page is for final combined results """
+    """ This page is for final combined round results """
 
     def is_displayed(self):
         """ This function makes the page appear only on the last random-ish round """

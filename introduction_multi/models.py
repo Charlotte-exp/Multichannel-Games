@@ -25,7 +25,7 @@ class Constants(BaseConstants):
     proba_next_round = 0.5
 
     """
-    Donation game payoff matrix
+    Donation game payoff
     """
     b_high = c(500)
     c_high = c(200)
