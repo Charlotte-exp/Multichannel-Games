@@ -31,13 +31,15 @@ class Constants(BaseConstants):
     Donation game payoffs
     b = benefit, c = cost, dd = both defect
     """
-    b_high = c(500)
-    c_high = c(200)
+    b_high = c(5)
+    c_high = c(1)
     dd_high = c(0)
+    endowment_high = c_high
 
-    b_low = c(555)
-    c_low = c(222)
+    b_low = c(2)
+    c_low = c(1)
     dd_low = c(0)
+    endowment_low = c_low
 
 
 class Subsession(BaseSubsession):
@@ -138,13 +140,13 @@ class Player(BasePlayer):
         payoff_matrix_high = {
             1:
                 {
-                    1: (Constants.b_high - Constants.c_high),
-                    2: -(Constants.c_high)
+                    1: Constants.endowment_high + (Constants.b_high - Constants.c_high),
+                    2: Constants.endowment_high + (-Constants.c_high)
                 },
             2:
                 {
-                    1: Constants.b_high,
-                    2: Constants.dd_high
+                    1: Constants.endowment_high + Constants.b_high,
+                    2: Constants.endowment_high + Constants.dd_high
                 }
         }
         self.payoff_high = payoff_matrix_high[self.decision_high][self.other_player().decision_high]
@@ -152,13 +154,13 @@ class Player(BasePlayer):
         payoff_matrix_low = {
             3:
                 {
-                    3: (Constants.b_low - Constants.c_low),
-                    4: -(Constants.c_low)
+                    3: Constants.endowment_low + (Constants.b_low - Constants.c_low),
+                    4: Constants.endowment_low + (-Constants.c_low)
                 },
             4:
                 {
-                    3: Constants.b_low,
-                    4: Constants.dd_low
+                    3: Constants.endowment_low + Constants.b_low,
+                    4: Constants.endowment_low + Constants.dd_low
                 }
         }
 
