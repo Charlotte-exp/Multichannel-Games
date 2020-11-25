@@ -24,35 +24,35 @@
     <div class="col">
         <p>
             <h4>Task A:</h4>
-            (played with <font color="blue">Participant 2</font>)
+            (played with Participant <font color="blue">2</font>)
         </p>
         {% if my_high_decision == 1 %}
         <ul>
             <li>
-                <small>You chose to <b>pay {{ cost_high }}</b> in order for Participant 2 to <b>receive {{ benefit_high }}</b></small>
+                You chose to <b>pay {{ cost_high }}</b> in order for Participant 2 to <b>receive {{ benefit_high }}</b>
             </li>
             {% if opponent_high_decision == 1 %}
             <li>
-                <small>Participant 2 chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b></small>
+                Participant 2 chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>
             </li>
             {% else %}
             <li>
-                <small>Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b></small>
+                Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>
             </li>
             {% endif %}
         </ul>
         {% else %}
         <ul>
             <li>
-                <small>You chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b></small>
+                You chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>
             </li>
             {% if opponent_high_decision == 1 %}
             <li>
-                <small>Participant 2 chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b></small>
+                Participant 2 chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>
             </li>
             {% else %}
             <li>
-                <small>Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b></small>
+                Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>
             </li>
             {% endif %}
         </ul>
@@ -64,7 +64,7 @@
     <div class="col">
         <p>
             <h4>Task B:</h4>
-            (played with <u>Participant 3</u>)
+            (played with Participant<font color="blue"> 3</font>)
         </p>
         {% if my_low_decision == 3 %}
         <ul>
@@ -108,9 +108,5 @@
         {% next_button %}
         </div>
     </p>
-
-<h2>
-    How do I enlarge this???? --> write it smaller!!
-</h2>
 
 {% endblock %}

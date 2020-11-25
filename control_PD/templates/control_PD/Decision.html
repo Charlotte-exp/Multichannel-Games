@@ -31,26 +31,26 @@
         <p><u>In the previous round:</u></p>
         {% if my_treatment == 'high' %}
             {% if previous_decision_high == 1 %}
-            <p>You chose to <b>pay {{ cost_high }}</b> in order for Participant 2 to <b>receive {{ benefit_high }}</b>.
+        <p><small>You chose to <b>pay {{ cost_high }}</b> in order for Participant 2 to <b>receive {{ benefit_high }}</b></small>
             {% else %}
-            <p>You chose to <b>pay</b> 0 in order for Participant 2 to <b>receive 0</b>.
+            <p><small>You chose to <b>pay</b> 0 in order for Participant 2 to <b>receive 0</b></small>
             {% endif %}
             {% if opponent_previous_decision_high == 1 %}
-            <p>Participant 2 chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>.
+            <p><small>Participant 2 chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b></small>
             {% else %}
-            <p>Participant 2 chose to <b>pay 0</b> in order for you to <b>receive 0</b>.
+            <p><small>Participant 2 chose to <b>pay 0</b> in order for you to <b>receive 0</b></small>
             {% endif %}
         {% endif %}
         {% if my_treatment == 'low' %}
             {% if previous_decision_low == 3 %}
-            <p>You chose to <b>pay {{ cost_low }}</b> in order for Participant 2 to <b>receive {{ benefit_low }}</b>.
+            <p><small>You chose to <b>pay {{ cost_low }}</b> in order for Participant 2 to <b>receive {{ benefit_low }}</b></small>
             {% else %}
-            <p>You chose to <b>pay</b> 0 in order for Participant 2 to <b>receive 0</b>.
+            <p><small>You chose to <b>pay</b> 0 in order for Participant 2 to <b>receive 0</b></small>
             {% endif %}
             {% if opponent_previous_decision_low == 3 %}
-            <p>Participant 2 chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>.
+            <p><small>Participant 2 chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b></small>
             {% else %}
-            <p>Participant 2 chose to <b>pay 0</b> in order for you to <b>receive 0</b>.
+            <p><small>Participant 2 chose to <b>pay 0</b> in order for you to <b>receive 0</b></small>
             {% endif %}
         {% endif %}
     </div>
