@@ -24,81 +24,81 @@
     <div class="col">
         <p>
             <h4>Task A:</h4>
-            (played with <font color="blue">Participant 2</font>)
+            (played with Participant <font color="blue">2</font>)
         </p>
         {% if my_high_decision == 1 %}
         <ul>
             <li>
-                <small>You chose to <b>pay {{ cost_high }}</b> in order for Participant 2 to <b>receive {{ benefit_high }}</b>.</small>
+                You chose to <b>pay {{ cost_high }}</b> in order for Participant 2 to <b>receive {{ benefit_high }}</b>
             </li>
             {% if opponent_high_decision == 1 %}
             <li>
-                <small>Participant 2 chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>.</small>
+                Participant 2 chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>
             </li>
             {% else %}
             <li>
-                <small>Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>.</small>
+                Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>
             </li>
             {% endif %}
         </ul>
         {% else %}
         <ul>
             <li>
-                <small>You chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>.</small>
+                You chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>
             </li>
             {% if opponent_high_decision == 1 %}
             <li>
-                <small>Participant 2 chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>.</small>
+                Participant 2 chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>
             </li>
             {% else %}
             <li>
-                <small>Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>.</small>
+                Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>
             </li>
             {% endif %}
         </ul>
         {% endif %}
         <p>
-            As a result, in Task A in this round, you earned a total of <b>{{ my_high_payoff }}</b>.
+            As a result, in Task A in this round, you earned <b>{{ my_high_payoff }}</b> points.
         </p>
     </div>
     <div class="col">
         <p>
             <h4>Task B:</h4>
-            (played with <u>Participant 3</u>)
+            (played with Participant<font color="blue"> 3</font>)
         </p>
         {% if my_low_decision == 3 %}
         <ul>
             <li>
-                You chose to <b>pay {{ cost_low }}</b> in order for Participant 3 to <b>receive {{ benefit_low }}</b>.
+                You chose to <b>pay {{ cost_low }}</b> in order for Participant 3 to <b>receive {{ benefit_low }}</b>
             </li>
             {% if opponent_low_decision == 3 %}
             <li>
-                Participant 3 chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>.
+                Participant 3 chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>
             </li>
             {% else %}
             <li>
-                <i>Participant 3 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>.
+                <i>Participant 3 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>
             </i>
             {% endif %}
         </ul>
         {% else %}
         <ul>
             <li>
-                You chose to <b>pay 0</b> in order for Participant 3 to <b>receive 0</b>.
+                You chose to <b>pay 0</b> in order for Participant 3 to <b>receive 0</b>
             </li>
             {% if opponent_low_decision == 3 %}
             <li>
-                Participant 3 chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>.
+                Participant 3 chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>
             </li>
             {% else %}
             <li>
-                Participant 3 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>.
+                Participant 3 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>
             </li>
             {% endif %}
         </ul>
         {% endif %}
         <p>
-            As a result, in Task B in this round, you earned a total of <b>{{ my_low_payoff }}</b>.
+            As a result, in Task B in this round, you earned <b>{{ my_low_payoff }}</b> points.
         </p>
     </div>
 </div>
@@ -109,53 +109,4 @@
         </div>
     </p>
 
-<h2>
-    How do I enlarge this???? --> write it smaller!!
-</h2>
-
 {% endblock %}
-
-
-<!---
-
-<div class="row">
-    <div class="col">
-        <p><font size="5px">Task A:</font></p>
-        <table class="table text-center">
-        <tr>
-            <td></td> leave a blank cell so the columns are in line!
-            <th scope="col">Decision</th>
-            <th scope="col">Outcome</th>
-        </tr>
-            <tr>
-                <th scope="row">Me {{ my_player_id }}</th>
-                <td>{{ my_high_decision }}</td>
-                <td>{{ my_high_payoff }}</td>
-            </tr>
-            <tr>
-                <th scope="row">Participant {{ opponent_high_id }}</th>
-                <td>{{ opponent_high_decision }}</td>
-                <td>{{ opponent_high_payoff }}</td>
-            </tr>
-        </table>
-    </div>
-    <div class="col">
-        <p><font size="5px">Task B:</font></p>
-        <table class="table text-center">
-        <tr>
-            <th scope="row">Your choice was to:</th>
-            <td>{{ my_low_decision }}</td>
-            <td><b>You got:</b></td>
-            <td>{{ my_low_payoff }}</td>
-        </tr>
-        <tr>
-            <th scope="row">Participant {{ opponent_low_id }} chose to:</th>
-            <td>{{ opponent_low_decision }}</td>
-            <td><b>They got:</b></td>
-            <td>{{ opponent_low_payoff }}</td>
-        </tr>
-        </table>
-    </div>
-</div>
-
---->

@@ -32,14 +32,14 @@
         <div class="card-body text-center">
             <p><u>In the previous round in Task A:</u></p>
             {% if previous_decision_high == 1 %}
-            <p>You({{ my_player_id }}) chose to <b>pay {{ cost_high }}</b> in order for Participant<font color="blue"> 2</font> to <b>receive {{ benefit_high }}</b>.
+            <p><small>You({{ my_player_id }}) chose to <b>pay {{ cost_high }}</b> in order for Participant<font color="blue"> 2</font> to <b>receive {{ benefit_high }}</b></small>
             {% else %}
-            <p>You({{ my_player_id }}) chose to <b>pay</b> 0 in order for Participant<font color="blue"> 2</font> to <b>receive 0</b>.
+            <p><small>You({{ my_player_id }}) chose to <b>pay</b> 0 in order for Participant<font color="blue"> 2</font> to <b>receive 0</b></small>
             {% endif %}
             {% if opponent_previous_decision_high == 1 %}
-            <p>Participant<font color="blue"> 2({{ opponent_high_id }})</font> chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>.
+            <p><small>Participant<font color="blue"> 2({{ opponent_high_id }})</font> chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b></small>
             {% else %}
-            <p>Participant<font color="blue"> 2({{ opponent_high_id }})</font> chose to <b>pay 0</b> in order for you to <b>receive 0</b>.
+            <p><small>Participant<font color="blue"> 2({{ opponent_high_id }})</font> chose to <b>pay 0</b> in order for you to <b>receive 0</b></small>
             {% endif %}
         </div>
         {% endif %}
@@ -49,14 +49,14 @@
         <div class="card-body text-center">
             <p><u>In the previous round in Task B:</u></p>
             {% if previous_decision_low == 3 %}
-            <p>You({{ my_player_id }}) chose to <b>pay {{ cost_low }}</b> in order for Participant <u>3</u> to <b>receive {{ benefit_low }}</b>.
+            <p><small>You({{ my_player_id }}) chose to <b>pay {{ cost_low }}</b> in order for Participant <u>3</u> to <b>receive {{ benefit_low }}</b></small>
             {% else %}
-            <p>You<({{ my_player_id }}) chose to <b>pay 0</b> in order for Participant <u>3</u> to <b>receive 0</b>.
+            <p><small>You<({{ my_player_id }}) chose to <b>pay 0</b> in order for Participant <u>3</u> to <b>receive 0</b></small>
             {% endif %}
             {% if opponent_previous_decision_low == 3 %}
-            <p>Participant <u>3({{ opponent_low_id }})</u> chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>.
+            <p><small>Participant <font color="blue">3({{ opponent_low_id }})</font> chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b></small>
             {% else %}
-            <p>Participant <u>3({{ opponent_low_id }})</u> chose to <b>pay</b> 0 in order for you to <b>receive 0</b>.
+            <p><small>Participant <font color="blue">3({{ opponent_low_id }})</font> chose to <b>pay</b> 0 in order for you to <b>receive 0</b></small>
             {% endif %}
         </div>
         {% endif %}
@@ -79,7 +79,7 @@
             <div class="col">
             <p>
                 <h4>Task B:</h4>
-                (played with Participant <u>3</u>)
+                (played with Participant<font color="blue"> 3</font>)
             </p>
                 {% formfield player.decision_low label='' %}
             </p>
@@ -95,176 +95,3 @@
     </p>
 
 {% endblock %}
-
-
-<!--
-
-<div class="row">
-    <div class="col">
-        {% if round_number > 1 %}
-        <div class="card-body text-center"> In the previous round, participant {{ opponent_high_id }} chose to {{ previous_decision_high }}</div>
-        {% endif %}
-        <h1>Task A:</h1>
-        <p>
-        Below are the four different outcomes based on your and the other participant's decision:
-        </p>
-        <ul>
-            <li>
-                If you choose <b>Option V</b>, then you pay {{ cost_high }} points for the other participant to get {{ benefit_high }} points.
-            </li>
-            <li>
-                If you choose <b>Option W</b>, then you pay 0 points for the other participant to get 0 points.
-            </li>
-        </ul>
-        <p>
-            {% formfield player.decision_high label='Your decision for Task A:' %}
-        </p>
-    </div>
-    <div class="col">
-        {% if round_number > 1 %}
-        <div class="card-body text-center"> In the previous round, participant {{ opponent_low_id }} chose to {{ previous_decision_high }}</div>
-        {% endif %}
-        <h1>Task B:</h1>
-        <p>
-        Below are the four different outcomes based on your and the other participant's decision:
-        </p>
-        <table class="table text-center">
-            <tr>
-                <th>Your decision</th>
-                <th>Your outcome</th>
-                <th>Other player outcome</th>
-            </tr>
-                <tr>
-                    <td>Option V</td>
-                    <td>{{ cost_low }}</td>
-                    <td>{{ benefit_low }}</td>
-                </tr>
-                <tr>
-                    <td>Option W</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-        </table>
-        <p>
-            {% formfield player.decision_low label='Your decision for Task B:' %}
-        </p>
-    </div>
-</div>
-
-    <p>
-        <div style="display: flex; justify-content: flex-end">
-        {% next_button %}
-        </div>
-    </p>
-
-
-    <div class="form-group required">
-        <table class="table table-bordered text-center" style="width: auto; margin: auto">
-            <tr>
-                <th colspan="2" rowspan="2"></th>
-                <th colspan="2">The Other Participant</th>
-            </tr>
-            <tr>
-                <th>Cooperate</th>
-                <th>Defect</th>
-            </tr>
-            <tr class="highlight-row-on-hover">
-                <th rowspan="2"><span class="rotate90">You</span></th>
-                <td><button name="decision_high" value="Cooperate" class="btn btn-primary btn-large">Cooperate</button></td>
-                <td><b>{{Constants.both_cooperate_payoff}}</b>, {{Constants.both_cooperate_payoff}}</td>
-                <td><b>{{ Constants.betrayed_payoff }}</b>, {{Constants.betray_payoff}}</td>
-            <tr class="highlight-row-on-hover">
-                <td><button name="decision_high" value="Defect" class="btn btn-primary btn-large">Defect</button></td>
-                <td><b>{{Constants.betray_payoff}}</b>, {{ Constants.betrayed_payoff }}</td>
-                <td><b>{{Constants.both_defect_payoff}}</b>, {{Constants.both_defect_payoff}}</td>
-            </tr>
-
-        </table>
-    </div>
-
-
-    <div class="form-group required">
-        <table class="table table-bordered text-center" style="width: auto; margin: auto">
-            <tr>
-                <th colspan="2" rowspan="2"></th>
-                <th colspan="2">The Other Participant</th>
-            </tr>
-            <tr>
-                <th>Cooperate</th>
-                <th>Defect</th>
-            </tr>
-            <tr class="highlight-row-on-hover">
-                <th rowspan="2"><span class="rotate90">You</span></th>
-                <td><button name="decision_low" value="Cooperate" class="btn btn-primary btn-large">Cooperate</button></td>
-                <td><b>{{Constants.low_both_cooperate_payoff}}</b>, {{Constants.low_both_cooperate_payoff}}</td>
-                <td><b>{{Constants.low_betrayed_payoff }}</b>, {{Constants.low_betray_payoff}}</td>
-            </tr>
-            <tr class="highlight-row-on-hover">
-                <td><button name="decision_low" value="Defect" class="btn btn-primary btn-large">Defect</button></td>
-                <td><b>{{Constants.low_betray_payoff}}</b>, {{ Constants.low_betrayed_payoff }}</td>
-                <td><b>{{Constants.low_both_defect_payoff}}</b>, {{Constants.low_both_defect_payoff}}</td>
-            </tr>
-
-
-        </table>
-    </div>
-
-
-<div class="row">
-    <div class="col">
-        <table class='table table-bordered text-center'
-               style='width: auto; margin: auto'>
-            <tr>
-                <th colspan=2 rowspan=2> <font size="5px"><b>Task A</b></font></th>
-                <th colspan=2><font color="red">{{ opponent_high_id }}</font></th>
-            </tr>
-            <tr>
-                <th>Cooperate</th>
-                <th>Defect</th>
-            </tr>
-            <tr>
-                <th rowspan=2><span class="rotate90"><font color="blue">{{ my_player_id }}</font></span></th>
-                <th>Cooperate</th>
-                <td><font color="blue">{{ Constants.both_cooperate_payoff }}</font>, <font color="red">{{ Constants.both_cooperate_payoff }}</font></td>
-                <td><font color="blue">{{ Constants.betrayed_payoff }}</font>, <font color="red">{{ Constants.betray_payoff }}</font></td>
-            </tr>
-            <tr>
-                <th>Defect</th>
-                <td><font color="blue">{{ Constants.betray_payoff }}</font>, <font color="red">{{ Constants.betrayed_payoff }}</font></td>
-                <td><font color="blue">{{ Constants.both_defect_payoff }}</font>, <font color="red">{{ Constants.both_defect_payoff }}</font></td>
-            </tr>
-        </table>
-        <p>
-            {% formfield player.decision_high label='Your decision for Task A:' %}
-        </p>
-    </div>
-    <div class="col">
-        <table class='table table-bordered text-center'
-               style='width: auto; margin: auto'>
-            <tr>
-                <th colspan=2 rowspan=2><font size="5px"><b>Task B</b></font></th>
-                <th colspan=2><font color="green">{{ opponent_low_id }}</font></th>
-            </tr>
-            <tr>
-                <th>Cooperate</th>
-                <th>Defect</th>
-            </tr>
-            <tr>
-                <th rowspan=2><span class="rotate90"><font color="blue">{{ my_player_id }}</font></span></th>
-                <th>Cooperate</th>
-                <td><font color="blue">{{ Constants.low_both_cooperate_payoff }}</font>, <font color="green">{{ Constants.low_both_cooperate_payoff }}</font></td>
-                <td><font color="blue">{{ Constants.low_betrayed_payoff }}</font>, <font color="green">{{ Constants.low_betray_payoff }}</font></td>
-            </tr>
-            <tr>
-                <th>Defect</th>
-                <td><font color="blue">{{ Constants.low_betray_payoff }}</font>, <font color="green">{{ Constants.low_betrayed_payoff }}</font></td>
-                <td><font color="blue">{{ Constants.low_both_defect_payoff }}</font>, <font color="green">{{ Constants.low_both_defect_payoff }}</font></td>
-            </tr>
-        </table>
-        <p>
-            {% formfield player.decision_low label='Your decision for Task B:' %}
-        </p>
-    </div>
-</div>
-
--->
