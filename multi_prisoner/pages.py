@@ -65,7 +65,7 @@ class ResultsWaitPage(WaitPage):
             return True
 
     # body_text = "Please wait while the other participant makes their decision."
-    template_name = 'multi_prisoner/Dropout.html'
+    # template_name = 'multi_prisoner/Dropout.html'
 
 
 class Results(Page):
@@ -157,7 +157,7 @@ page_sequence = [
     ResultsWaitPage,
     Results,
     End,
-    # Demographics,
+    Demographics,
     Payment,
     ProlificLink,
 ]

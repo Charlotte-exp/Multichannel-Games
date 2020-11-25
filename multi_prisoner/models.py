@@ -22,7 +22,7 @@ class Constants(BaseConstants):
     players_per_group = 2
     num_rounds = 100
 
-    min_rounds = 2
+    min_rounds = 10
     proba_next_round = 0.5
 
     currency_per_point = 0.01

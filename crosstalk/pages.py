@@ -75,7 +75,7 @@ class ResultsWaitPage(WaitPage):
             return True
 
     # body_text = "Please wait while the other participant makes their decision."
-    template_name = 'crosstalk/Dropout.html'
+    # template_name = 'crosstalk/Dropout.html'
 
 
 class Results(Page):
@@ -184,7 +184,7 @@ page_sequence = [
     ResultsWaitPage,
     Results,
     End,
-    # Demographics,
+    Demographics,
     Payment,
     ProlificLink,
 ]
