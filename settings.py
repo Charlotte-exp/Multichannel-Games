@@ -19,7 +19,7 @@ SESSION_CONFIGS = [
         'display_name': "Crosstalk game",
         'num_demo_participants': 4,
         'app_sequence': ['introduction_cross', 'crosstalk'],
-        'use_browser_bots': True
+        'use_browser_bots': False
     },
     {
         'name': 'multi_prisoner',
@@ -33,7 +33,7 @@ SESSION_CONFIGS = [
         'display_name': "Control group",
         'num_demo_participants': 2,
         'app_sequence': ['introduction_control', 'control_PD'],
-        'use_browser_bots': True
+        'use_browser_bots': False
     },
     {
         'name': 'control_PD_test',
