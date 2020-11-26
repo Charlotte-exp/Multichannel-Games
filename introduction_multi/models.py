@@ -130,7 +130,7 @@ class Player(BasePlayer):
         choices=[
             [1, '0 points'],
             [2, '2 points'],
-            [3, '100 points']
+            [3, '10 points']
         ],
         verbose_name='Across both tasks, how many points did Participant 1 earn in total?',
         widget=widgets.RadioSelect
