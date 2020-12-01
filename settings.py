@@ -57,7 +57,7 @@ SESSION_CONFIGS = [
     {
         'name': 'introduction_cross',
         'display_name': "Intro Crosstalk",
-        'num_demo_participants': 2,
+        'num_demo_participants': 4,
         'app_sequence': ['introduction_cross'],
     },
 ]

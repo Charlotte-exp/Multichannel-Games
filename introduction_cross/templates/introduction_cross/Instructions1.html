@@ -20,12 +20,13 @@ div {
     <link rel="stylesheet" type="text/css"
           href="{% static 'global/matrix.css' %}"/>
 
-    <p>You are <b>Participant 1</b> in this study. The other Participants are <b>Participant 2</b> and <b>Participant 3</b>.</p>
+    <p>You are <b>Participant 1</b> in this study. The other Participants are <b>Participant <font color="blue">2</font></b> and <b>Participant <font color="blue">3</font></b>.</p>
     <p>
-        In each round, you and Participant 2 will simultaneously interact with each other in Task A,
-        and you and Participant 3 will simultaneously interact with each other in Task B. In each task,
+        In each round, you and Participant <font color="blue">2</font> will simultaneously interact with each other in Task A,
+        and you and Participant <font color="blue">3</font> will simultaneously interact with each other in Task B. In each task,
         your co-participant on that task must choose between two options.
-        The points you earn in each round will depend on what you, Participant 2 and Participant 3 independently decide for your respective tasks.
+        The points you earn in each round will depend on what you, Participant <font color="blue">2</font> and
+        Participant <font color="blue">3</font> independently decide for your respective tasks.
         The two tasks are independent: The points you earn in either task do not depend on the decisions made in the other.
         In each round and for each of the two tasks, you and the other two participants are endowed with XXXX points in task A and YYYY points in task B.
     </p>
@@ -36,44 +37,44 @@ div {
         <div class="row">
             <div class="col">
             <p>
-                Below you can see the outcomes of each option that <b>you and Participant 2</b> can choose from in Task A in each round,
-                depending on your own decision as well as Participant 2's decision.
+                Below you can see the outcomes of each option that <b>you and Participant <font color="blue">2</font></b> can choose from in Task A in each round,
+                depending on your own decision as well as Participant <font color="blue">2</font>'s decision.
             </p>
             <h4>
                 Task A:
             </h4>
             <ul>
                 <li>
-                    You <b>pay XX points</b> in order for Participant 2 to <b>receive XX points</b>.
+                    You <b>pay XX</b> points in order for Participant <font color="blue">2</font> to <b>receive XX</b> points
                 </li>
                 <li>
-                    You <b>pay 0 points</b> in order for Participant 2 to <b>receive 0 points</b>.
+                    You <b>pay 0</b> points in order for Participant <font color="blue">2</font> to <b>receive 0</b> points
                 </li>
             </ul>
             <p>
-                Participant 2 faces exactly the same Task A with <b>you</b> as the recipient.
-                You and Participant 2 have to choose simultaneously between these two options.
+                Participant <font color="blue">2</font> faces exactly the same Task A with <b>you</b> as the recipient.
+                You and Participant <font color="blue">2</font> have to choose simultaneously between these two options.
             </p>
             </div>
             <div class="col">
             <p>
-                Below you can see the outcomes of each option that <b>you and Participant 3</b> can choose from in Task B in each round,
-                depending on your own decision as well as Participant 3's decision.
+                Below you can see the outcomes of each option that <b>you and Participant <font color="blue">3</font></b> can choose from in Task B in each round,
+                depending on your own decision as well as Participant <font color="blue">3</font>'s decision.
             </p>
             <h4>
                 Task B:
             </h4>
             <ul>
                 <li>
-                    You <b>pay XX points</b> in order for Participant 2 to <b>receive XX points</b>.
+                    You <b>pay XX</b> points in order for Participant <font color="blue">3</font> to <b>receive XX</b> points
                 </li>
                 <li>
-                    You <b>pay 0 points</b> in order for Participant 2 to <b>receive 0 points</b>.
+                    You <b>pay 0</b> points in order for Participant <font color="blue">3</font> to <b>receive 0</b> points
                 </li>
             </ul>
             <p>
-                Participant 3 faces exactly the same Task B with you as the recipient.
-                You and Participant 3 have to choose simultaneously between these two options.
+                Participant <font color="blue">3</font> faces exactly the same Task B with you as the recipient.
+                You and Participant <font color="blue">3</font> have to choose simultaneously between these two options.
             </p>
             </div>
         </div>
@@ -83,7 +84,7 @@ div {
 
 <div class="card-body">
     <p>
-        Note that, while Participant 2 and Participant 3 interact with you in Tasks A and B,
+        Note that, while Participant <font color="blue">2</font> and Participant <font color="blue">3</font> interact with you in Tasks A and B,
         they both also simultaneously interact with another Participant (but not with each other) in a similar task.
         That is, each of you is engaged in two tasks simultaneously at all times.
     </p>
