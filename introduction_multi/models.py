@@ -30,10 +30,12 @@ class Constants(BaseConstants):
     b_high = c(5)
     c_high = c(1)
     dd_high = c(0)
+    endowment_high = c_high
 
     b_low = c(2)
     c_low = c(1)
     dd_low = c(0)
+    endowment_low = c_low
 
 
 class Subsession(BaseSubsession):
