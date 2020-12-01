@@ -30,10 +30,12 @@ class Constants(BaseConstants):
     b_high = c(5)
     c_high = c(1)
     dd_high = c(0)
+    endowment_high = c_high
 
     b_low = c(2)
     c_low = c(1)
     dd_low = c(0)
+    endowment_low = c_low
 
 
 class Subsession(BaseSubsession):
@@ -95,12 +97,12 @@ class Player(BasePlayer):
 
     q3 = models.IntegerField(
         choices=[
-            [1, 'You will earn b-c_high points.'],
-            [2, 'You will earn 100 points.'],
+            [1, 'You will earn 5 points.'],
+            [2, 'You will earn 2 points.'],
             [3, 'Neither will earn additional points.']
         ],
-        verbose_name='In Task A, What amount will you earn if '
-                     'Participant 2 chooses to pay c_high points in order for you to receive b_high points?',
+        verbose_name='In Task A, What amount will you receive from '
+                     'Participant 2 chooses to pay 1 point?',
         widget=widgets.RadioSelect
     )
 
@@ -127,8 +129,8 @@ class Player(BasePlayer):
     q6 = models.IntegerField(
         choices=[
             [1, '0 points'],
-            [2, '0+b-c points'],
-            [3, '100 points']
+            [2, '2 points'],
+            [3, '10 points']
         ],
         verbose_name='Across both tasks, how many points did Participant 1 earn in total?',
         widget=widgets.RadioSelect
@@ -137,8 +139,8 @@ class Player(BasePlayer):
     q7 = models.IntegerField(
         choices=[
             [1, '0 points'],
-            [2, '50 points'],
-            [3, 'b-c points']
+            [2, '3 points'],
+            [3, '6 points']
         ],
         verbose_name='In Task A, how many points did Participant 2 earn?',
         widget=widgets.RadioSelect
@@ -147,8 +149,8 @@ class Player(BasePlayer):
     q8 = models.IntegerField(
         choices=[
             [1, '0 points'],
-            [2, '50 points'],
-            [3, 'b-c points']
+            [2, '1 points'],
+            [3, '2 points']
         ],
         verbose_name='In Task B, how many points did Participant 3 earn?',
         widget=widgets.RadioSelect

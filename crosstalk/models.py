@@ -20,7 +20,7 @@ class Constants(BaseConstants):
         even if one player interacts with only 2 other in the group """
     name_in_url = 'crosstalk'
     players_per_group = 4
-    num_rounds = 100
+    num_rounds = 50
 
     min_rounds = 10
     proba_next_round = 0.5

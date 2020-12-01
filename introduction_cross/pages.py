@@ -53,10 +53,10 @@ class Instructions2(Page):
             return 'Answer to question 3 is incorrect. Check the instructions again and give a new answer'
 
     def vars_for_template(self):
-        reward_low = Constants.b_low-Constants.c_low
-        temptation_high = Constants.b_high
-        sucker_high = -Constants.c_high
-        # punishment = Constants.dd_low
+        reward_low = Constants.endowment_low + Constants.b_low-Constants.c_low
+        temptation_high = Constants.endowment_high + Constants.b_high
+        sucker_high = -Constants.endowment_high + Constants.c_high
+        # punishment = Constants.endowment_low + Constants.dd_low
         return{
             'total_high_p1': sucker_high,
             'total_high_p2': temptation_high,
