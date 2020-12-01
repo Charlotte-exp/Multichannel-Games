@@ -102,7 +102,7 @@ class Player(BasePlayer):
 
     decision_high = models.IntegerField(
         choices=[
-            [1, 'You pay XX points in order for Participant 2 to receive XX points.'],
+            [1, 'You pay 1 points in order for Participant 2 to receive 5 points.'],
             [2, 'You pay 0 points in order for Participant 2 to receive 0 points.'],
         ],
         doc="""This player's decision""",
@@ -110,7 +110,7 @@ class Player(BasePlayer):
     )
     decision_low = models.IntegerField(
         choices=[
-            [3, 'You pay YY points in order for Participant 3 to receive YY points.'],
+            [3, 'You pay 1 points in order for Participant 3 to receive 2 points.'],
             [4, 'You pay 0 points in order for Participant 3 to receive 0 points.'],
         ],
         doc="""This player's decision""",

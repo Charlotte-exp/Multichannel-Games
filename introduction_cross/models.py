@@ -97,8 +97,8 @@ class Player(BasePlayer):
 
     q3 = models.IntegerField(
         choices=[
-            [1, 'You will earn 5 points.'],
-            [2, 'You will earn 2 points.'],
+            [1, 'You will receive 5 points.'],
+            [2, 'You will receive 2 points.'],
             [3, 'Neither will earn additional points.']
         ],
         verbose_name='In Task A, What amount will you receive from '
