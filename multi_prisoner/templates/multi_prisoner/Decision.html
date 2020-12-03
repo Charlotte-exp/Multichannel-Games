@@ -31,12 +31,12 @@
             {% if round_number > 1 %}
             <div class="card-body text-center">
                 <p><u>In the previous round in Task A:</u></p>
-                {% if previous_decision_high == 1 %}
+                {% if opponent_previous_decision_high == 1 %}
                 <p><small>Participant 2 chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b></small>
                 {% else %}
                 <p><small>Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b></small>
                 {% endif %}
-                {% if opponent_previous_decision_high == 1 %}
+                {% if previous_decision_high == 1 %}
                 <p><small>You chose to <b>pay {{ cost_high }}</b> in order for Participant 2 to <b>receive {{ benefit_high }}</b></small>
                 {% else %}
                 <p><small>You chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b></small>
@@ -48,12 +48,12 @@
             {% if round_number > 1 %}
             <div class="card-body text-center">
                 <p><u>In the previous round in Task B:</u></p>
-                {% if previous_decision_low == 3 %}
+                {% if opponent_previous_decision_low == 3 %}
                 <p><small>Participant 2 chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b></small>
                 {% else %}
                 <p><small>Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b></small>
                 {% endif %}
-                {% if opponent_previous_decision_low == 1 %}
+                {% if previous_decision_low == 1 %}
                 <p><small>You chose to <b>pay {{ cost_low }}</b> in order for Participant to <b>receive {{ benefit_low }}</b></small>
                 {% else %}
                 <p><small>You chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b></small>

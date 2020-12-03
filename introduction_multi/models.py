@@ -21,7 +21,7 @@ class Constants(BaseConstants):
     players_per_group = 2
     num_rounds = 1
 
-    min_rounds = 2
+    min_rounds = 10
     proba_next_round = 0.5
 
     """
