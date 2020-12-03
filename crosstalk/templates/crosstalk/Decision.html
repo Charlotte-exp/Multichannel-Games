@@ -32,14 +32,14 @@
         <div class="card-body text-center">
             <p><u>In the previous round in Task A:</u></p>
             {% if previous_decision_high == 1 %}
-            <p><small>You({{ my_player_id }}) chose to <b>pay {{ cost_high }}</b> in order for Participant<font color="blue"> 2</font> to <b>receive {{ benefit_high }}</b></small>
+            <p><small>You chose to <b>pay {{ cost_high }}</b> in order for Participant<font color="blue"> 2</font> to <b>receive {{ benefit_high }}</b></small>
             {% else %}
-            <p><small>You({{ my_player_id }}) chose to <b>pay</b> 0 in order for Participant<font color="blue"> 2</font> to <b>receive 0</b></small>
+            <p><small>You chose to <b>pay</b> 0 in order for Participant<font color="blue"> 2</font> to <b>receive 0</b></small>
             {% endif %}
             {% if opponent_previous_decision_high == 1 %}
-            <p><small>Participant<font color="blue"> 2({{ opponent_high_id }})</font> chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b></small>
+            <p><small>Participant<font color="blue"> 2</font> chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b></small>
             {% else %}
-            <p><small>Participant<font color="blue"> 2({{ opponent_high_id }})</font> chose to <b>pay 0</b> in order for you to <b>receive 0</b></small>
+            <p><small>Participant<font color="blue"> 2</font> chose to <b>pay 0</b> in order for you to <b>receive 0</b></small>
             {% endif %}
         </div>
         {% endif %}
@@ -49,14 +49,14 @@
         <div class="card-body text-center">
             <p><u>In the previous round in Task B:</u></p>
             {% if previous_decision_low == 3 %}
-            <p><small>You({{ my_player_id }}) chose to <b>pay {{ cost_low }}</b> in order for Participant <u>3</u> to <b>receive {{ benefit_low }}</b></small>
+            <p><small>You chose to <b>pay {{ cost_low }}</b> in order for Participant <font color="blue">3</font> to <b>receive {{ benefit_low }}</b></small>
             {% else %}
-            <p><small>You<({{ my_player_id }}) chose to <b>pay 0</b> in order for Participant <u>3</u> to <b>receive 0</b></small>
+            <p><small>You chose to <b>pay 0</b> in order for Participant <font color="blue">3</font> to <b>receive 0</b></small>
             {% endif %}
             {% if opponent_previous_decision_low == 3 %}
-            <p><small>Participant <font color="blue">3({{ opponent_low_id }})</font> chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b></small>
+            <p><small>Participant <font color="blue">3</font> chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b></small>
             {% else %}
-            <p><small>Participant <font color="blue">3({{ opponent_low_id }})</font> chose to <b>pay</b> 0 in order for you to <b>receive 0</b></small>
+            <p><small>Participant <font color="blue">3</font> chose to <b>pay</b> 0 in order for you to <b>receive 0</b></small>
             {% endif %}
         </div>
         {% endif %}
