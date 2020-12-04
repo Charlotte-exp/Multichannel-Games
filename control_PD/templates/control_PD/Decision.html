@@ -3,7 +3,7 @@
 
 
 {% block title %}
-    Round {{ subsession.round_number }} of {{ Constants.num_rounds }}
+    Round {{ subsession.round_number }}
 {% endblock %}
 
 {% block styles %}
@@ -81,12 +81,6 @@
 
 {% endblock %}
 
-{% block scripts %}
-
-
-
-{% endblock %}
-
 <!---
 
 <style>
@@ -104,81 +98,4 @@
         });
     });
 </script>
-
-
-<div class="card bg-light instructions">
-    <div class="card-body">
-        {% if group.treatment == 'high' %}
-        <ul>
-            <li>
-                You pay {{ cost_high }} points for Participant 2 to receive {{ benefit_high }} points.
-            </li>
-            <li>
-                You pay 0 points for Participant 2 to receive 0 points.
-            </li>
-        </ul>
-        {% endif %}
-        {% if group.treatment == 'low' %}
-        <ul>
-            <li>
-                You pay {{ cost_low }} points for Participant 2 to receive {{ benefit_low }} points.
-            </li>
-            <li>
-                You pay 0 points for Participant 2 to receive 0 points.
-            </li>
-        </ul>
-        {% endif %}
-    </div>
-</div>
-
-<div class="form-group required">
-        <table class="table table-bordered text-center" style="width: auto; margin: auto">
-            <tr>
-               <th colspan=2 rowspan=2> <font size="5px"><b>Task A</b></font></th>
-                <th colspan=2><font color="red">Participant 2</font></th>
-            </tr>
-            <tr>
-                <th>Cooperate</th>
-                <th>Defect</th>
-            </tr>
-            <tr class="highlight-row-on-hover">
-                 {% if group.treatment == 'high' %}
-                <th rowspan="2"><span class="rotate90"><font color="blue">You</font></span></th>
-                <td><b>Cooperate</b></td>
-                <td><font color="blue">{{ Constants.both_cooperate_payoff }}</font>, <font color="red">{{ Constants.both_cooperate_payoff }}</font></td>
-                <td><font color="blue">{{ Constants.betrayed_payoff }}</font>, <font color="red">{{ Constants.betray_payoff }}</font></td>
-                 {% endif %}
-
-                {% if group.treatment == 'low' %}
-                <th rowspan="2"><span class="rotate90">You</span></th>
-                <td><b>Cooperate</b></td>
-                <td><b>{{Constants.low_both_cooperate_payoff}}</b>, {{Constants.low_both_cooperate_payoff}}</td>
-                <td><b>{{ Constants.low_betrayed_payoff }}</b>, {{Constants.low_betray_payoff}}</td>
-                 {% endif %}
-            </tr>
-            <tr class="highlight-row-on-hover">
-                {% if group.treatment == 'high' %}
-                <td><b>Defect</b></td>
-                <td><font color="blue">{{ Constants.betray_payoff }}</font>, <font color="red">{{ Constants.betrayed_payoff }}</font></td>
-                <td><font color="blue">{{ Constants.both_defect_payoff }}</font>, <font color="red">{{ Constants.both_defect_payoff }}</font></td>
-                {% endif %}
-
-                {% if group.treatment == 'low' %}
-                <td><b>Defect</b></td>
-                <td><b>{{Constants.low_betray_payoff}}</b>, {{ Constants.low_betrayed_payoff }}</td>
-                <td><b>{{Constants.low_both_defect_payoff}}</b>, {{Constants.low_both_defect_payoff}}</td>
-                {% endif %}
-            </tr>
-        </table>
-        <p>
-            {% formfield player.decision label='Your decision for Task A:' %}
-        </p>
-    </div>
-
-        <p>
-        <div style="display: flex; justify-content: flex-end">
-        {% next_button %}
-        </div>
-    </p>
-
 --->

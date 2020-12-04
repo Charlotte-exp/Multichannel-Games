@@ -55,7 +55,7 @@ class Instructions2(Page):
     def vars_for_template(self):
         reward_low = Constants.endowment_low + Constants.b_low - Constants.c_low
         temptation_high = Constants.endowment_high + Constants.b_high
-        sucker_high = -Constants.endowment_high + Constants.c_high
+        sucker_high = Constants.endowment_high - Constants.c_high
         # punishment = Constants.endowment_low + Constants.dd_low
         return{
             'total_high_p1': sucker_high,

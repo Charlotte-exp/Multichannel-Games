@@ -20,13 +20,15 @@ class Constants(BaseConstants):
     players_per_group = 2
     num_rounds = 50
 
-    min_rounds = 5
-    proba_next_round = 0.5
+    # """ variables for randomish end round, used in the intro app at the mo"""
+    # min_rounds = 20
+    # proba_next_round = 0.5
 
-    currency_per_point = 0.01  # I think... if 100pts is £1
+    currency_per_point = 0.1  # 10pts is £1
 
     """
-    Donation game payoff matrix
+    Donation game payoffs
+    b = benefit, c = cost, dd = both defect
     """
     b_high = c(5)
     c_high = c(1)
@@ -109,7 +111,7 @@ class Player(BasePlayer):
 
     decision_high = models.IntegerField(
         choices=[
-            [1, 'You pay XX points in order for Participant 2 to receive XX points.'],
+            [1, f'You pay {Constants.c_high} points in order for Participant 2 to receive {Constants.b_high} points.'],
             [2, 'You pay 0 points in order for Participant 2 to receive 0 points.'],
         ],
         doc="""This player's decision""",
@@ -118,7 +120,7 @@ class Player(BasePlayer):
 
     decision_low = models.IntegerField(
         choices=[
-            [3, 'You pay YY points in order for Participant 2 to receive YY points.'],
+            [3, f'You pay {Constants.c_low} points in order for Participant 2 to receive {Constants.b_low} points.'],
             [4, 'You pay 0 points in order for Participant 2 to receive 0 points.'],
         ],
         doc="""This player's decision""",
