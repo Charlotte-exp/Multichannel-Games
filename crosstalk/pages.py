@@ -74,8 +74,8 @@ class ResultsWaitPage(WaitPage):
         if self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
-    # body_text = "Please wait while the other participant makes their decision."
-    template_name = 'crosstalk/Dropout.html'
+    body_text = "Please wait while the other participant makes their decision."
+    # template_name = 'crosstalk/Dropout.html'
 
 
 class Results(Page):
