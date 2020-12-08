@@ -3,7 +3,7 @@
 
 
 {% block title %}
-    Round {{ subsession.round_number }} of {{ Constants.num_rounds }}
+    Round {{ subsession.round_number }}
 {% endblock %}
 
 {% block styles %}
@@ -12,7 +12,7 @@
     <script>
         setTimeout(
         function () {
-            alert("The other participants are waiting. Please make your decision.");
+            alert("Please make your decision.");
         },
         60*1000 // 60 seconds
     );
@@ -22,47 +22,47 @@
 
 {% block content %}
 
-
-<p>
-    Below are your two options for <b>Task A</b> and <b>Task B</b>, respectively. You need to make a choice for each task to continue.
-</p>
-<div class="row">
-    <div class="col">
-        {% if round_number > 1 %}
-        <div class="card-body text-center">
-            <p><u>In the previous round in Task A:</u></p>
-            {% if previous_decision_high == 1 %}
-            <p><small>You({{ my_player_id }}) chose to <b>pay {{ cost_high }}</b> in order for Participant<font color="blue"> 2</font> to <b>receive {{ benefit_high }}</b></small>
-            {% else %}
-            <p><small>You({{ my_player_id }}) chose to <b>pay</b> 0 in order for Participant<font color="blue"> 2</font> to <b>receive 0</b></small>
-            {% endif %}
-            {% if opponent_previous_decision_high == 1 %}
-            <p><small>Participant<font color="blue"> 2({{ opponent_high_id }})</font> chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b></small>
-            {% else %}
-            <p><small>Participant<font color="blue"> 2({{ opponent_high_id }})</font> chose to <b>pay 0</b> in order for you to <b>receive 0</b></small>
-            {% endif %}
-        </div>
-        {% endif %}
-    </div>
-    <div class="col">
-        {% if round_number > 1 %}
-        <div class="card-body text-center">
-            <p><u>In the previous round in Task B:</u></p>
-            {% if previous_decision_low == 3 %}
-            <p><small>You({{ my_player_id }}) chose to <b>pay {{ cost_low }}</b> in order for Participant <u>3</u> to <b>receive {{ benefit_low }}</b></small>
-            {% else %}
-            <p><small>You<({{ my_player_id }}) chose to <b>pay 0</b> in order for Participant <u>3</u> to <b>receive 0</b></small>
-            {% endif %}
-            {% if opponent_previous_decision_low == 3 %}
-            <p><small>Participant <font color="blue">3({{ opponent_low_id }})</font> chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b></small>
-            {% else %}
-            <p><small>Participant <font color="blue">3({{ opponent_low_id }})</font> chose to <b>pay</b> 0 in order for you to <b>receive 0</b></small>
+<div class="card-body">
+    <p>
+        Below are your two options for <b>Task A</b> and <b>Task B</b>, respectively. You need to make a choice in each task to continue.
+    </p>
+    <div class="row">
+        <div class="col">
+            {% if round_number > 1 %}
+            <div class="card-body text-center">
+                <p><u>In the previous round in Task A:</u></p>
+                {% if previous_decision_high == 1 %}
+                <p><small>You({{ my_player_id }}) chose to <b>pay {{ cost_high }}</b> in order for Participant<font color="blue"> 2</font> to <b>receive {{ benefit_high }}</b></small>
+                {% else %}
+                <p><small>You({{ my_player_id }}) chose to <b>pay</b> 0 in order for Participant<font color="blue"> 2</font> to <b>receive 0</b></small>
+                {% endif %}
+                {% if opponent_previous_decision_high == 1 %}
+                <p><small>Participant<font color="blue"> 2({{ opponent_high_id }})</font> chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b></small>
+                {% else %}
+                <p><small>Participant<font color="blue"> 2({{ opponent_high_id }})</font> chose to <b>pay 0</b> in order for you to <b>receive 0</b></small>
+                {% endif %}
+            </div>
             {% endif %}
         </div>
-        {% endif %}
+        <div class="col">
+            {% if round_number > 1 %}
+            <div class="card-body text-center">
+                <p><u>In the previous round in Task B:</u></p>
+                {% if previous_decision_low == 3 %}
+                <p><small>You({{ my_player_id }}) chose to <b>pay {{ cost_low }}</b> in order for Participant <u>3</u> to <b>receive {{ benefit_low }}</b></small>
+                {% else %}
+                <p><small>You<({{ my_player_id }}) chose to <b>pay 0</b> in order for Participant <u>3</u> to <b>receive 0</b></small>
+                {% endif %}
+                {% if opponent_previous_decision_low == 3 %}
+                <p><small>Participant <font color="blue">3({{ opponent_low_id }})</font> chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b></small>
+                {% else %}
+                <p><small>Participant <font color="blue">3({{ opponent_low_id }})</font> chose to <b>pay</b> 0 in order for you to <b>receive 0</b></small>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
     </div>
 </div>
-
 
 
 <div class="card bg-light instructions">

@@ -21,7 +21,8 @@ class Constants(BaseConstants):
     players_per_group = 2
     num_rounds = 1
 
-    min_rounds = 2
+    """variables for randomish next round"""
+    min_rounds = 10
     proba_next_round = 0.5
 
     """
@@ -36,6 +37,10 @@ class Constants(BaseConstants):
     c_low = c(1)
     dd_low = c(0)
     endowment_low = c_low
+
+    reward_low = endowment_low + b_low - c_low
+    temptation_high = endowment_high + b_high
+    sucker_high = endowment_high - c_high
 
 
 class Subsession(BaseSubsession):
@@ -72,9 +77,13 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    """ These are all variables that depend on a real person's action.
+    """
+        These are all variables that depend on a real person's action.
         The options for the demographics survey & the decisions in the game.
-        Any variable defined in Player class becomes a new field attached to the player. """
+        Any variable defined in Player class becomes a new field attached to the player.
+        Variables for the f-string are from vars for template in pages.py (since they need to match)
+    """
+
     q1 = models.IntegerField(
         choices=[
             [1, '0 other participants'],
@@ -97,12 +106,12 @@ class Player(BasePlayer):
 
     q3 = models.IntegerField(
         choices=[
-            [1, 'You will earn b-c_high points.'],
-            [2, 'You will earn 100 points.'],
+            [1, f'You will earn {Constants.b_high} points.'],
+            [2, 'You will earn 10 points.'],
             [3, 'Neither will earn additional points.']
         ],
-        verbose_name='In Task A, What amount will you earn if '
-                     'Participant 2 chooses to pay c_high points in order for you to receive b_high points?',
+        verbose_name=f'In Task A, What amount will you receive if Participant 2 chooses to pay {Constants.c_high} points '
+                     f'in order for you to receive {Constants.b_high} points?',
         widget=widgets.RadioSelect
     )
 
@@ -129,8 +138,8 @@ class Player(BasePlayer):
     q6 = models.IntegerField(
         choices=[
             [1, '0 points'],
-            [2, '0+b-c points'],
-            [3, '100 points']
+            [2, f'{Constants.sucker_high+Constants.reward_low} points'],
+            [3, '10 points']
         ],
         verbose_name='Across both tasks, how many points did Participant 1 earn in total?',
         widget=widgets.RadioSelect
@@ -139,8 +148,8 @@ class Player(BasePlayer):
     q7 = models.IntegerField(
         choices=[
             [1, '0 points'],
-            [2, '50 points'],
-            [3, 'b-c points']
+            [2, '3 points'],
+            [3, f'{Constants.temptation_high} points']
         ],
         verbose_name='In Task A, how many points did Participant 2 earn?',
         widget=widgets.RadioSelect
@@ -149,8 +158,8 @@ class Player(BasePlayer):
     q8 = models.IntegerField(
         choices=[
             [1, '0 points'],
-            [2, '50 points'],
-            [3, 'b-c points']
+            [2, '1 points'],
+            [3, f'{Constants.reward_low} points']
         ],
         verbose_name='In Task B, how many points did Participant 2 earn?',
         widget=widgets.RadioSelect
