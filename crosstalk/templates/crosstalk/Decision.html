@@ -62,27 +62,30 @@
             {% endif %}
         </div>
     </div>
-</div>
 
-
-<div class="card bg-light instructions">
-    <div class="card-body">
-        <div class="row">
-            <div class="col">
-            <p>
-                <h4>Task A:</h4>
-                (played with Participant<font color="blue"> 2</font>)
-            </p>
-                {% formfield player.decision_high label='' %}
-            </p>
+    <div class="row">
+        <div class="col">
+            <div class="card bg-light instructions">
+                <div class="card-body">
+                <p>
+                    <h4>Task A:</h4>
+                    (played with Participant<font color="blue"> 2</font>)
+                    </p>
+                        {% formfield player.decision_high label='' %}
+                    </p>
+                </div>
             </div>
-            <div class="col">
-            <p>
-                <h4>Task B:</h4>
-                (played with Participant<font color="blue"> 3</font>)
-            </p>
-                {% formfield player.decision_low label='' %}
-            </p>
+        </div>
+        <div class="col">
+            <div class="card bg-light instructions">
+                <div class="card-body">
+                <p>
+                    <h4>Task B:</h4>
+                    (played with Participant<font color="blue"> 3</font>)
+                    </p>
+                        {% formfield player.decision_low label='' %}
+                    </p>
+                </div>
             </div>
         </div>
     </div>
