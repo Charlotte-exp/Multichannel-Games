@@ -38,6 +38,10 @@ class Constants(BaseConstants):
     dd_low = c(0)
     endowment_low = c_low
 
+    reward_low = endowment_low + b_low - c_low
+    temptation_high = endowment_high + b_high
+    sucker_high = endowment_high - c_high
+
 
 class Subsession(BaseSubsession):
     """
@@ -79,9 +83,6 @@ class Player(BasePlayer):
         Any variable defined in Player class becomes a new field attached to the player.
         Variables for the f-string are from vars for template in pages.py (since they need to match)
     """
-    reward_low = Constants.endowment_low + Constants.b_low - Constants.c_low
-    temptation_high = Constants.endowment_high + Constants.b_high
-    sucker_high = Constants.endowment_high - Constants.c_high
 
     q1 = models.IntegerField(
         choices=[
@@ -137,7 +138,7 @@ class Player(BasePlayer):
     q6 = models.IntegerField(
         choices=[
             [1, '0 points'],
-            [2, f'{sucker_high+reward_low} points'],
+            [2, f'{Constants.sucker_high+Constants.reward_low} points'],
             [3, '10 points']
         ],
         verbose_name='Across both tasks, how many points did Participant 1 earn in total?',
@@ -148,7 +149,7 @@ class Player(BasePlayer):
         choices=[
             [1, '0 points'],
             [2, '3 points'],
-            [3, f'{temptation_high} points']
+            [3, f'{Constants.temptation_high} points']
         ],
         verbose_name='In Task A, how many points did Participant 2 earn?',
         widget=widgets.RadioSelect
@@ -158,7 +159,7 @@ class Player(BasePlayer):
         choices=[
             [1, '0 points'],
             [2, '1 points'],
-            [3, f'{reward_low} points']
+            [3, f'{Constants.reward_low} points']
         ],
         verbose_name='In Task B, how many points did Participant 2 earn?',
         widget=widgets.RadioSelect
