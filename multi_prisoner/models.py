@@ -125,6 +125,8 @@ class Player(BasePlayer):
     payoff_low = models.CurrencyField()
     payment = models.CurrencyField()
 
+    left_hanging = models.CurrencyField()
+
     def other_player(self):
         """
         This function is form the prisoner template. It defines who the payoffs are calculated from.

@@ -2,6 +2,8 @@ from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
 from decimal import *
+import time
+
 getcontext().rounding = ROUND_CEILING  # is this for rounding up the payment?
 
 
@@ -20,7 +22,9 @@ class Decision(Page):
 
     def is_displayed(self):
         """ Probabilistic display! """
-        if self.subsession.round_number <= self.participant.vars['last_round']:
+        if self.player.left_hanging == 1:
+            return False
+        elif self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
     def vars_for_template(self):
@@ -64,8 +68,22 @@ class ResultsWaitPage(WaitPage):
         if self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
-    body_text = "Please wait while the other participant makes their decision."
+    # body_text = "Please wait while the other participant makes their decision."
     # template_name = 'multi_prisoner/Dropout.html'
+
+    timer_text = 'Time left to complete your choices:'
+
+    def get_timeout_seconds(self):
+        self.participant.vars['wait_time'] = time.time() + 2 * 60
+        return self.participant.vars['wait_time'] - time.time()
+
+    def before_next_page(self):
+        # other_player = self.get_others_in_group()
+        if self.timeout_happened:
+            self.player.left_hanging = 1
+            print(self.player.left_hanging)
+            # for p in other_player:
+            #     return self.player.left_hanging == 1
 
 
 class Results(Page):
@@ -73,7 +91,9 @@ class Results(Page):
 
     def is_displayed(self):
         """ Probabilistic display! """
-        if self.subsession.round_number <= self.participant.vars['last_round']:
+        if self.player.left_hanging == 1:
+            return False
+        elif self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
     def vars_for_template(self):
@@ -102,7 +122,10 @@ class End(Page):
 
     def is_displayed(self):
         """ This function makes the page appear only on the last random-ish round """
-        return self.round_number == self.participant.vars['last_round']
+        if self.player.left_hanging == 1:
+            return False
+        elif self.subsession.round_number == self.participant.vars['last_round']:
+            return True
 
     def vars_for_template(self):
         me = self.player
@@ -120,7 +143,10 @@ class Demographics(Page):
 
     def is_displayed(self):
         """ This function makes the page appear only on the last random-ish round """
-        return self.round_number == self.participant.vars['last_round']
+        if self.player.left_hanging == 1:
+            return False
+        elif self.subsession.round_number == self.participant.vars['last_round']:
+            return True
 
 
 class Payment(Page):
@@ -128,7 +154,10 @@ class Payment(Page):
 
     def is_displayed(self):
         """ This function makes the page appear only on the last random-ish round """
-        return self.round_number == self.participant.vars['last_round']
+        if self.player.left_hanging == 1:
+            return False
+        elif self.subsession.round_number == self.participant.vars['last_round']:
+            return True
 
     def vars_for_template(self):
         return {
@@ -146,6 +175,14 @@ class Payment(Page):
         }
 
 
+class LeftHanging(Page):
+
+    def is_displayed(self):
+        """ This function makes the page appear only on the last random-ish round """
+        if self.player.left_hanging == 1:
+            return True
+
+
 class ProlificLink(Page):
     def is_displayed(self):
         return self.round_number == self.participant.vars['last_round']
@@ -159,5 +196,6 @@ page_sequence = [
     End,
     # Demographics,
     Payment,
+    LeftHanging,
     ProlificLink,
 ]

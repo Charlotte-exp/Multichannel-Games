@@ -78,5 +78,4 @@ page_sequence = [
     # Welcome,
     # Instructions1,
     # Instructions2,
-
 ]
