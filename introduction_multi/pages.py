@@ -74,8 +74,8 @@ class Consent(Page):
 
 
 page_sequence = [
-    # Welcome,
-    # Instructions1,
-    # Instructions2,
+    Welcome,
+    Instructions1,
+    Instructions2,
     Consent,
 ]
