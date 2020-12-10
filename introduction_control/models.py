@@ -156,8 +156,8 @@ class Player(BasePlayer):
 
     q6 = models.IntegerField(
         choices=[
-            [1, '0 points'],
-            [2, f'{Constants.sucker_high} points'],  # this need to be benefit high
+            [1, f'{Constants.sucker_high} points'],
+            [2, '3 points'],
             [3, '10 points']
         ],
         verbose_name='In Example 1, how many points did Participant 1 earn in total?',
