@@ -28,7 +28,9 @@
     </p>
     {% if round_number > 1 %}
     <div class="card-body text-center">
-        <p><u>In the previous round:</u></p>
+        <p>
+            <h5>In the previous round</h5>
+        </p>
         {% if my_treatment == 'high' %}
             {% if previous_decision_high == 1 %}
         <p><small>You chose to <b>pay {{ cost_high }}</b> in order for Participant 2 to <b>receive {{ benefit_high }}</b></small>
