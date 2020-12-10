@@ -62,12 +62,12 @@
             <p>
                 <h4>In this round</h4>
             </p>
-            {% if my_decision_low == 1 %}
+            {% if my_decision_low == 3 %}
             <ul>
                 <li>
                     <i>You</i> chose to <b>pay {{ cost_low }}</b> in order for Participant 2 to <b>receive {{ benefit_low }}</b>
                 </li>
-                {% if opponent_decision_low == 1 %}
+                {% if opponent_decision_low == 3 %}
                 <li>
                     <i>Participant 2</i> chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>
                 </li>
@@ -82,7 +82,7 @@
                 <li>
                     <i>You</i> chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>
                 </li>
-                {% if opponent_decision_low == 1 %}
+                {% if opponent_decision_low == 3 %}
                 <li>
                     <i>Participant 2</i> chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>
                 </li>
