@@ -26,7 +26,7 @@ class Constants(BaseConstants):
     # min_rounds = 20
     # proba_next_round = 0.5
 
-    currency_per_point = 0.1
+    currency_per_point = 0.1  # 10pts is £1
 
     """
     Donation game payoffs
@@ -44,13 +44,12 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-
     """
-       Instead of creating_session() we need to use group_by_arrival_time_method().
-       The function makes sure that only players with the same last_round will be paired up.
-       I could only implement that retroactively though and assign last_round in the intro app.
-       The inconveninent is that if 3 people read the instructions, 2 get 5 and 1 gets 6,
-       if one of the 5 one gives up and quits the other two cannot play together. So not ideal
+    Instead of creating_session() we need to use group_by_arrival_time_method().
+    The function makes sure that only players with the same last_round will be paired up.
+    I could only implement that retroactively though and assign last_round in the intro app.
+    The inconveninent is that if 3 people read the instructions, 2 get 5 and 1 gets 6,
+    if one of the 5 one gives up and quits the other two cannot play together. So not ideal
     """
     def group_by_arrival_time_method(self, waiting_players):
         print("starting group_by_arrival_time_method")
@@ -71,9 +70,11 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    """ These are all variables that depend on a real person's action.
-        The options for the demographics survey & the decisions in the game.
-        Any variable defined in Player class becomes a new field attached to the player. """
+    """
+    These are all variables that depend on a real person's action.
+    The options for the demographics survey & the decisions in the game.
+    Any variable defined in Player class becomes a new field attached to the player.
+    """
     age = models.IntegerField(
         verbose_name='What is your age?',
         min=18, max=100)
@@ -109,6 +110,7 @@ class Player(BasePlayer):
         doc="""This player's decision""",
         widget=widgets.RadioSelect
     )
+
     decision_low = models.IntegerField(
         choices=[
             [3, f'You pay {Constants.c_low} points in order for Participant 3 to receive {Constants.b_low} points.'],
@@ -121,6 +123,8 @@ class Player(BasePlayer):
     payoff_high = models.CurrencyField()
     payoff_low = models.CurrencyField()
     payment = models.CurrencyField()
+
+    left_hanging = models.CurrencyField()
 
     def get_opponent(self):
         """ This is were the magic happens. we cannot just get_others_in_group() as there are 3 possible opponents and we want 2.
@@ -182,6 +186,5 @@ class Player(BasePlayer):
         self.payoff_low = payoff_matrix_low[self.decision_low][opponents[1].decision_low]
         # print(self.decision_low)
         self.payment = self.payoff_high + self.payoff_low
-        # check the participant.vars works in multichannel before adding here
         # print('self.payment', self.payment)
         # print('Player ID', self.id_in_group)

@@ -45,11 +45,11 @@ class Constants(BaseConstants):
 
 class Subsession(BaseSubsession):
     """
-   Instead of creating_session() we need to use group_by_arrival_time_method().
-   The function makes sure that only players with the same last_round will be paired up.
-   I could only implement that retroactively though and assign last_round in the intro app.
-   The inconveninent is that if 3 people read the instructions, 2 get 5 and 1 gets 6,
-   if one of the 5 one gives up and quits the other two cannot play together. So not ideal
+    Instead of creating_session() we need to use group_by_arrival_time_method().
+    The function makes sure that only players with the same last_round will be paired up.
+    I could only implement that retroactively though and assign last_round in the intro app.
+    The inconveninent is that if 3 people read the instructions, 2 get 5 and 1 gets 6,
+    if one of the 5 one gives up and quits the other two cannot play together. So not ideal
     """
     def group_by_arrival_time_method(self, waiting_players):
         print("starting group_by_arrival_time_method")
@@ -176,6 +176,6 @@ class Player(BasePlayer):
         """
         self.payoff_low = payoff_matrix_low[self.decision_low][self.other_player().decision_low]
         self.payment = self.payoff_high + self.payoff_low
-        self.participant.vars['payment'] = self.payment
+        # self.participant.vars['payment'] = self.payment
         # print('self.payment', self.payment)
         # print('Player ID', self.id_in_group)

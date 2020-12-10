@@ -2,7 +2,6 @@ from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
 from decimal import *
-import time
 
 getcontext().rounding = ROUND_CEILING  # is this for rounding up the payment?
 
@@ -38,10 +37,10 @@ class Decision(Page):
 
     def before_next_page(self):
         """
-            Dropout code! basically if the timer set above runs out, the opponent becomes left_hanging and
-            is jumped to the leftHanging page with a link to Prolific. The dropout also goes to that page but gets
-            a different text.
-            I need to set decisions to avoid an error message that's all
+        Dropout code! basically if the timer set above runs out, the opponent becomes left_hanging and
+        is jumped to the leftHanging page with a link to Prolific. The dropout also goes to that page but gets
+        a different text.
+        I need to set decisions to avoid an error message that's all
         """
         me = self.player
         opponent = me.other_player()
