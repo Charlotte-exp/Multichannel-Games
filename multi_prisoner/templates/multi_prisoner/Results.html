@@ -22,82 +22,90 @@
 
 <div class="row">
     <div class="col">
-        <p>
-            <h4>Task A:</h4>
-        </p>
-        {% if my_high_decision == 1 %}
-        <ul>
-            <li>
-                <i>You</i> chose to <b>pay {{ cost_high }}</b> in order for Participant 2 to <b>receive {{ benefit_high }}</b>
-            </li>
-            {% if opponent_high_decision == 1 %}
-            <li>
-                <i>Participant 2</i> chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>
-            </li>
-            {% else %}
-            <li>
-                <i>Participant 2</i> chose to <b>pay 0</b> in order for you to <b>receive 0</b>
-            </li>
-            {% endif %}
-        </ul>
-        {% else %}
-        <ul>
-            <li>
-                <i>You</i> chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>
-            </li>
-            {% if opponent_high_decision == 1 %}
-            <li>
-                <i>Participant 2</i> chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>
-            </li>
-            {% else %}
-            <li>
-                <i>Participant 2</i> chose to <b>pay 0</b> in order for you to <b>receive 0</b>
-            </li>
-            {% endif %}
-        </ul>
-        {% endif %}
-        <p>
-            As a result, in Task A in this round, you earned <b>{{ my_high_payoff }}</b> points.
-        </p>
+        <div class="card bg-light instructions">
+            <div class="card-body">
+                <p>
+                    <h4>Task A:</h4>
+                </p>
+                {% if my_high_decision == 1 %}
+                <ul>
+                    <li>
+                        <i>You</i> chose to <b>pay {{ cost_high }}</b> in order for Participant 2 to <b>receive {{ benefit_high }}</b>
+                    </li>
+                    {% if opponent_high_decision == 1 %}
+                    <li>
+                        <i>Participant 2</i> chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>
+                    </li>
+                    {% else %}
+                    <li>
+                        <i>Participant 2</i> chose to <b>pay 0</b> in order for you to <b>receive 0</b>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% else %}
+                <ul>
+                    <li>
+                        <i>You</i> chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>
+                    </li>
+                    {% if opponent_high_decision == 1 %}
+                    <li>
+                        <i>Participant 2</i> chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>
+                    </li>
+                    {% else %}
+                    <li>
+                        <i>Participant 2</i> chose to <b>pay 0</b> in order for you to <b>receive 0</b>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+                <p>
+                    As a result, in Task A in this round, you earned <b>{{ my_high_payoff }}</b> points.
+                </p>
+            </div>
+        </div>
     </div>
     <div class="col">
-        <p>
-            <h4>Task B:</h4>
-        </p>
-        {% if my_low_decision == 3 %}
-        <ul>
-            <li>
-                <i>You</i> chose to <b>pay {{ cost_low }}</b> in order for Participant 2 to <b>receive {{ benefit_low }}</b>
-            </li>
-            {% if opponent_low_decision == 3 %}
-            <li>
-                <i>Participant 2</i> chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>
-            </li>
-            {% else %}
-            <li>
-                <i>Participant 2</i> chose to <b>pay 0</b> in order for you to <b>receive 0</b>
-            </li>
-            {% endif %}
-        </ul>
-        {% else %}
-        <ul>
-            <li>
-                <i>You</i> chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>
-            </li>
-            {% if opponent_low_decision == 3 %}
-            <li>
-                <i>Participant 2</i> chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>
-            </li>
-            {% else %}
-            <li>
-                <i>Participant 2</i> chose to <b>pay 0</b> in order for you to <b>receive 0</b>
-            </li>
-            {% endif %}
-        </ul>
-        {% endif %}
-        <p>
-            As a result, in Task B in this round, you earned <b>{{ my_low_payoff }}</b> points.
-        </p>
+        <div class="card bg-light instructions">
+            <div class="card-body">
+                <p>
+                    <h4>Task B:</h4>
+                </p>
+                {% if my_low_decision == 3 %}
+                <ul>
+                    <li>
+                        <i>You</i> chose to <b>pay {{ cost_low }}</b> in order for Participant 2 to <b>receive {{ benefit_low }}</b>
+                    </li>
+                    {% if opponent_low_decision == 3 %}
+                    <li>
+                        <i>Participant 2</i> chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>
+                    </li>
+                    {% else %}
+                    <li>
+                        <i>Participant 2</i> chose to <b>pay 0</b> in order for you to <b>receive 0</b>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% else %}
+                <ul>
+                    <li>
+                        <i>You</i> chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>
+                    </li>
+                    {% if opponent_low_decision == 3 %}
+                    <li>
+                        <i>Participant 2</i> chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>
+                    </li>
+                    {% else %}
+                    <li>
+                        <i>Participant 2</i> chose to <b>pay 0</b> in order for you to <b>receive 0</b>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+                <p>
+                    As a result, in Task B in this round, you earned <b>{{ my_low_payoff }}</b> points.
+                </p>
+            </div>
+        </div>
     </div>
 </div>
 

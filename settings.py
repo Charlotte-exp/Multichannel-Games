@@ -42,24 +42,6 @@ SESSION_CONFIGS = [
         'app_sequence': ['introduction_control', 'control_PD_test'],
         'use_browser_bots': True
     },
-    {
-        'name': 'introduction_control',
-        'display_name': "Intro Control",
-        'num_demo_participants': 2,
-        'app_sequence': ['introduction_control'],
-    },
-    {
-        'name': 'introduction_multi',
-        'display_name': "Intro Multichannel",
-        'num_demo_participants': 2,
-        'app_sequence': ['introduction_multi'],
-    },
-    {
-        'name': 'introduction_cross',
-        'display_name': "Intro Crosstalk",
-        'num_demo_participants': 4,
-        'app_sequence': ['introduction_cross'],
-    },
 ]
 # see the end of this file for the inactive session configs
 
