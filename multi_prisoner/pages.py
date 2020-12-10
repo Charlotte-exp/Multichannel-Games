@@ -9,7 +9,7 @@ getcontext().rounding = ROUND_CEILING  # is this for rounding up the payment?
 
 class PairingWaitPage(WaitPage):
     """
-       The code below keeps the groups the same across all rounds automatically.
+    The code below keeps the groups the same across all rounds automatically.
     """
     group_by_arrival_time = True
 
@@ -158,7 +158,7 @@ class End(Page):
 
     def vars_for_template(self):
         me = self.player
-        # opponent = me.other_player()  # of we want to display the opponent's payoff
+        opponent = me.other_player()
         return {
             'total_payoff_high': sum([p.payoff_high for p in self.player.in_all_rounds()]),
             'total_payoff_low': sum([p.payoff_low for p in self.player.in_all_rounds()]),

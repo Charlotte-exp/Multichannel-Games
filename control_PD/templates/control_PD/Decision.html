@@ -3,7 +3,7 @@
 
 
 {% block title %}
-    Round {{ subsession.round_number }}
+    Round Decision {{ subsession.round_number }}
 {% endblock %}
 
 {% block styles %}
@@ -33,26 +33,26 @@
         </p>
         {% if my_treatment == 'high' %}
             {% if previous_decision_high == 1 %}
-        <p><small>You chose to <b>pay {{ cost_high }}</b> in order for Participant 2 to <b>receive {{ benefit_high }}</b></small>
+            <p><small>You chose to <b>pay {{ cost_high }} pts</b> in order for Participant 2 to <b>receive {{ benefit_high }} pts</b></small>
             {% else %}
-            <p><small>You chose to <b>pay</b> 0 in order for Participant 2 to <b>receive 0</b></small>
+            <p><small>You chose to <b>pay 0 pts</b> in order for Participant 2 to <b>receive 0 pts</b></small>
             {% endif %}
             {% if opponent_previous_decision_high == 1 %}
-            <p><small>Participant 2 chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b></small>
+            <p><small>Participant 2 chose to <b>pay {{ cost_high }} pts</b> in order for you to <b>receive {{ benefit_high }} pts</b></small>
             {% else %}
-            <p><small>Participant 2 chose to <b>pay 0</b> in order for you to <b>receive 0</b></small>
+            <p><small>Participant 2 chose to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b></small>
             {% endif %}
         {% endif %}
         {% if my_treatment == 'low' %}
             {% if previous_decision_low == 3 %}
-            <p><small>You chose to <b>pay {{ cost_low }}</b> in order for Participant 2 to <b>receive {{ benefit_low }}</b></small>
+            <p><small>You chose to <b>pay {{ cost_low } pts}</b> in order for Participant 2 to <b>receive {{ benefit_low }} pts</b></small>
             {% else %}
-            <p><small>You chose to <b>pay</b> 0 in order for Participant 2 to <b>receive 0</b></small>
+            <p><small>You chose to <b>pay pts</b> 0 in order for Participant 2 to <b>receive 0 pts</b></small>
             {% endif %}
             {% if opponent_previous_decision_low == 3 %}
-            <p><small>Participant 2 chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b></small>
+            <p><small>Participant 2 chose to <b>pay {{ cost_low }} pts</b> in order for you to <b>receive {{ benefit_low }} pts</b></small>
             {% else %}
-            <p><small>Participant 2 chose to <b>pay 0</b> in order for you to <b>receive 0</b></small>
+            <p><small>Participant 2 chose to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b></small>
             {% endif %}
         {% endif %}
     </div>
@@ -86,21 +86,22 @@
 
 {% endblock %}
 
-<!---
+{% block scripts %}
 
-<style>
-    .otree-timer {
-        display: none;
-    }
-</style>
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
 
-<script>
-    $(function () {
-        $('.otree-timer__time-left').on('update.countdown', function (event) {
-            if (event.offset.totalSeconds === 15) {
-                $('.otree-timer').show();
-            }
+    <script>
+        $(function () {
+            $('.otree-timer__time-left').on('update.countdown', function (event) {
+                if (event.offset.totalSeconds === 10) {
+                    $('.otree-timer').show();
+                }
+            });
         });
-    });
-</script>
---->
+    </script>
+
+{% endblock %}
