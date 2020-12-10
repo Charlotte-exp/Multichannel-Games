@@ -43,11 +43,11 @@ class Constants(BaseConstants):
 
 class Subsession(BaseSubsession):
     """
-       Instead of creating_session() we need to use group_by_arrival_time_method().
-       The function makes sure that only high players play with high players.
-       I could only implement that retroactively though and assign treatment in the intro app.
-       The inconveninent is that if 3 people read the instructions, 2 become high and 1 becomes low,
-       if one of the high one gives and quits the other two cannot play together.
+   Instead of creating_session() we need to use group_by_arrival_time_method().
+   The function makes sure that only high players play with high players.
+   I could only implement that retroactively though and assign treatment in the intro app.
+   The inconveninent is that if 3 people read the instructions, 2 become high and 1 becomes low,
+   if one of the high one gives and quits the other two cannot play together.
     """
     def group_by_arrival_time_method(self, waiting_players):
         print("starting group_by_arrival_time_method")
@@ -78,9 +78,9 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     """
-        These are all variables that depend on a real person's action.
-        The options for the demographics survey & the decisions in the game.
-        Any variable defined in Player class becomes a new field attached to the player.
+    These are all variables that depend on a real person's action.
+    The options for the demographics survey & the decisions in the game.
+    Any variable defined in Player class becomes a new field attached to the player.
     """
     age = models.IntegerField(
         verbose_name='What is your age?',
@@ -127,17 +127,23 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect
     )
 
+    left_hanging = models.CurrencyField()
+
     def other_player(self):
-        """ This function is form the prisoner template. It defines who the payoffs are calculated from.
-            It uses the otree function get_others_in_group() """
+        """
+        This function is form the prisoner template. It defines who the payoffs are calculated from.
+        It uses the otree function get_others_in_group()
+        """
         return self.get_others_in_group()[0]
 
     def set_payoff(self):
-        """ The payoff function layout is from the prisoner template.
-            there is one matrix per treatment using two one decision variable.
-            Bottom lines calculate the payoff based on actual choices,.
-            The if statement contains .group because the treatment variable is defined in group.
-            If defined in player it is not needed. """
+        """
+        The payoff function layout is from the prisoner template.
+        there is one matrix per treatment using two one decision variable.
+        Bottom lines calculate the payoff based on actual choices,.
+        The if statement contains .group because the treatment variable is defined in group.
+        If defined in player it is not needed.
+        """
         if self.participant.vars['treatment'] == 'high':
             payoff_matrix_high = {
                 1:

@@ -2,11 +2,15 @@ from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
 from decimal import *
+
 getcontext().rounding = ROUND_CEILING  # is this for rounding up the payment?
 
 
 class PairingWaitPage(WaitPage):
-    group_by_arrival_time = True  # this code keeps the groups the same across all rounds automatically
+    """
+    The code below keeps the groups the same across all rounds automatically.
+    """
+    group_by_arrival_time = True
 
     def is_displayed(self):
         return self.round_number == 1
@@ -20,14 +24,44 @@ class Decision(Page):
 
     def is_displayed(self):
         """ Probabilistic display! """
-        if self.subsession.round_number <= self.participant.vars['last_round']:
+        if self.player.left_hanging == 1:
+            return False
+        elif self.player.left_hanging == 2:
+            return False
+        elif self.subsession.round_number <= self.participant.vars['last_round']:
             return True
+
+    timer_text = 'If you stay inactive for too long you will be considered a dropout:'
+
+    timeout_seconds = 2 * 60
+
+    def before_next_page(self):
+        """
+        Dropout code! basically if the timer set above runs out, the opponent becomes left_hanging and
+        is jumped to the leftHanging page with a link to Prolific. The dropout also goes to that page but gets
+        a different text.
+        I need to set decisions to avoid an error message that's all
+        """
+        me = self.player
+        opponents = me.get_opponent()
+        opponent_high = opponents[0]
+        opponent_low = opponents[1]
+        if self.timeout_happened:
+            opponent_high.left_hanging = 1
+            opponent_low.left_hanging = 1
+            me.left_hanging = 2
+            print('is the other player left hanging?', opponent.left_hanging)
+            print('Am I a dropout?', me.left_hanging)
+            me.decision_high = 1
+            me.decision_low = 3
 
     # player id for for troubleshooting. If I want to display the player in the group of four though I can keep it.
 
     def vars_for_template(self):
-        """ This function is for displaying variables in the HTML file (with Django I believe)
-            The variables are inserted into calculation or specifications if needed and given a display name """
+        """
+        This function is for displaying variables in the HTML file (with Django I believe)
+        The variables are inserted into calculation or specifications if needed and given a display name
+        """
         me = self.player
         opponents = me.get_opponent()
         opponent_high = opponents[0]
@@ -74,8 +108,8 @@ class ResultsWaitPage(WaitPage):
         if self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
-    body_text = "Please wait while the other participant makes their decision."
-    # template_name = 'crosstalk/Dropout.html'
+    # body_text = "Please wait while the other participant makes their decision."
+    template_name = 'crosstalk/ResultsWaitPage.html'
 
 
 class Results(Page):
@@ -83,8 +117,25 @@ class Results(Page):
 
     def is_displayed(self):
         """ Probabilistic display! """
-        if self.subsession.round_number <= self.participant.vars['last_round']:
+        if self.player.left_hanging == 1:
+            return False
+        elif self.player.left_hanging == 2:
+            return False
+        elif self.subsession.round_number <= self.participant.vars['last_round']:
             return True
+
+    timeout_seconds = 2 * 60
+    # my_page_timeout_seconds = 90
+    #
+    # def get_timeout_seconds(self):
+    #     round_number = self.subsession.round_number
+    #     timeout = self.my_page_timeout_seconds
+    #     if round_number <= 2:
+    #         return timeout
+    #     else:
+    #         timeout -= (round_number - 2) * 5
+    #         print(timeout)
+    #         return timeout
 
     def vars_for_template(self):
         me = self.player
@@ -118,7 +169,12 @@ class End(Page):
 
     def is_displayed(self):
         """ This function makes the page appear only on the last random-ish round """
-        return self.round_number == self.participant.vars['last_round']
+        if self.player.left_hanging == 1:
+            return False
+        elif self.player.left_hanging == 2:
+            return False
+        elif self.subsession.round_number == self.participant.vars['last_round']:
+            return True
 
     def vars_for_template(self):
         me = self.player
@@ -147,15 +203,25 @@ class Demographics(Page):
 
     def is_displayed(self):
         """ This function makes the page appear only on the last random-ish round """
-        return self.round_number == self.participant.vars['last_round']
+        if self.player.left_hanging == 1:
+            return False
+        elif self.player.left_hanging == 2:
+            return False
+        elif self.subsession.round_number == self.participant.vars['last_round']:
+            return True
 
 
 class Payment(Page):
     """ This page is for final payment in GBP """
 
     def is_displayed(self):
-        """ This function makes the page appear only on the last round """
-        return self.round_number == self.participant.vars['last_round']
+        """ This function makes the page appear only on the last random-ish round """
+        if self.player.left_hanging == 1:
+            return False
+        elif self.player.left_hanging == 2:
+            return False
+        elif self.subsession.round_number == self.participant.vars['last_round']:
+            return True
 
     def vars_for_template(self):
         return {
@@ -173,6 +239,24 @@ class Payment(Page):
         }
 
 
+class LeftHanging(Page):
+
+    def is_displayed(self):
+        """ This function makes the page appear only on the last random-ish round """
+        if self.player.left_hanging == 1:
+            return True
+        elif self.player.left_hanging == 2:
+            return True
+
+    # def vars_for_template(self):
+    #     me = self.player
+    #     opponent = me.other_player()
+    #     return {
+    #         'left_hanging': opponent.left_hanging,
+    #         'dropout': me.left_hanging
+    #     }
+
+
 class ProlificLink(Page):
     def is_displayed(self):
         return self.round_number == self.participant.vars['last_round']
@@ -186,5 +270,6 @@ page_sequence = [
     End,
     # Demographics,
     Payment,
+    LeftHanging,
     ProlificLink,
 ]
