@@ -21,11 +21,19 @@ div {
           href="{% static 'global/matrix.css' %}"/>
 
     <p>You are <b>Participant 1</b> in this study. The other Participant is <b>Participant 2.</b></p>
+    {% if my_treatment == 'high' %}
     <p>
         In each round, you and Participant 2 will interact with each other in a task. In this task, both of you must choose between two options.
         The total points you earn in each round will depend on what you and Participant 2 independently decide.
-        In each round, you and the other participant are both endowed with XXXX points.
+        In each round, you and the other participant are both endowed with {{ Constants.endowment_high }} points.
     </p>
+    {% else %}
+    <p>
+        In each round, you and Participant 2 will interact with each other in a task. In this task, both of you must choose between two options.
+        The total points you earn in each round will depend on what you and Participant 2 independently decide.
+        In each round, you and the other participant are both endowed with {{ Constants.endowment_low }} points.
+    </p>
+    {% endif %}
     <p>
         Below you can see the outcomes of each option that you and Participant 2 can choose from in each task in each round,
         depending on your own decision as well as Participant 2's decision.
@@ -34,12 +42,21 @@ div {
 
 <div class="card bg-light instructions"> <!-- Makes the para a box -->
     <div class="card-body">
+        <p>
+            <h4>In this round:</h4>
+        </p>
         <ul>
+            {% if my_treatment == 'high' %}
             <li>
-                You <b>pay {{ Constants.c_high}} points</b> in order for Participant 2 to <b>receive {{Constants.b_high }} points</b>.
+                You <b>pay {{ Constants.c_high}} pts</b> in order for Participant 2 to <b>receive {{Constants.b_high }} pts</b>.
             </li>
+            {% else %}
             <li>
-                You <b>pay 0 points</b> in order for Participant 2 to <b>receive 0 points</b>.
+                You <b>pay {{ Constants.c_low}} pts</b> in order for Participant 2 to <b>receive {{Constants.b_low }} pts</b>.
+            </li>
+            {% endif %}
+            <li>
+                You <b>pay 0 pts</b> in order for Participant 2 to <b>receive 0 pts</b>.
             </li>
         </ul>
         <p>

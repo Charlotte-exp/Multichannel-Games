@@ -28,27 +28,29 @@ div {
         The points you earn in each round will depend on what you, Participant <font color="blue">2</font> and
         Participant <font color="blue">3</font> independently decide for your respective tasks.
         The two tasks are independent: The points you earn in either task do not depend on the decisions made in the other.
-        In each round and for each of the two tasks, you and the other two participants are endowed with XXXX points in task A and YYYY points in task B.
+        In each round and for each of the two tasks, you and the other two participants are endowed with {{ Constants.endowment_high }}
+        points in task A and {{ Constants.endowment_low }} points in task B.
     </p>
 </div>
 
-<div class="card bg-light instructions"> <!-- Makes the para a box -->
-    <div class="card-body">
-        <div class="row">
-            <div class="col">
-            <p>
-                Below you can see the outcomes of each option that <b>you and Participant <font color="blue">2</font></b> can choose from in Task A in each round,
-                depending on your own decision as well as Participant <font color="blue">2</font>'s decision.
-            </p>
+
+<div class="row">
+    <div class="col">
+        <p>
+            Below you can see the outcomes of each option that <b>you and Participant <font color="blue">2</font></b> can choose from in Task A in each round,
+            depending on your own decision as well as Participant <font color="blue">2</font>'s decision.
+        </p>
+        <div class="card bg-light instructions"> <!-- Makes the para a box -->
+            <div class="card-body">
             <h4>
                 Task A:
             </h4>
             <ul>
                 <li>
-                    You <b>pay {{ Constants.c_high }}</b> points in order for Participant <font color="blue">2</font> to <b>receive {{ Constants.b_high }}</b> points
+                    You <b>pay {{ Constants.c_high }}</b> pts in order for Participant <font color="blue">2</font> to <b>receive {{ Constants.b_high }}</b> pts
                 </li>
                 <li>
-                    You <b>pay 0</b> points in order for Participant <font color="blue">2</font> to <b>receive 0</b> points
+                    You <b>pay 0</b> pts in order for Participant <font color="blue">2</font> to <b>receive 0</b> pts
                 </li>
             </ul>
             <p>
@@ -56,20 +58,24 @@ div {
                 You and Participant <font color="blue">2</font> have to choose simultaneously between these two options.
             </p>
             </div>
-            <div class="col">
-            <p>
-                Below you can see the outcomes of each option that <b>you and Participant <font color="blue">3</font></b> can choose from in Task B in each round,
-                depending on your own decision as well as Participant <font color="blue">3</font>'s decision.
-            </p>
+        </div>
+    </div>
+    <div class="col">
+        <p>
+            Below you can see the outcomes of each option that <b>you and Participant <font color="blue">3</font></b> can choose from in Task B in each round,
+            depending on your own decision as well as Participant <font color="blue">3</font>'s decision.
+        </p>
+        <div class="card bg-light instructions"> <!-- Makes the para a box -->
+            <div class="card-body">
             <h4>
                 Task B:
             </h4>
             <ul>
                 <li>
-                    You <b>pay {{ Constants.c_low }}</b> points in order for Participant <font color="blue">3</font> to <b>receive {{ Constants.b_low }}</b> points
+                    You <b>pay {{ Constants.c_low }}</b> pts in order for Participant <font color="blue">3</font> to <b>receive {{ Constants.b_low }}</b> pts
                 </li>
                 <li>
-                    You <b>pay 0</b> points in order for Participant <font color="blue">3</font> to <b>receive 0</b> points
+                    You <b>pay 0</b> pts in order for Participant <font color="blue">3</font> to <b>receive 0</b> pts
                 </li>
             </ul>
             <p>

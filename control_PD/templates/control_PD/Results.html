@@ -29,30 +29,30 @@
             {% if my_decision_high == 1 %}
             <ul>
                 <li>
-                    You chose to <b>pay {{ cost_high }}</b> in order for Participant 2 to <b>receive {{ benefit_high }}</b>
+                    You chose to <b>pay {{ cost_high }} pts</b> in order for Participant 2 to <b>receive {{ benefit_high }} pts</b>
                 </li>
                 {% if opponent_decision_high == 1 %}
                 <li>
-                    Participant 2 chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>
+                    Participant 2 chose to <b>pay {{ cost_high }} pts</b> in order for you to <b>receive {{ benefit_high }} pts</b>
                 </li>
                 {% else %}
                 <li>
-                    Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>
+                    Participant 2 chose to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b>
                 </li>
                 {% endif %}
             </ul>
             {% else %}
             <ul>
                 <li>
-                    You chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>
+                    You chose to <b>pay 0 pts</b> in order for Participant 2 to <b>receive 0 pts</b>
                 </li>
                 {% if opponent_decision_high == 1 %}
                 <li>
-                    Participant 2 chose to <b>pay {{ cost_high }}</b> in order for you to <b>receive {{ benefit_high }}</b>
+                    Participant 2 chose to <b>pay {{ cost_high }} pts</b> in order for you to <b>receive {{ benefit_high }} pts</b>
                 </li>
                 {% else %}
                 <li>
-                    Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>
+                    Participant 2 chose to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b>
                 </li>
                 {% endif %}
             </ul>
@@ -65,37 +65,37 @@
             {% if my_decision_low == 3 %}
             <ul>
                 <li>
-                    You chose to <b>pay {{ cost_low }}</b> in order for Participant 2 to <b>receive {{ benefit_low }}</b>
+                    You chose to <b>pay {{ cost_low }} pts</b> in order for Participant 2 to <b>receive {{ benefit_low }} pts</b>
                 </li>
                 {% if opponent_decision_low == 3 %}
                 <li>
-                    Participant 2 chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>
+                    Participant 2 chose to <b>pay {{ cost_low }} pts</b> in order for you to <b>receive {{ benefit_low }} pts</b>
                 </li>
                 {% else %}
                 <li>
-                    Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>
+                    Participant 2 chose to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b>
                 </li>
                 {% endif %}
             </ul>
             {% else %}
             <ul>
                 <li>
-                    You chose to <b>pay 0</b> in order for Participant 2 to <b>receive 0</b>
+                    You chose to <b>pay 0 pts</b> in order for Participant 2 to <b>receive 0 pts</b>
                 </li>
                 {% if opponent_decision_low == 3 %}
                 <li>
-                    Participant 2 chose to <b>pay {{ cost_low }}</b> in order for you to <b>receive {{ benefit_low }}</b>
+                    Participant 2 chose to <b>pay {{ cost_low }} pts</b> in order for you to <b>receive {{ benefit_low }} pts</b>
                 </li>
                 {% else %}
                 <li>
-                    Participant 2 chose to <b>pay</b> 0 in order for you to <b>receive 0</b>
+                    Participant 2 chose to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b>
                 </li>
                 {% endif %}
             </ul>
             {% endif %}
         {% endif %}
         <p>
-            As a result, in this round, you earned <b>{{ my_payoff }}</b> points.
+            As a result, in this round, you earned <b>{{ my_payoff }}</b> pts.
         </p>
     </div>
 </div>
@@ -105,5 +105,24 @@
         {% next_button %}
         </div>
     </p>
+
+{% endblock %}
+{% block scripts %}
+
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
+
+    <script>
+        $(function () {
+            $('.otree-timer__time-left').on('update.countdown', function (event) {
+                if (event.offset.totalSeconds === 10) {
+                    $('.otree-timer').show();
+                }
+            });
+        });
+    </script>
 
 {% endblock %}

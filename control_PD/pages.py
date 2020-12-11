@@ -34,7 +34,6 @@ class Decision(Page):
             return True
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
-
     timeout_seconds = 2 * 60
 
     def before_next_page(self):
@@ -114,6 +113,7 @@ class Results(Page):
         elif self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
+    timer_text = 'You are about to be automatically moved to the next round decision page'
     timeout_seconds = 2 * 60
     # my_page_timeout_seconds = 90
     #

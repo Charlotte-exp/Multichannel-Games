@@ -160,7 +160,7 @@ class Player(BasePlayer):
             [2, '3 points'],
             [3, '10 points']
         ],
-        verbose_name='In Example 1, how many points did Participant 1 earn in total?',
+        verbose_name='In Example 1, how many points did Participant 1 earn?',
         widget=widgets.RadioSelect
     )
 
