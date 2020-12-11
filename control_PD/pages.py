@@ -45,12 +45,12 @@ class Decision(Page):
             I need to set decisions to avoid an error message that's all
         """
         me = self.player
-        opponent = me.other_player()
+        other_players = me.get_others_in_group()
         if self.timeout_happened:
-            opponent.left_hanging = 1
+            other_players[0].left_hanging = 1
+            # other_players[1].left_hanging = 1
+            # other_players[2].left_hanging = 1
             me.left_hanging = 2
-            print('is the other player left hanging?', opponent.left_hanging)
-            print('Am I a dropout?', me.left_hanging)
             me.decision_high = 1
             me.decision_low = 3
 

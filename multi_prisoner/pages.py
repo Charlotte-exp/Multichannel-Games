@@ -33,22 +33,22 @@ class Decision(Page):
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
 
-    timeout_seconds = 2 * 60
+    timeout_seconds = 2 * 10
 
     def before_next_page(self):
         """
-        Dropout code! basically if the timer set above runs out, the opponent becomes left_hanging and
+        Dropout code! basically if the timer set above runs out, the other player in the group becomes left_hanging and
         is jumped to the leftHanging page with a link to Prolific. The dropout also goes to that page but gets
         a different text.
-        I need to set decisions to avoid an error message that's all
+        I need to set decisions to avoid an error message that's all.
         """
         me = self.player
-        opponent = me.other_player()
+        other_players = me.get_others_in_group()
         if self.timeout_happened:
-            opponent.left_hanging = 1
+            other_players[0].left_hanging = 1
+            # other_players[1].left_hanging = 1
+            # other_players[2].left_hanging = 1
             me.left_hanging = 2
-            print('is the other player left hanging?', opponent.left_hanging)
-            print('Am I a dropout?', me.left_hanging)
             me.decision_high = 1
             me.decision_low = 3
 
