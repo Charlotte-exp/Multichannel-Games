@@ -36,6 +36,11 @@ class Instructions1(Page):
         if values['q5'] != 2:
             return 'Answer to question 3 is incorrect. Check the instructions again and give a new answer'
 
+    def vars_for_template(self):
+        return{
+            'my_treatment': self.participant.vars['treatment']
+        }
+
 
 class Instructions2(Page):
     form_model = 'player'
@@ -75,7 +80,7 @@ class Consent(Page):
 
 page_sequence = [
     Consent,
-    # Welcome,
-    # Instructions1,
-    # Instructions2,
+    Welcome,
+    Instructions1,
+    Instructions2,
 ]
