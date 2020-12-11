@@ -20,7 +20,10 @@
 </div>
 
 <div class="card bg-light instructions"> <!-- Makes the para a box -->
-    <div class="card-body"> <!-- creates indentation -->
+    <div class="card-body">
+        <p>
+            <h4>In this round:</h4>
+        </p>
         <ul>
             <li>
                 You <b>pay {{ Constants.c_high }}</b> points in order for Participant 2 to <b>receive {{ Constants.b_high }}</b> points.
@@ -33,43 +36,67 @@
 </div>
 
 <div class="card-body"> <!-- creates indentation -->
-    <h4><u>Examples</u></h4>
     <p></p>
-    <div class="row">
-        <div class="col">
+    <h4>
+        <u>Examples</u>
+    </h4>
+</div>
+
+
+<div class="row">
+    <div class="col">
         <p><b>EXAMPLE 1:</b> Consider a scenario where Participant 1 and Participant 2 made the following decisions:</p>
-        <ul>
-            <li>
-                Participant 1 chose to <b>pay {{ Constants.c_high }}</b> in order for Participant 2 to <b>receive {{ Constants.b_high }}</b>.
-            </li>
-            <li>
-                Participant 2 chose to <b>pay 0</b> in order for Participant 1 to <b>receive 0</b>.
-            </li>
-        </ul>
-        <p>
-            As a result, in this round, Participant 1 earned <b>{{ total_high_p1 }}</b> points and Participant 2 earned <b>{{ total_high_p2 }}</b> points.
-        </p>
+        <div class="card bg-light instructions"> <!-- Makes the para a box -->
+            <div class="card-body">
+            <p>
+                <h4>In this round:</h4>
+            </p>
+            <ul>
+                <li>
+                    Participant 1 chose to <b>pay {{ Constants.c_high }}</b> in order for Participant 2 to <b>receive {{ Constants.b_high }}</b>.
+                </li>
+                <li>
+                    Participant 2 chose to <b>pay 0</b> in order for Participant 1 to <b>receive 0</b>.
+                </li>
+            </ul>
+            <p>
+                As a result, in this round, Participant 1 earned <b>{{ total_high_p1 }}</b> points and Participant 2 earned <b>{{ total_high_p2 }}</b> points.
+            </p>
+            </div>
         </div>
-        <div class="col">
+    </div>
+    <div class="col">
         <p><b>EXAMPLE 2:</b> Consider a scenario where Participant 1 and Participant 2 made the following decisions:</p>
-        <ul>
-            <li>
-                Participant 1 chose to <b>pay {{ Constants.c_low }}</b> in order for Participant 2 to <b>receive {{ Constants.b_low }}</b>.
-            </li>
-            <li>
-                Participant 2 chose to <b>pay {{ Constants.c_low }}</b>in order for Participant 1 to <b>receive {{ Constants.b_low }}</b>.
-            </li>
-        </ul>
-        <p>
-            As a result, in this round, Participant 1 earned <b>{{ total_low_p1 }}</b> points and Participant 2 earned <b>{{ total_low_p2 }}</b> points.
-        </p>
+        <div class="card bg-light instructions"> <!-- Makes the para a box -->
+            <div class="card-body">
+            <p>
+                <h4>In this round:</h4>
+            </p>
+            <ul>
+                <li>
+                    Participant 1 chose to <b>pay {{ Constants.c_low }}</b> in order for Participant 2 to <b>receive {{ Constants.b_low }}</b>.
+                </li>
+                <li>
+                    Participant 2 chose to <b>pay {{ Constants.c_low }}</b>in order for Participant 1 to <b>receive {{ Constants.b_low }}</b>.
+                </li>
+            </ul>
+            <p>
+                As a result, in this round, Participant 1 earned <b>{{ total_low_p1 }}</b> points and Participant 2 earned <b>{{ total_low_p2 }}</b> points.
+            </p>
+            </div>
         </div>
     </div>
     <p></p>
 </div>
 
 <div class="card-body">
-    <h4><b>Please answer the following questions to continue:</b></h4>
+    <p></p>
+</div>
+
+<div class="card-body">
+    <h4>
+        <b>Please answer the following questions to continue:</b>
+    </h4>
 
     {% for field in form %}
         {% formfield field %}
