@@ -26,14 +26,14 @@
                 <td>{{ p.decision_low }}</td>
                 <td>{{ p.other_player.decision_low }}</td>
                 {% endif %}
-                <td>{{ p.payoff }}</td>
-                <td>{{ p.other_player.payoff}}</td>
+                <td>{{ p.payoff }} pts</td>
+                <td>{{ p.other_player.payoff}} pts</td>
             </tr>
         {% endfor %}
     </table>
 
     <p>
-        In this Task, across all rounds, you earned a total of <b>{{ total_payoff }}</b> points.
+        In this Task, across all rounds, you earned a total of <b>{{ total_payoff }}</b> pts.
     </p>
 
     <p>

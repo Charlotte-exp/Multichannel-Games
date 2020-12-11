@@ -23,13 +23,13 @@
             {% for q in p.get_opponent %}
         <tr>
             <td>{{ p.round_number }}</td> <!-- don't forget the p. for the looping -->
-            <td>{{ p.payoff_high }}</td>
-            <td>{{ q.payoff_high }}</td>
+            <td>{{ p.payoff_high }} pts</td>
+            <td>{{ q.payoff_high }} pts</td>
         </tr>
             {% endfor %}
     </table>
     <p>
-        In Task A, across all rounds, you earned a total of <b>{{ total_payoff_high }}</b> points.
+        In Task A, across all rounds, you earned a total of <b>{{ total_payoff_high }}</b> pts.
     </p>
 
     </div>
@@ -47,14 +47,14 @@
             {% for q in p.get_opponent %}
         <tr>
             <td>{{ p.round_number }}</td>
-            <td>{{ p.payoff_low }}</td>
-            <td>{{ q.payoff_low }}</td>
+            <td>{{ p.payoff_low }} pts</td>
+            <td>{{ q.payoff_low }} pts</td>
         </tr>
             {% endfor %}
         {% endfor %}
     </table>
     <p>
-        In Task B, across all rounds, you earned a total of <b>{{ total_payoff_low }}</b> points.
+        In Task B, across all rounds, you earned a total of <b>{{ total_payoff_low }}</b> pts.
     </p>
     </div>
 </div>
