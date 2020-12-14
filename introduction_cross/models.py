@@ -22,7 +22,7 @@ class Constants(BaseConstants):
     num_rounds = 1
 
     """variables for randomish next round"""
-    min_rounds = 10
+    min_rounds = 2
     proba_next_round = 0.5
 
     """

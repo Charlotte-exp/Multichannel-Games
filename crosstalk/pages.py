@@ -183,18 +183,14 @@ class End(Page):
         opponent_high = opponents[0]
         opponent_low = opponents[1]
         return {
-            'opponent_payoff_high': opponent_high.payoff_high,
-            'opponent_payoff_low': opponent_low.payoff_low,
-
-            'opponent_decision_high': opponent_high.decision_high,
-            'opponent_decision_low': opponent_low.decision_low,
+            'player_in_all_rounds': me.in_all_rounds(),
+            'opponent_high_in_all_rounds': opponent_high.in_all_rounds(),
+            'opponent_low_in_all_rounds': opponent_low.in_all_rounds(),
+            'player_and_opponent_high': zip(me.in_all_rounds(), opponent_high.in_all_rounds()),
+            'player_and_opponent_low': zip(me.in_all_rounds(), opponent_low.in_all_rounds()),
 
             'total_payoff_high': sum([p.payoff_high for p in self.player.in_all_rounds()]),
             'total_payoff_low': sum([p.payoff_low for p in self.player.in_all_rounds()]),
-
-            'player_in_all_rounds': me.in_all_rounds(),
-            'opponent_high_in_all_rounds': opponent_high.in_all_rounds(),  # one of my attempts to solve the loop issue
-            'opponent_low_in_all_rounds': opponent_low.in_all_rounds(),    # see notion for sample HTML code
         }
 
 
