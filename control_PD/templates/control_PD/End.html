@@ -10,8 +10,6 @@
     <table class="table">
         <tr>
             <th>Round</th>
-            <th>My choice</th>
-            <th>Opponent's choice</th>
             <th>My outcome</th>
             <th>Opponent's outcome</th>
 
@@ -19,13 +17,13 @@
         {% for p in player_in_all_rounds %}
             <tr>
                 <td>{{ p.round_number }}</td>
-                {% if my_treatment == 'high' %}
-                <td>{{ p.decision_high }}</td>
-                <td>{{ p.other_player.decision_high }}</td>
+                <!--- {% if my_treatment == 'high' %}
+                <td>{{ p.payoff_high }}</td>
+                <td>{{ p.other_player.payoff_high }}</td>
                 {% else %}
-                <td>{{ p.decision_low }}</td>
-                <td>{{ p.other_player.decision_low }}</td>
-                {% endif %}
+                <td>{{ p.payoff_low }}</td>
+                <td>{{ p.other_player.payoff_low }}</td>
+                {% endif %} --->
                 <td>{{ p.payoff }} pts</td>
                 <td>{{ p.other_player.payoff}} pts</td>
             </tr>

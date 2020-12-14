@@ -204,8 +204,7 @@ class Payment(Page):
             # 'vars_payment': sum([p.participant.vars['payment'] for p in self.player.in_all_rounds()]),
             # this is not summing... so if I were to use it below it would not work...
             'total_payoff': sum([p.payoff for p in self.player.in_all_rounds()]),  # same as End page
-            'participation_fee': self.session.config['participation_fee'],
-            # set it in the settings along with the curency
+            'participation_fee': self.session.config['participation_fee'],  # set it in the settings like currency
             'payment': (sum([p.payoff.to_real_world_currency(self.session) for p in
                              self.player.in_all_rounds()]) * Constants.currency_per_point),
             'final_payment': ((sum([p.payoff.to_real_world_currency(self.session) for p in
