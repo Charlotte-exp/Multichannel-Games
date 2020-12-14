@@ -236,7 +236,7 @@ page_sequence = [
     ResultsWaitPage,
     Results,
     End,
-    # Demographics,
+    Demographics,
     Payment,
     LeftHanging,
     ProlificLink,
