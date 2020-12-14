@@ -143,6 +143,20 @@ class Player(BasePlayer):
                     opponents.append(opponent)
         return opponents
 
+    # def get_high_opponent(self):
+    #     my_two_opponents = self.get_opponent()
+    #     print(my_two_opponents)
+    #     high_opponent = []
+    #     for p in my_two_opponents:
+    #         my_two_opponents[0] = p.high_opponent
+    #         return high_opponent
+    #
+    # def get_low_opponent(self):
+    #     my_two_opponents = self.get_opponent()
+    #     low_opponent = []
+    #     for p in my_two_opponents:
+    #         my_two_opponents[1] = low_opponent
+
     def set_payoff(self):
         """
         The payoff function layout is from the prisoner template.

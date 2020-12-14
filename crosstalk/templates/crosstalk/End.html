@@ -12,6 +12,60 @@
         <p>
             <h4>Task A:</h4>
         </p>
+        <table class="table">
+            <tr>
+                <th>Round</th>
+                <th>My outcome</th>
+                <th>Opponent's outcome</th>
+            </tr>
+            {% for p,q in player_and_opponent_high %}
+            <tr>
+                <td>{{ p.round_number }}</td>
+                <td>{{ p.payoff_high }} pts</td>
+                <td>{{ q.payoff_high }} pts</td>
+            </tr>
+            {% endfor %}
+            </table>
+        <p>
+            In Task A, across all rounds, you earned a total of <b>{{ total_payoff_high }}</b> points.
+        </p>
+    </div>
+    <div class="col">
+        <p>
+            <h4>Task B:</h4>
+        </p>
+        <table class="table">
+            <tr>
+                <th>Round</th>
+                <th>My outcome</th>
+                <th>Opponent's outcome</th>
+
+            </tr>
+            {% for p,q in player_and_opponent_low %}
+            <tr>
+                <td>{{ p.round_number }}</td>
+                <td>{{ p.payoff_low }} pts</td>
+                <td>{{ q.payoff_low }} pts</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <p>
+            In Task B, across all rounds, you earned a total of <b>{{ total_payoff_low }}</b> points.
+        </p>
+    </div>
+</div>
+
+    {% next_button %}
+
+{% endblock %}
+
+<!---
+
+<div class="row">
+    <div class="col">
+        <p>
+            <h4>Task A:</h4>
+        </p>
     <table class="table">
         <tr>
             <th>Round</th>
@@ -19,10 +73,10 @@
             <th>Opponent's outcome</th>
 
         </tr>
-        {% for p in player_in_all_rounds %} <!-- that loops the stuff below for each round so we have the results in all rounds! -->
+        {% for p in player_in_all_rounds %}
             {% for q in p.get_opponent %}
         <tr>
-            <td>{{ p.round_number }}</td> <!-- don't forget the p. for the looping -->
+            <td>{{ p.round_number }}</td>
             <td>{{ p.payoff_high }} pts</td>
             <td>{{ q.payoff_high }} pts</td>
         </tr>
@@ -59,8 +113,4 @@
     </div>
 </div>
 
-    {% next_button %}
-
-{% endblock %}
-
-
+--->
