@@ -18,7 +18,7 @@ doc = """
 
 class Constants(BaseConstants):
     name_in_url = 'introduction_control'
-    players_per_group = 2
+    players_per_group = 4
     num_rounds = 1
 
     """variables for randomish next round"""
@@ -70,8 +70,7 @@ class Subsession(BaseSubsession):
         for p in self.get_players():
             p.participant.vars['treatment'] = p.group.treatment
             print('vars treatment is', p.participant.vars['treatment'])
-            # print('id in session', p.participant.id_in_session)  # what the hell does that print??
-
+            print('id in session', p.participant.id_in_session)  # what the hell does that print??
         """ random last round code. With the function from above, 
                 we attribute the different elements in the list to each group."""
         list_num_rounds = self.get_random_number_of_rounds()
@@ -102,6 +101,15 @@ class Player(BasePlayer):
         Any variable defined in Player class becomes a new field attached to the player.
         Variables for the f-string are from vars for template in pages.py (since they need to match)
     """
+
+    # subgroup = models.StringField()
+    #
+    # def set_subgroups(self):
+    #     if self.id_in_group <= 2:
+    #         self.subgroup = 'high'
+    #     elif self.id_in_group >= 3:
+    #         self.subgroup = 'low'
+    #     return self.subgroup
 
     q1 = models.IntegerField(
         choices=[

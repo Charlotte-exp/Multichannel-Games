@@ -17,7 +17,7 @@ doc = """
 
 class Constants(BaseConstants):
     name_in_url = 'control_PD'
-    players_per_group = 2
+    players_per_group = 4
     num_rounds = 50
 
     # """ variables for randomish end round, used in the intro app at the mo"""
@@ -53,18 +53,18 @@ class Subsession(BaseSubsession):
         print("starting group_by_arrival_time_method")
         from collections import defaultdict
         d = defaultdict(list)
-        for p in waiting_players:
-            category = p.participant.vars['treatment']
-            players_with_this_category = d[category]
-            players_with_this_category.append(p)
-            if len(players_with_this_category) == 2:
-                print("forming group...")
-                return players_with_this_category
+        # for p in waiting_players:
+        #     category = p.participant.vars['treatment']
+        #     players_with_this_category = d[category]
+        #     players_with_this_category.append(p)
+        #     if len(players_with_this_category) == 4:
+        #         print("forming group...")
+        #         return players_with_this_category
         for p in waiting_players:
             category = p.participant.vars['last_round']
             players_with_this_category = d[category]
             players_with_this_category.append(p)
-            if len(players_with_this_category) == 2:
+            if len(players_with_this_category) == 4:
                 print("forming group", players_with_this_category)
                 print('last_round is', p.participant.vars['last_round'])
                 return players_with_this_category
@@ -129,12 +129,31 @@ class Player(BasePlayer):
 
     left_hanging = models.CurrencyField()
 
-    def other_player(self):
-        """
-        This function is form the prisoner template. It defines who the payoffs are calculated from.
-        It uses the otree function get_others_in_group()
-        """
-        return self.get_others_in_group()[0]
+    def get_opponent(self):
+        """ This is were the magic happens. we cannot just get_others_in_group() as there are 3 possible opponents and we want 2.
+            We create a dictionary, matches, that matches the correct two opponents IN THE RIGHT ORDER with each player.
+            We create a list of all the possible opponents in the group (so 3 players without oneself).
+            We create an empty matrix of opponents to be filled.
+            We create two looped loops.  """
+        matches = {1: [2], 2: [1], 3: [4], 4: [3]}
+        list_opponents = self.get_others_in_group()
+        # print(self.get_others_in_group())
+        # print(self.id_in_group)
+        opponent = []
+        for opponent_id in matches[self.id_in_group]:  # picks the two opponents from the matches dict
+            for other_player in list_opponents:  #
+                if other_player.id_in_group == opponent_id:
+                    opponent.append(other_player)
+        return opponent
+
+    subgroup = models.StringField()
+
+    def set_subgroups(self):
+        if self.id_in_group <= 2:
+            self.subgroup = 'high'
+        elif self.id_in_group >= 3:
+            self.subgroup = 'low'
+        return self.subgroup
 
     def set_payoff(self):
         """
@@ -144,7 +163,9 @@ class Player(BasePlayer):
         The if statement contains .group because the treatment variable is defined in group.
         If defined in player it is not needed.
         """
-        if self.participant.vars['treatment'] == 'high':
+        opponent = self.get_opponent()
+        # print([opponent.id_in_group for opponent in opponents])
+        if self.subgroup == 'high':
             payoff_matrix_high = {
                 1:
                     {
@@ -157,12 +178,13 @@ class Player(BasePlayer):
                         2: Constants.endowment_high + Constants.dd_high
                     }
             }
-            self.payoff = payoff_matrix_high[self.decision_high][self.other_player().decision_high]
+            self.payoff = payoff_matrix_high[self.decision_high][opponent[0].decision_high]
             self.participant.vars['payment'] = self.payoff
             # print('payoff is', self.payoff)
             # print('vars payoff is', self.participant.vars['payment'])
+            print('subgroup', self.subgroup)
 
-        elif self.participant.vars['treatment'] == 'low':
+        elif self.subgroup == 'low':
             payoff_matrix_low = {
                 3:
                     {
@@ -181,10 +203,11 @@ class Player(BasePlayer):
             I could have written participant.vars = payoff matrix directly,
             but then it means I need to use the participant.vars code everywhere I call the payoff!
             """
-            self.payoff = payoff_matrix_low[self.decision_low][self.other_player().decision_low]
+            self.payoff = payoff_matrix_low[self.decision_low][opponent[0].decision_low]
             self.participant.vars['payment'] = self.payoff
             # print('payoff is', self.payoff)
             # print('vars payoff is', self.participant.vars['payment'])
+            print('subgroup', self.subgroup)
 
         # print('treatment is', self.group.treatment)
         # print('Player ID', self.id_in_group) # I need participant ID to check the random pairing is working

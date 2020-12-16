@@ -25,7 +25,9 @@
                 <td>{{ p.other_player.payoff_low }}</td>
                 {% endif %} --->
                 <td>{{ p.payoff }} pts</td>
-                <td>{{ p.other_player.payoff}} pts</td>
+                {% for q in p.get_opponent %}
+                <td>{{ q.payoff}} pts</td>
+                {% endfor %}
             </tr>
         {% endfor %}
     </table>

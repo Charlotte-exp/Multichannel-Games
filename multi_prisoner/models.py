@@ -143,6 +143,7 @@ class Player(BasePlayer):
             for other_player in list_opponents:  #
                 if other_player.id_in_group == opponent_id:
                     opponent.append(other_player)
+                    print('subgroup is', self.opponent)
         return opponent
 
     def set_payoff(self):

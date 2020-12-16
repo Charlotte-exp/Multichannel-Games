@@ -140,8 +140,9 @@ class Player(BasePlayer):
         #print(self.get_others_in_group())
         #print(self.id_in_group)
         opponents = []
+        print(self.get_opponent)
         for opponent_id in matches[self.id_in_group]:  # picks the two opponents from the matches dict
-            for opponent in list_opponents:  #
+            for opponent in list_opponents:  # picks the three other players from the list of other players
                 if opponent.id_in_group == opponent_id:
                     opponents.append(opponent)
         return opponents

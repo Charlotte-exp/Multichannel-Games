@@ -15,11 +15,25 @@ class PairingWaitPage(WaitPage):
     template_name = 'control_PD/Waitroom.html'
 
 
+class SetGroupThings(Page):
+
+    def is_displayed(self):
+        return self.round_number == 1
+
+    timeout_seconds = 0.5
+
+    def before_next_page(self):
+        if self.player.id_in_group <= 2:
+            self.player.subgroup = 'high'
+        elif self.player.id_in_group >= 3:
+            self.player.subgroup = 'low'
+
+
 class Decision(Page):
     form_model = 'player'
 
     def get_form_fields(self):
-        if self.participant.vars['treatment'] == 'high':
+        if self.player.subgroup == 'high':
             return ['decision_high']
         else:
             return ['decision_low']
@@ -47,8 +61,8 @@ class Decision(Page):
         other_players = me.get_others_in_group()
         if self.timeout_happened:
             other_players[0].left_hanging = 1
-            # other_players[1].left_hanging = 1
-            # other_players[2].left_hanging = 1
+            other_players[1].left_hanging = 1
+            other_players[2].left_hanging = 1
             me.left_hanging = 2
             me.decision_high = 1
             me.decision_low = 3
@@ -59,14 +73,16 @@ class Decision(Page):
         The variables are inserted into calculation or specifications if needed and given a display name
         """
         me = self.player
-        opponent = me.other_player()  # the other player attributed to me by the function other_player()
+        opponent = me.get_opponent()
+        opponent_high = opponent[0]
+        opponent_low = opponent[0]
         if self.round_number > 1:
             return {
                 'round_number': self.round_number,
-                'my_treatment': me.participant.vars['treatment'],
+                'my_treatment': me.subgroup,
 
-                'opponent_previous_decision_high': opponent.in_round(self.round_number - 1).decision_high,
-                'opponent_previous_decision_low': opponent.in_round(self.round_number - 1).decision_low,
+                'opponent_previous_decision_high': opponent_high.in_round(self.round_number - 1).decision_high,
+                'opponent_previous_decision_low': opponent_low.in_round(self.round_number - 1).decision_low,
                 'previous_decision_high': me.in_round(self.round_number - 1).decision_high,
                 'previous_decision_low': me.in_round(self.round_number - 1).decision_low,
 
@@ -78,7 +94,7 @@ class Decision(Page):
         else:
             return {
                 'round_number': self.round_number,
-                'my_treatment': me.participant.vars['treatment'],
+                'my_treatment': me.subgroup,
 
                 'cost_high': Constants.c_high,
                 'cost_low': Constants.c_low,
@@ -129,17 +145,20 @@ class Results(Page):
 
     def vars_for_template(self):
         me = self.player
-        opponent = me.other_player()
+        opponent = me.get_opponent()
+        opponent_high = opponent[0]
+        opponent_low = opponent[0]
         return {
-            'my_treatment': me.participant.vars['treatment'],
+            'my_treatment': me.subgroup,
 
             'my_decision_high': me.decision_high,
             'my_decision_low': me.decision_low,
-            'opponent_decision_high': opponent.decision_high,
-            'opponent_decision_low': opponent.decision_low,
+            'opponent_decision_high': opponent_high.decision_high,
+            'opponent_decision_low': opponent_low.decision_low,
 
             'my_payoff': me.payoff,
-            'opponent_payoff': opponent.payoff,
+            'opponent_payoff_high': opponent_high.payoff,
+            'opponent_payoff_low': opponent_low.payoff,
 
             'cost_high': Constants.c_high,
             'cost_low': Constants.c_low,
@@ -164,7 +183,7 @@ class End(Page):
         me = self.player
         opponent = me.other_player()
         return {
-            'my_treatment': me.participant.vars['treatment'],
+            'my_treatment': me.subgroup,
             'total_payoff': sum([p.payoff for p in self.player.in_all_rounds()]),  # both work!
             # 'total_payment': sum([p.participant.vars['payment'] for p in self.player.in_all_rounds()]),
             'player_in_all_rounds': self.player.in_all_rounds(),
@@ -230,6 +249,7 @@ class ProlificLink(Page):
 
 page_sequence = [
     PairingWaitPage,
+    SetGroupThings,
     Decision,
     ResultsWaitPage,
     Results,
