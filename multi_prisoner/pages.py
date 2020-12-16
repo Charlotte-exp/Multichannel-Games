@@ -45,8 +45,8 @@ class Decision(Page):
         other_players = me.get_others_in_group()
         if self.timeout_happened:
             other_players[0].left_hanging = 1
-            # other_players[1].left_hanging = 1
-            # other_players[2].left_hanging = 1
+            other_players[1].left_hanging = 1
+            other_players[2].left_hanging = 1
             me.left_hanging = 2
             me.decision_high = 1
             me.decision_low = 3
@@ -57,12 +57,14 @@ class Decision(Page):
         The variables are inserted into calculation or specifications if needed and given a display name
         """
         me = self.player
-        opponent = me.other_player()  # the other player attributed to me by the function other_player()
+        opponent = me.get_opponent()
+        opponent_high = opponent[0]
+        opponent_low = opponent[0]
         if self.round_number > 1:
             return {
                 'round_number': self.round_number,
-                'opponent_previous_decision_high': opponent.in_round(self.round_number - 1).decision_high,
-                'opponent_previous_decision_low': opponent.in_round(self.round_number - 1).decision_low,
+                'opponent_previous_decision_high': opponent_high.in_round(self.round_number - 1).decision_high,
+                'opponent_previous_decision_low': opponent_low.in_round(self.round_number - 1).decision_low,
                 'previous_decision_high': me.in_round(self.round_number - 1).decision_high,
                 'previous_decision_low': me.in_round(self.round_number - 1).decision_low,
 
@@ -124,17 +126,19 @@ class Results(Page):
 
     def vars_for_template(self):
         me = self.player
-        opponent = me.other_player()
+        opponent = me.get_opponent()
+        opponent_high = opponent[0]
+        opponent_low = opponent[0]
         return {
             'my_high_decision': me.decision_high,
             'my_low_decision': me.decision_low,
-            'opponent_high_decision': opponent.decision_high,
-            'opponent_low_decision': opponent.decision_low,
+            'opponent_high_decision': opponent_high.decision_high,
+            'opponent_low_decision': opponent_low.decision_low,
 
             'my_high_payoff': me.payoff_high,
             'my_low_payoff': me.payoff_low,
-            'opponent_high_payoff': opponent.payoff_high,
-            'opponent_low_payoff': opponent.payoff_low,
+            'opponent_high_payoff': opponent_high.payoff_high,
+            'opponent_low_payoff': opponent_low.payoff_low,
 
             'cost_high': Constants.c_high,
             'cost_low': Constants.c_low,
@@ -157,7 +161,7 @@ class End(Page):
 
     def vars_for_template(self):
         me = self.player
-        opponent = me.other_player()
+        opponent = me.get_opponent()
         return {
             'total_payoff_high': sum([p.payoff_high for p in self.player.in_all_rounds()]),
             'total_payoff_low': sum([p.payoff_low for p in self.player.in_all_rounds()]),
@@ -236,7 +240,7 @@ page_sequence = [
     ResultsWaitPage,
     Results,
     End,
-    Demographics,
+    # Demographics,
     Payment,
     LeftHanging,
     ProlificLink,

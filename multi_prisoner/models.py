@@ -18,8 +18,10 @@ doc = """
 
 
 class Constants(BaseConstants):
+    """ This game can only work with a group of four participants,
+        even if one player interacts with only 2 other in the group """
     name_in_url = 'multi_prisoner'
-    players_per_group = 2
+    players_per_group = 4
     num_rounds = 50
 
     # """variables for randomish end round, used in the intro app at the mo"""
@@ -52,16 +54,16 @@ class Subsession(BaseSubsession):
     if one of the 5 one gives up and quits the other two cannot play together. So not ideal
     """
     def group_by_arrival_time_method(self, waiting_players):
-        print("starting group_by_arrival_time_method")
+        # print("starting group_by_arrival_time_method")
         from collections import defaultdict
         d = defaultdict(list)
         for p in waiting_players:
             category = p.participant.vars['last_round']
             players_with_this_category = d[category]
             players_with_this_category.append(p)
-            if len(players_with_this_category) == 2:
-                print("forming group", players_with_this_category)
-                print('last_round is', p.participant.vars['last_round'])
+            if len(players_with_this_category) == 4:
+                # print("forming group", players_with_this_category)
+                # print('last_round is', p.participant.vars['last_round'])
                 return players_with_this_category
 
 
@@ -126,12 +128,22 @@ class Player(BasePlayer):
 
     left_hanging = models.CurrencyField()
 
-    def other_player(self):
-        """
-        This function is form the prisoner template. It defines who the payoffs are calculated from.
-        It uses the otree function get_others_in_group()
-        """
-        return self.get_others_in_group()[0]
+    def get_opponent(self):
+        """ This is were the magic happens. we cannot just get_others_in_group() as there are 3 possible opponents and we want 2.
+            We create a dictionary, matches, that matches the correct two opponents IN THE RIGHT ORDER with each player.
+            We create a list of all the possible opponents in the group (so 3 players without oneself).
+            We create an empty matrix of opponents to be filled.
+            We create two looped loops.  """
+        matches = {1: [2], 2: [1], 3: [4], 4: [3]}
+        list_opponents = self.get_others_in_group()
+        # print(self.get_others_in_group())
+        # print(self.id_in_group)
+        opponent = []
+        for opponent_id in matches[self.id_in_group]:  # picks the two opponents from the matches dict
+            for other_player in list_opponents:  #
+                if other_player.id_in_group == opponent_id:
+                    opponent.append(other_player)
+        return opponent
 
     def set_payoff(self):
         """
@@ -140,6 +152,8 @@ class Player(BasePlayer):
         Bottom lines calculate the payoff based on actual choices, again, one for each game.
         They are added for the round total (self.payment).
         """
+        opponent = self.get_opponent()
+        # print([opponent.id_in_group for opponent in opponents])
         payoff_matrix_high = {
             1:
                 {
@@ -152,7 +166,7 @@ class Player(BasePlayer):
                     2: Constants.endowment_high + Constants.dd_high
                 }
         }
-        self.payoff_high = payoff_matrix_high[self.decision_high][self.other_player().decision_high]
+        self.payoff_high = payoff_matrix_high[self.decision_high][opponent[0].decision_high]
 
         payoff_matrix_low = {
             3:
@@ -174,7 +188,7 @@ class Player(BasePlayer):
         but then it means I need to use the participant.vars code everywhere I call the payoff!
         Here only the combined payoffs of the two games together is stored
         """
-        self.payoff_low = payoff_matrix_low[self.decision_low][self.other_player().decision_low]
+        self.payoff_low = payoff_matrix_low[self.decision_low][opponent[0].decision_low]
         self.payment = self.payoff_high + self.payoff_low
         # self.participant.vars['payment'] = self.payment
         # print('self.payment', self.payment)
