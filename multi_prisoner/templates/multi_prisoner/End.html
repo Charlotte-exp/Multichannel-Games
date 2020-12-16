@@ -23,7 +23,9 @@
                 <tr>
                     <td>{{ p.round_number }}</td> <!-- don't forget the p. for the looping -->
                     <td>{{ p.payoff_high }} pts</td>
-                    <td>{{ p.other_player.payoff_high}} pts</td>
+                    {% for q in p.get_opponent %}
+                    <td>{{ q.payoff_high}} pts</td>
+                    {% endfor %}
                 </tr>
             {% endfor %}
         </table>
@@ -46,7 +48,9 @@
                 <tr>
                     <td>{{ p.round_number }}</td> <!-- don't forget the p. for the looping -->
                     <td>{{ p.payoff_low }} pts</td>
-                    <td>{{ p.other_player.payoff_low}} pts</td>
+                    {% for q in p.get_opponent %}
+                    <td>{{ q.payoff_low}} pts</td>
+                    {% endfor %}
                 </tr>
             {% endfor %}
         </table>
