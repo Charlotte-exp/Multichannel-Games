@@ -22,70 +22,112 @@
 
 {% block content %}
 
-<div class="card-body">
     <p>
         Below are your two options for <b>Task A</b> and <b>Task B</b>, respectively. You need to make a choice in each task to continue.
     </p>
+{% if round_number > 1 %}
+<div class="card-body small">
     <div class="row">
         <div class="col">
-            {% if round_number > 1 %}
-            <div class="card-body text-center">
-                <p><u>In the previous round in Task A:</u></p>
-                {% if previous_decision_high == 1 %}
-                <p><small>You({{ my_player_id }}) chose to <b>pay {{ cost_high }} pts</b> in order for Participant<font color="blue"> 2</font> to <b>receive {{ benefit_high }} pts</b></small>
-                {% else %}
-                <p><small>You({{ my_player_id }}) chose to <b>pay pts</b> 0 in order for Participant<font color="blue"> 2</font> to <b>receive 0 pts</b></small>
-                {% endif %}
-                {% if opponent_previous_decision_high == 1 %}
-                <p><small>Participant<font color="blue"> 2({{ opponent_high_id }})</font> chose to <b>pay {{ cost_high }} pts</b> in order for you to <b>receive {{ benefit_high }} pts</b></small>
-                {% else %}
-                <p><small>Participant<font color="blue"> 2({{ opponent_high_id }})</font> chose to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b></small>
-                {% endif %}
+            <div class="card bg-light instructions">
+                <div class="card-body">
+                    <p>
+                        <h6>In the previous round in Task A:</h6>
+                        (played with Participant <font color="blue">2</font>)
+                    </p>
+                    <p>You chose:</p>
+                    <ul>
+                        {% if previous_decision_high == 1 %}
+                        <p>
+                            to <b>pay {{ cost_high }} pts</b> in order for Participant<font color="blue"> 2</font> to <b>receive {{ benefit_high }} pts</b>.
+                        </p>
+                        {% else %}
+                        <p>
+                            to <b>pay pts</b> 0 in order for Participant<font color="blue"> 2</font> to <b>receive 0 pts</b>.
+                        </p>
+                        {% endif %}
+                    </ul>
+                    <p> Participant<font color="blue"> 2({{ opponent_high_id }})</font> chose:</p>
+                    <ul>
+                        {% if opponent_previous_decision_high == 1 %}
+                        <p>
+                             to <b>pay {{ cost_high }} pts</b> in order for you to <b>receive {{ benefit_high }} pts</b>.
+                        </p>
+                        {% else %}
+                        <p>
+                            to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b>.
+                        </p>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
-            {% endif %}
         </div>
         <div class="col">
-            {% if round_number > 1 %}
-            <div class="card-body text-center">
-                <p><u>In the previous round in Task B:</u></p>
-                {% if previous_decision_low == 3 %}
-                <p><small>You({{ my_player_id }}) chose to <b>pay {{ cost_low }} pts</b> in order for Participant <u>3</u> to <b>receive {{ benefit_low }} pts</b></small>
-                {% else %}
-                <p><small>You<({{ my_player_id }}) chose to <b>pay 0 pts</b> in order for Participant <u>3</u> to <b>receive 0 pts</b></small>
-                {% endif %}
-                {% if opponent_previous_decision_low == 3 %}
-                <p><small>Participant <font color="blue">3({{ opponent_low_id }})</font> chose to <b>pay {{ cost_low }} pts</b> in order for you to <b>receive {{ benefit_low }} pts</b></small>
-                {% else %}
-                <p><small>Participant <font color="blue">3({{ opponent_low_id }})</font> chose to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b></small>
-                {% endif %}
+            <div class="card bg-light instructions">
+                <div class="card-body">
+                    <p>
+                        <h6>In the previous round in Task B:</h6>
+                        (played with Participant <font color="blue">3</font>)
+                    </p>
+                    <p>You chose:</p>
+                    <ul>
+                        {% if previous_decision_high == 3 %}
+                        <p>
+                            to chose to <b>pay {{ cost_low }} pts</b> in order for Participant<font color="blue"> 3</font> to <b>receive {{ benefit_high }} pts</b>.
+                        </p>
+                        {% else %}
+                        <p>
+                            to <b>pay pts</b> 0 in order for Participant<font color="blue"> 3</font> to <b>receive 0 pts</b>.
+                        </p>
+                        {% endif %}
+                    </ul>
+                    <p> Participant<font color="blue"> 3({{ opponent_high_id }})</font> chose:</p>
+                    <ul>
+                        {% if opponent_previous_decision_high == 3 %}
+                        <p>
+                            to <b>pay {{ cost_low }} pts</b> in order for you to <b>receive {{ benefit_low }} pts</b>
+                        </p>
+                        {% else %}
+                        <p>
+                            to chose to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b>
+                        </p>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
-            {% endif %}
         </div>
     </div>
+</div>
+{% endif %}
 
-    <div class="row">
-        <div class="col">
-            <div class="card bg-light instructions">
-                <div class="card-body">
-                <p>
-                    <h4>Task A:</h4>
-                    (played with Participant<font color="blue"> 2</font>)
-                    </p>
-                        {% formfield player.decision_high label='' %}
-                    </p>
-                </div>
+<div class="card-body">
+    <p>
+        <h4>In this round:</h4>
+    </p>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="card bg-light instructions">
+            <div class="card-body">
+            <p>
+                <h4>Task A:</h4>
+                (played with Participant<font color="blue"> 2</font>)
+                </p>
+                    {% formfield player.decision_high label='' %}
+                </p>
             </div>
         </div>
-        <div class="col">
-            <div class="card bg-light instructions">
-                <div class="card-body">
-                <p>
-                    <h4>Task B:</h4>
-                    (played with Participant<font color="blue"> 3</font>)
-                    </p>
-                        {% formfield player.decision_low label='' %}
-                    </p>
-                </div>
+    </div>
+    <div class="col">
+        <div class="card bg-light instructions">
+            <div class="card-body">
+            <p>
+                <h4>Task B:</h4>
+                (played with Participant<font color="blue"> 3</font>)
+                </p>
+                    {% formfield player.decision_low label='' %}
+                </p>
             </div>
         </div>
     </div>

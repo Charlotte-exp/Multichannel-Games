@@ -52,7 +52,7 @@ class Subsession(BaseSubsession):
     if one of the 5 one gives up and quits the other two cannot play together. So not ideal
     """
     def group_by_arrival_time_method(self, waiting_players):
-        print("starting group_by_arrival_time_method")
+        # print("starting group_by_arrival_time_method")
         from collections import defaultdict
         d = defaultdict(list)
         for p in waiting_players:
@@ -60,8 +60,8 @@ class Subsession(BaseSubsession):
             players_with_this_category = d[category]
             players_with_this_category.append(p)
             if len(players_with_this_category) == 4:
-                print("forming group", players_with_this_category)
-                print('last_round is', p.participant.vars['last_round'])
+                # print("forming group", players_with_this_category)
+                # print('last_round is', p.participant.vars['last_round'])
                 return players_with_this_category
 
 
@@ -104,8 +104,8 @@ class Player(BasePlayer):
 
     decision_high = models.IntegerField(
         choices=[
-            [1, f'You pay {Constants.c_high} points in order for Participant 2 to receive {Constants.b_high} points.'],
-            [2, 'You pay 0 points in order for Participant 2 to receive 0 points.'],
+            [1, f'You pay {Constants.c_high} pts for Participant 2 to receive {Constants.b_high} pts.'],
+            [2, 'You pay 0 pts for Participant 2 to receive 0 pts.'],
         ],
         doc="""This player's decision""",
         widget=widgets.RadioSelect
@@ -113,8 +113,8 @@ class Player(BasePlayer):
 
     decision_low = models.IntegerField(
         choices=[
-            [3, f'You pay {Constants.c_low} points in order for Participant 3 to receive {Constants.b_low} points.'],
-            [4, 'You pay 0 points in order for Participant 3 to receive 0 points.'],
+            [3, f'You pay {Constants.c_low} pts for Participant 3 to receive {Constants.b_low} pts.'],
+            [4, 'You pay 0 pts for Participant 3 to receive 0 pts.'],
         ],
         doc="""This player's decision""",
         widget=widgets.RadioSelect
@@ -143,20 +143,6 @@ class Player(BasePlayer):
                     opponents.append(opponent)
         return opponents
 
-    # def get_high_opponent(self):
-    #     my_two_opponents = self.get_opponent()
-    #     print(my_two_opponents)
-    #     high_opponent = []
-    #     for p in my_two_opponents:
-    #         my_two_opponents[0] = p.high_opponent
-    #         return high_opponent
-    #
-    # def get_low_opponent(self):
-    #     my_two_opponents = self.get_opponent()
-    #     low_opponent = []
-    #     for p in my_two_opponents:
-    #         my_two_opponents[1] = low_opponent
-
     def set_payoff(self):
         """
         The payoff function layout is from the prisoner template.
@@ -169,7 +155,7 @@ class Player(BasePlayer):
         (elements here is the player id in the list).
         """
         opponents = self.get_opponent()
-        print([opponent.id_in_group for opponent in opponents])
+        # print([opponent.id_in_group for opponent in opponents])
         payoff_matrix_high = {
             1:
                 {

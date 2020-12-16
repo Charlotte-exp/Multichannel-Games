@@ -22,49 +22,84 @@
 
 {% block content %}
 
-<div class="card-body">
     <p>
         Below are your two options for the task. You need to make a choice to continue.
     </p>
+
+<div class="card-body">
     {% if round_number > 1 %}
-    <div class="card-body text-center">
-        <p>
-            <h5>In the previous round</h5>
-        </p>
-        {% if my_treatment == 'high' %}
-            {% if previous_decision_high == 1 %}
-            <p><small>You chose to <b>pay {{ cost_high }} pts</b> in order for Participant 2 to <b>receive {{ benefit_high }} pts</b></small>
-            {% else %}
-            <p><small>You chose to <b>pay 0 pts</b> in order for Participant 2 to <b>receive 0 pts</b></small>
-            {% endif %}
-            {% if opponent_previous_decision_high == 1 %}
-            <p><small>Participant 2 chose to <b>pay {{ cost_high }} pts</b> in order for you to <b>receive {{ benefit_high }} pts</b></small>
-            {% else %}
-            <p><small>Participant 2 chose to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b></small>
-            {% endif %}
-        {% endif %}
-        {% if my_treatment == 'low' %}
-            {% if previous_decision_low == 3 %}
-            <p><small>You chose to <b>pay {{ cost_low }} pts</b> in order for Participant 2 to <b>receive {{ benefit_low }} pts</b></small>
-            {% else %}
-            <p><small>You chose to <b>pay pts</b> 0 in order for Participant 2 to <b>receive 0 pts</b></small>
-            {% endif %}
-            {% if opponent_previous_decision_low == 3 %}
-            <p><small>Participant 2 chose to <b>pay {{ cost_low }} pts</b> in order for you to <b>receive {{ benefit_low }} pts</b></small>
-            {% else %}
-            <p><small>Participant 2 chose to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b></small>
-            {% endif %}
-        {% endif %}
+    <div class="card-body small">
+        <div class="card bg-light instructions">
+            <div class="card-body">
+                <p>
+                    <h5>In the previous round</h5>
+                </p>
+                {% if my_treatment == 'high' %}
+                    <p>You chose:</p>
+                    <ul>
+                        {% if previous_decision_high == 1 %}
+                        <li>
+                            to <b>pay {{ cost_high }} pts</b> for Participant 2 to <b>receive {{ benefit_high }} pts</b>.
+                        </li>
+                        {% else %}
+                        <li>
+                            to <b>pay 0 pts</b> in order for Participant 2 to <b>receive 0 pts</b>.
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <p> Participant 2 chose:</p>
+                    <ul>
+                        {% if opponent_previous_decision_high == 1 %}
+                        <li>
+                            to <b>pay {{ cost_high }} pts</b> in order for you to <b>receive {{ benefit_high }} pts</b>.
+                        </li>
+                        {% else %}
+                        <li>
+                            to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b>.
+                        </li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+                {% if my_treatment == 'low' %}
+                    <p>You chose:</p>
+                    <ul>
+                        {% if previous_decision_low == 3 %}
+                        <li>
+                            to <b>pay {{ cost_low }} pts</b> for Participant 2 to <b>receive {{ benefit_low}} pts</b>.
+                        </li>
+                        {% else %}
+                        <li>
+                            to <b>pay 0 pts</b> in order for Participant 2 to <b>receive 0 pts</b>.
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <p> Participant 2 chose:</p>
+                    <ul>
+                        {% if opponent_previous_decision_low == 3 %}
+                        <li>
+                            to <b>pay {{ cost_low }} pts</b> in order for you to <b>receive {{ benefit_low }} pts</b>.
+                        </li>
+                        {% else %}
+                        <li>
+                            to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b>.
+                        </li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
     </div>
     {% endif %}
 </div>
 
+<div class="card-body">
+    <p>
+        <h4>In this round:</h4>
+    </p>
+</div>
 
 <div class="card bg-light instructions">
     <div class="card-body">
-        <p>
-            <h4>In this round:</h4>
-        </p>
         {% if my_treatment == 'high' %}
             <p>
                 {% formfield player.decision_high label='' %}

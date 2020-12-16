@@ -32,7 +32,7 @@ class Decision(Page):
             return True
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
-    timeout_seconds = 2 * 10
+    # timeout_seconds = 2 * 60
 
     def before_next_page(self):
         """
@@ -109,7 +109,7 @@ class Results(Page):
             return True
 
     timer_text = 'You are about to be automatically moved to the next round decision page'
-    timeout_seconds = 2 * 60
+    # timeout_seconds = 2 * 60
     # my_page_timeout_seconds = 90
     #
     # def get_timeout_seconds(self):
@@ -236,7 +236,7 @@ page_sequence = [
     ResultsWaitPage,
     Results,
     End,
-    # Demographics,
+    Demographics,
     Payment,
     LeftHanging,
     ProlificLink,

@@ -2,7 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-    Results
+    Round Results
 {% endblock %}
 
 {% block styles %}
@@ -20,82 +20,69 @@
 
 {% block content %}
 
-<div class="card bg-light instructions">
-    <div class="card-body">
+
+    <div class="card bg-light instructions">
+        <div class="card-body">
         {% if my_treatment == 'high' %}
             <p>
                 <h4>In this round:</h4>
             </p>
-            {% if my_decision_high == 1 %}
+            <p>You chose:</p>
             <ul>
+                {% if my_decision_high == 1 %}
                 <li>
-                    You chose to <b>pay {{ cost_high }} pts</b> in order for Participant 2 to <b>receive {{ benefit_high }} pts</b>
-                </li>
-                {% if opponent_decision_high == 1 %}
-                <li>
-                    Participant 2 chose to <b>pay {{ cost_high }} pts</b> in order for you to <b>receive {{ benefit_high }} pts</b>
+                    to <b>pay {{ cost_high }} pts</b> for Participant 2 to <b>receive {{ benefit_high }} pts</b>.
                 </li>
                 {% else %}
                 <li>
-                    Participant 2 chose to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b>
+                    to <b>pay 0 pts</b> in order for Participant 2 to <b>receive 0 pts</b>.
                 </li>
                 {% endif %}
             </ul>
-            {% else %}
+            <p> Participant 2 chose:</p>
             <ul>
-                <li>
-                    You chose to <b>pay 0 pts</b> in order for Participant 2 to <b>receive 0 pts</b>
-                </li>
                 {% if opponent_decision_high == 1 %}
                 <li>
-                    Participant 2 chose to <b>pay {{ cost_high }} pts</b> in order for you to <b>receive {{ benefit_high }} pts</b>
+                    to <b>pay {{ cost_high }} pts</b> in order for you to <b>receive {{ benefit_high }} pts</b>.
                 </li>
                 {% else %}
                 <li>
-                    Participant 2 chose to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b>
+                    to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b>.
                 </li>
                 {% endif %}
             </ul>
-            {% endif %}
         {% endif %}
         {% if my_treatment == 'low' %}
             <p>
                 <h4>In this round</h4>
             </p>
-            {% if my_decision_low == 3 %}
-            <ul>
-                <li>
-                    You chose to <b>pay {{ cost_low }} pts</b> in order for Participant 2 to <b>receive {{ benefit_low }} pts</b>
-                </li>
-                {% if opponent_decision_low == 3 %}
-                <li>
-                    Participant 2 chose to <b>pay {{ cost_low }} pts</b> in order for you to <b>receive {{ benefit_low }} pts</b>
-                </li>
-                {% else %}
-                <li>
-                    Participant 2 chose to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b>
-                </li>
-                {% endif %}
-            </ul>
-            {% else %}
-            <ul>
-                <li>
-                    You chose to <b>pay 0 pts</b> in order for Participant 2 to <b>receive 0 pts</b>
-                </li>
-                {% if opponent_decision_low == 3 %}
-                <li>
-                    Participant 2 chose to <b>pay {{ cost_low }} pts</b> in order for you to <b>receive {{ benefit_low }} pts</b>
-                </li>
-                {% else %}
-                <li>
-                    Participant 2 chose to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b>
-                </li>
-                {% endif %}
-            </ul>
-            {% endif %}
+            <p>You chose:</p>
+                <ul>
+                    {% if my_decision_low == 3 %}
+                    <li>
+                        to <b>pay {{ cost_low }} pts</b> for Participant 2 to <b>receive {{ benefit_low }} pts</b>.
+                    </li>
+                    {% else %}
+                    <li>
+                        to <b>pay 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
+                    </li>
+                    {% endif %}
+                </ul>
+                <p> Participant 2 chose:</p>
+                <ul>
+                    {% if opponent_decision_low == 3 %}
+                    <li>
+                        to <b>pay {{ cost_low }} pts</b> for you to <b>receive {{ benefit_low }} pts</b>.
+                    </li>
+                    {% else %}
+                    <li>
+                        to <b>pay 0 pts</b> for you to <b>receive 0 pts</b>.
+                    </li>
+                    {% endif %}
+                </ul>
         {% endif %}
         <p>
-            As a result, in this round, you earned <b>{{ my_payoff }}</b> pts.
+            In total, taking your initial endowment into account, you earned <b>{{ my_payoff }}</b> pts in this round.
         </p>
     </div>
 </div>

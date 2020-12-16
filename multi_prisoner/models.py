@@ -104,8 +104,8 @@ class Player(BasePlayer):
 
     decision_high = models.IntegerField(
         choices=[
-            [1, f'You pay {Constants.c_high} points in order for Participant 2 to receive {Constants.b_high} points.'],
-            [2, 'You pay 0 points in order for Participant 2 to receive 0 points.'],
+            [1, f'You pay {Constants.c_high} pts for Participant 2 to receive {Constants.b_high} pts.'],
+            [2, 'You pay 0 pts for Participant 2 to receive 0 pts.'],
         ],
         doc="""This player's decision""",
         widget=widgets.RadioSelect
@@ -113,8 +113,8 @@ class Player(BasePlayer):
 
     decision_low = models.IntegerField(
         choices=[
-            [3, f'You pay {Constants.c_low} points in order for Participant 2 to receive {Constants.b_low} points.'],
-            [4, 'You pay 0 points in order for Participant 2 to receive 0 points.'],
+            [3, f'You pay {Constants.c_low} pts for Participant 2 to receive {Constants.b_low} pts.'],
+            [4, 'You pay 0 pts for Participant 2 to receive 0 pts.'],
         ],
         doc="""This player's decision""",
         widget=widgets.RadioSelect

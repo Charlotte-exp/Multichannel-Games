@@ -126,7 +126,7 @@ class Player(BasePlayer):
     q3 = models.IntegerField(
         choices=[
             [1, f'You will earn {Constants.b_high} points.'],
-            [2, 'You will earn 100 points.'],
+            [2, 'You will earn 10 points.'],
             [3, 'Neither will earn additional points.']
         ],
         verbose_name=f'What amount will you receive if Participant 2 chooses to pay {Constants.c_high} points '
