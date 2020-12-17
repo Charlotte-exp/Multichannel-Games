@@ -18,7 +18,7 @@ doc = """
 
 class Constants(BaseConstants):
     name_in_url = 'introduction_control'
-    players_per_group = 2
+    players_per_group = 4
     num_rounds = 1
 
     """variables for randomish next round"""
@@ -60,20 +60,10 @@ class Subsession(BaseSubsession):
 
     def creating_session(self):
         """
-            Assigns treatments to pairs of two. First create the treatments (high, low),
-            for each groups, assign one treatment to a pair, then the other, then the first one again.
+            Assigns a last_round number to the 4 player group.
+            With the function from above, we attribute the different elements in the list to each group.
             Then for each player, store the treatment in participant.vars.
         """
-        treatments = itertools.cycle(['high', 'low'])
-        for g in self.get_groups():
-            g.treatment = next(treatments)
-        for p in self.get_players():
-            p.participant.vars['treatment'] = p.group.treatment
-            print('vars treatment is', p.participant.vars['treatment'])
-            # print('id in session', p.participant.id_in_session)  # what the hell does that print??
-
-        """ random last round code. With the function from above, 
-                we attribute the different elements in the list to each group."""
         list_num_rounds = self.get_random_number_of_rounds()
         group_number_of_rounds = itertools.cycle(list_num_rounds)
         for g in self.get_groups():
@@ -83,14 +73,8 @@ class Subsession(BaseSubsession):
             p.participant.vars['last_round'] = p.group.last_round
             print('vars last_round is', p.participant.vars['last_round'])
 
-# when this is finalised merge together treatment and last_round as they are the same
-
 
 class Group(BaseGroup):
-    """ treatment needs to be defined at the group level so that both player in the group have the same.
-       if defined at the player level, then each player will have a different one regardless of pairs/groups """
-    treatment = models.StringField()
-
     """Field of the number of rounds. Each group gets attributed a number of rounds"""
     last_round = models.IntegerField()
 
