@@ -29,7 +29,7 @@ class Instructions1(Page):
         return self.round_number == 1  # Exclude this page in the loop
 
     def error_message(self, values):
-        if values['q3'] != 1:
+        if values['q3'] != 2:
             return 'Answer to question 1 is incorrect. Check the instructions again and give a new answer'
         if values['q4'] != 2:
             return 'Answer to question 2 is incorrect. Check the instructions again and give a new answer'

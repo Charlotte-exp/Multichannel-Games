@@ -87,7 +87,7 @@ class Player(BasePlayer):
     q1 = models.IntegerField(
         choices=[
             [1, '0 other participants'],
-            [2, '1 other participants'],
+            [2, '1 other participant'],
             [3, '2 other participants']
         ],
         verbose_name='With how many other participant(s) will you be interacting in this study?',
@@ -98,7 +98,7 @@ class Player(BasePlayer):
         choices=[
             [1, 'There is no bonus possible in this study.'],
             [2, 'My bonus payment depends only on my decisions.'],
-            [3, 'My bonus payment depends only on my decision and the decision of the other participant.']
+            [3, 'My bonus payment depends on my decision and the decision of the other participant.']
         ],
         verbose_name='What will your bonus payment depend on?',
         widget=widgets.RadioSelect

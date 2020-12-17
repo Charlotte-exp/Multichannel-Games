@@ -56,7 +56,7 @@
         </div>
         <div class="card-body">
         <p>
-            In total, taking your initial endowment into account, you earned <b>{{ my_high_payoff }}</b> pts in task A in this round.
+            In total, taking your initial endowment of 1 pts into account, you earned <b>{{ my_high_payoff }}</b> pts in task A in this round.
         </p>
         </div>
     </div>
@@ -71,15 +71,15 @@
                 <ul>
                     {% if my_low_decision == 3 %}
                     <li>
-                        to <b>pay {{ cost_low }} pts</b> for Participant<font color="blue"> 3({{ opponent_high_id }})</font> to <b>receive {{ benefit_low }} pts</b>.
+                        to <b>pay {{ cost_low }} pts</b> for Participant<font color="blue"> 3({{ opponent_low_id }})</font> to <b>receive {{ benefit_low }} pts</b>.
                     </li>
                     {% else %}
                     <li>
-                        to <b>pay 0 pts</b> for PParticipant<font color="blue"> 3({{ opponent_high_id }})</font> to <b>receive 0 pts</b>.
+                        to <b>pay 0 pts</b> for PParticipant<font color="blue"> 3({{ opponent_low_id }})</font> to <b>receive 0 pts</b>.
                     </li>
                     {% endif %}
                 </ul>
-                <p> Participant<font color="blue"> 3({{ opponent_high_id }})</font> chose:</p>
+                <p> Participant<font color="blue"> 3({{ opponent_low_id }})</font> chose:</p>
                 <ul>
                     {% if opponent_low_decision == 3 %}
                     <li>
@@ -92,7 +92,7 @@
                     {% endif %}
                 </ul>
                 <p>
-                    In total, taking your initial endowment into account, you earned <b>{{ my_low_payoff }}</b> pts in task A in this round.
+                    In total, taking your initial endowment of 1 pts into account, you earned <b>{{ my_low_payoff }}</b> pts in task B in this round.
                 </p>
             </div>
         </div>
