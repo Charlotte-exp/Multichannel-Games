@@ -82,6 +82,11 @@ class Player(BasePlayer):
     The options for the demographics survey & the decisions in the game.
     Any variable defined in Player class becomes a new field attached to the player.
     """
+
+    left_hanging = models.CurrencyField()
+
+    subgroup = models.StringField()
+
     age = models.IntegerField(
         verbose_name='What is your age?',
         min=18, max=100)
@@ -127,8 +132,6 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect
     )
 
-    left_hanging = models.CurrencyField()
-
     def get_opponent(self):
         """ This is were the magic happens. we cannot just get_others_in_group() as there are 3 possible opponents and we want 2.
             We create a dictionary, matches, that matches the correct two opponents IN THE RIGHT ORDER with each player.
@@ -145,15 +148,6 @@ class Player(BasePlayer):
                 if other_player.id_in_group == opponent_id:
                     opponent.append(other_player)
         return opponent
-
-    subgroup = models.StringField()
-
-    def set_subgroups(self):
-        if self.id_in_group <= 2:
-            self.subgroup = 'high'
-        elif self.id_in_group >= 3:
-            self.subgroup = 'low'
-        return self.subgroup
 
     def set_payoff(self):
         """

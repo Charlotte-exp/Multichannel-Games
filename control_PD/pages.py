@@ -16,6 +16,12 @@ class PairingWaitPage(WaitPage):
 
 
 class SetGroupThings(Page):
+    """
+    This page is useless. I only need it to set the subgroups/treatments in control and the last round.
+    So it appears for too short for pp to see it.
+    all that because the before_next_page code does not work on a waitpage...
+    and after_all_players_arrive does not work with group_by_arrival_time.
+    """
 
     def is_displayed(self):
         return self.round_number == 1
