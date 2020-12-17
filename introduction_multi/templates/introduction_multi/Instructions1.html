@@ -20,18 +20,17 @@ div {
     <link rel="stylesheet" type="text/css"
           href="{% static 'global/matrix.css' %}"/>
 
-    <p>You are <b>Participant 1</b> in this study. The other Participant is <b>Participant 2.</b></p>
+    <p>You are <b>Participant 1</b> in this study. The other participant is <b>Participant 2.</b></p>
     <p>
         In each round, you and Participant 2 will simultaneously interact with each other in two tasks, Task A and Task B.
-        In each task, both of you must choose between two options.
+        In each task, you and your co-participant must choose between two options.
         The points you earn in each round will depend on what you and Participant 2 independently decide for each task.
         The two tasks are independent. The points you earn in either task do not depend on the decisions made in the other.
-        In each round and for each of the two tasks, you and the other participant are endowed with
+        In the beginning of each round, you and the other participant receive an endowment of
         {{ Constants.endowment_high }} points in Task A and {{ Constants.endowment_low }} points in task B.
     </p>
     <p>
-        Below you can see the outcomes of each option that you and Participant 2 can choose from in each task in each round,
-        depending on your own decision as well as Participant 2's decision. You are using the money endowed to you in each.
+        Below you can see the two options that you and Participant 2 can choose from in each task in each round.
     </p>
 </div>
 

@@ -25,6 +25,9 @@ class Constants(BaseConstants):
     min_rounds = 10
     proba_next_round = 0.5
 
+    currency_per_point = 0.6  # 60pts is £1
+    pounds_per_points = currency_per_point * 100
+
     """
     Donation game payoff
     """
@@ -109,12 +112,12 @@ class Player(BasePlayer):
 
     q3 = models.IntegerField(
         choices=[
-            [1, f'You will earn {Constants.b_high} points.'],
-            [2, 'You will earn 10 points.'],
-            [3, 'Neither will earn additional points.']
+            [1, 'You will earn 0 pts.'],
+            [2, f'You will earn {Constants.b_high} pts.'],
+            [3, 'You will earn 10 pts.']
         ],
-        verbose_name=f'What amount will you receive if Participant 2 chooses to pay {Constants.c_high} points '
-                     f'in order for you to receive {Constants.b_high} points?',
+        verbose_name=f'What amount will you receive from Participant 2 '
+                     f'if they choose to pay {Constants.c_high} pts',
         widget=widgets.RadioSelect
     )
 

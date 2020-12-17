@@ -20,10 +20,10 @@ div {
     <link rel="stylesheet" type="text/css"
           href="{% static 'global/matrix.css' %}"/>
 
-    <p>You are <b>Participant 1</b> in this study. The other Participant is <b>Participant 2.</b></p>
+    <p>You are <b>Participant 1</b> in this study. The other participant is <b>Participant 2.</b></p>
     {% if my_treatment == 'high' %}
     <p>
-        In each round, you and Participant 2 will interact with each other in a task. In this task, both of you must choose between two options.
+        In each round, you and Participant 2 will interact with each other in a task. In this task, you and your co-participant must choose between two options.
         The total points you earn in each round will depend on what you and Participant 2 independently decide.
         In each round, you and the other participant are both endowed with {{ Constants.endowment_high }} points.
     </p>
@@ -31,12 +31,11 @@ div {
     <p>
         In each round, you and Participant 2 will interact with each other in a task. In this task, both of you must choose between two options.
         The total points you earn in each round will depend on what you and Participant 2 independently decide.
-        In each round, you and the other participant are both endowed with {{ Constants.endowment_low }} points.
+        In the beginning of each round, you and the other participant receive an endowment of {{ Constants.endowment_low }} points.
     </p>
     {% endif %}
     <p>
-        Below you can see the outcomes of each option that you and Participant 2 can choose from in each task in each round,
-        depending on your own decision as well as Participant 2's decision.
+        Below you can see the two options that you and Participant 2 can choose from in each task in each round.
     </p>
 </div>
 

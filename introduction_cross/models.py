@@ -25,6 +25,9 @@ class Constants(BaseConstants):
     min_rounds = 2
     proba_next_round = 0.5
 
+    currency_per_point = 0.6  # 60pts is £1
+    pounds_per_points = currency_per_point * 100
+
     """
     Donation game payoff
     """
@@ -109,8 +112,8 @@ class Player(BasePlayer):
             [2, f'You will earn {Constants.b_high} pts.'],
             [3, 'You will earn 10 pts.']
         ],
-        verbose_name=f'In Task A, what amount will you receive from Participant 2 if they choose to pay {Constants.c_high} pts '
-                     f'in order for you to receive {Constants.b_high} points?',
+        verbose_name=f'In Task A, what amount will you receive from Participant 2 '
+                     f'if they choose to pay {Constants.c_high} pts',
         widget=widgets.RadioSelect
     )
 

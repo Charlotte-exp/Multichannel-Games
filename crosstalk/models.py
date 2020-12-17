@@ -30,6 +30,7 @@ class Constants(BaseConstants):
     # proba_next_round = 0.5
 
     currency_per_point = 0.6  # 60pts is £1
+    pounds_per_points = currency_per_point * 100
 
     """
     Donation game payoffs
