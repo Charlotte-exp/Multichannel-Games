@@ -130,15 +130,15 @@ class Results(Page):
         opponent_high = opponent[0]
         opponent_low = opponent[0]
         return {
-            'my_high_decision': me.decision_high,
-            'my_low_decision': me.decision_low,
-            'opponent_high_decision': opponent_high.decision_high,
-            'opponent_low_decision': opponent_low.decision_low,
+            'my_decision_high': me.decision_high,
+            'my_decision_low': me.decision_low,
+            'opponent_decision_high': opponent_high.decision_high,
+            'opponent_decision_low': opponent_low.decision_low,
 
-            'my_high_payoff': me.payoff_high,
-            'my_low_payoff': me.payoff_low,
-            'opponent_high_payoff': opponent_high.payoff_high,
-            'opponent_low_payoff': opponent_low.payoff_low,
+            'my_payoff_high': me.payoff_high,
+            'my_payoff_low': me.payoff_low,
+            'opponent_payoff_high': opponent_high.payoff_high,
+            'opponent_payoff_low': opponent_low.payoff_low,
 
             'cost_high': Constants.c_high,
             'cost_low': Constants.c_low,
