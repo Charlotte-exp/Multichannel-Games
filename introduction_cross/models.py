@@ -25,6 +25,9 @@ class Constants(BaseConstants):
     min_rounds = 2
     proba_next_round = 0.5
 
+    currency_per_point = 0.6  # 60pts is £1
+    pounds_per_points = currency_per_point * 100
+
     """
     Donation game payoff
     """
@@ -86,7 +89,7 @@ class Player(BasePlayer):
     q1 = models.IntegerField(
         choices=[
             [1, '0 other participants'],
-            [2, '1 other participants'],
+            [2, '1 other participant'],
             [3, '2 other participants']
         ],
         verbose_name='With how many other participant(s) will you be interacting in this study?',
@@ -97,7 +100,7 @@ class Player(BasePlayer):
         choices=[
             [1, 'There is no bonus possible in this study.'],
             [2, 'My bonus payment depends only on my decisions.'],
-            [3, 'My bonus payment depends only on my decision and the decision of the other participants.']
+            [3, 'My bonus payment depends on my decision and the decision of the other participants.']
         ],
         verbose_name='What will your bonus payment depend on?',
         widget=widgets.RadioSelect
@@ -105,12 +108,12 @@ class Player(BasePlayer):
 
     q3 = models.IntegerField(
         choices=[
-            [1, f'You will earn {Constants.b_high} points.'],
-            [2, 'You will earn 10 points.'],
-            [3, 'Neither will earn additional points.']
+            [1, 'You will earn 0 pts.'],
+            [2, f'You will earn {Constants.b_high} pts.'],
+            [3, 'You will earn 10 pts.']
         ],
-        verbose_name=f'In Task A, What amount will you receive if Participant 2 chooses to pay {Constants.c_high} points '
-                     f'in order for you to receive {Constants.b_high} points?',
+        verbose_name=f'In Task A, what amount will you receive from Participant 2 '
+                     f'if they choose to pay {Constants.c_high} pts',
         widget=widgets.RadioSelect
     )
 
@@ -130,7 +133,7 @@ class Player(BasePlayer):
             [2, '50%'],
             [3, '100%']
         ],
-        verbose_name='What are the chances that there will be another round after the 21th round?',
+        verbose_name='What are the chances that there will be another round after the 21st round?',
         widget=widgets.RadioSelect
     )
 

@@ -22,9 +22,11 @@
 
 {% block content %}
 
+<div class="card-body">
     <p>
-        Below are your two options for the task. You need to make a choice to continue.
+        <h4>In the previous round:</h4>
     </p>
+</div>
 
 <div class="card-body">
     {% if round_number > 1 %}
@@ -95,6 +97,9 @@
 <div class="card-body">
     <p>
         <h4>In this round:</h4>
+        <p>
+        Below are your two options for the task. You need to make a choice to continue.
+    </p>
     </p>
 </div>
 

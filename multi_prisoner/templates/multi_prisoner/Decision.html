@@ -22,9 +22,11 @@
 
 {% block content %}
 
+<div class="card-body">
     <p>
-        Below are your two options for <b>Task A</b> and <b>Task B</b>, respectively. You need to make a choice in each task to continue.
+        <h4>In the previous round:</h4>
     </p>
+</div>
 
 {% if round_number > 1 %}
 <div class="card-body small">
@@ -43,7 +45,7 @@
                         </li>
                         {% else %}
                         <li>
-                            to <b>pay 0 pts</b> in order for Participant 2 to <b>receive 0 pts</b>.
+                            to <b>pay 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
                         </li>
                         {% endif %}
                     </ul>
@@ -51,11 +53,11 @@
                     <ul>
                         {% if opponent_previous_decision_high == 1 %}
                         <li>
-                            to <b>pay {{ cost_high }} pts</b> in order for you to <b>receive {{ benefit_high }} pts</b>.
+                            to <b>pay {{ cost_high }} pts</b> for you to <b>receive {{ benefit_high }} pts</b>.
                         </li>
                         {% else %}
                         <li>
-                            to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b>.
+                            to <b>pay 0 pts</b> for you to <b>receive 0 pts</b>.
                         </li>
                         {% endif %}
                     </ul>
@@ -78,7 +80,7 @@
                         </li>
                         {% else %}
                         <li>
-                            to <b>pay 0 pts</b> in order for Participant 2 to <b>receive 0 pts</b>.
+                            to <b>pay 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
                         </li>
                         {% endif %}
                     </ul>
@@ -86,11 +88,11 @@
                     <ul>
                         {% if opponent_previous_decision_low == 3 %}
                         <li>
-                            to <b>pay {{ cost_low }} pts</b> in order for you to <b>receive {{ benefit_low }} pts</b>.
+                            to <b>pay {{ cost_low }} pts</b> for you to <b>receive {{ benefit_low }} pts</b>.
                         </li>
                         {% else %}
                         <li>
-                            to <b>pay 0 pts</b> in order for you to <b>receive 0 pts</b>.
+                            to <b>pay 0 pts</b> for you to <b>receive 0 pts</b>.
                         </li>
                         {% endif %}
                     </ul>
@@ -104,6 +106,9 @@
 <div class="card-body">
     <p>
         <h4>In this round:</h4>
+    </p>
+    <p>
+        Below are your two options for <b>Task A</b> and <b>Task B</b>, respectively. You need to make a choice in each task to continue.
     </p>
 </div>
 
