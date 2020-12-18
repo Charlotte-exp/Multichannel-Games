@@ -124,6 +124,10 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect
     )
 
+    comment_box = models.LongStringField(
+        verbose_name=''
+    )
+
     payoff_high = models.CurrencyField()
     payoff_low = models.CurrencyField()
     payment = models.CurrencyField()

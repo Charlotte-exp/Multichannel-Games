@@ -32,7 +32,7 @@ class Decision(Page):
             return True
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
-    timeout_seconds = 2 * 20
+    timeout_seconds = 2 * 60
 
     def before_next_page(self):
         """
@@ -125,7 +125,7 @@ class Results(Page):
             return True
 
     timer_text = 'You are about to be automatically moved to the next round decision page'
-    timeout_seconds = 2 * 20
+    timeout_seconds = 2 * 60
     # my_page_timeout_seconds = 90
     #
     # def get_timeout_seconds(self):
@@ -208,6 +208,20 @@ class Demographics(Page):
             return True
 
 
+class CommentBox(Page):
+    form_model = 'player'
+    form_fields = ['comment_box']
+
+    def is_displayed(self):
+        """ This function makes the page appear only on the last random-ish round """
+        if self.player.left_hanging == 1:
+            return False
+        elif self.player.left_hanging == 2:
+            return False
+        elif self.subsession.round_number == self.participant.vars['last_round']:
+            return True
+
+
 class Payment(Page):
     """ This page is for final payment in GBP """
 
@@ -266,6 +280,7 @@ page_sequence = [
     Results,
     End,
     Demographics,
+    CommentBox,
     Payment,
     LeftHanging,
     ProlificLink,
