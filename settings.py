@@ -87,13 +87,13 @@ ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
 
 # Consider '', None, and '0' to be empty/false
-DEBUG = (environ.get('OTREE_PRODUCTION') in {None, '', '0'})
+# DEBUG = (environ.get('OTREE_PRODUCTION') in {None, '', '0'})
 # DEBUG = True
-DEMO_PAGE_INTRO_HTML = """
-Here are various games implemented with 
-oTree. These games are open
-source, and you can modify them as you wish.
-"""
+# DEMO_PAGE_INTRO_HTML = """
+# Here are various games implemented with
+# oTree. These games are open
+# source, and you can modify them as you wish.
+# """
 
 # don't share this with anybody.
 SECRET_KEY = 'q=ig%=7m1hg%*%^_7e9!%xrrdpi!g+i=n7vhn4l%uuw@!6_#w*'
