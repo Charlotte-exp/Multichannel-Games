@@ -3,6 +3,15 @@ from otree.api import (
     Currency as c, currency_range
 )
 
+import sentry_sdk
+sentry_sdk.init(
+    "https://819cca3e1a814e2ea459091cb3787cb8@o493514.ingest.sentry.io/5562864",
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+)
+
 import random
 import itertools
 
