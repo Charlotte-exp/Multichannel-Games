@@ -3,6 +3,8 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 from decimal import *
 
+import itertools
+
 getcontext().rounding = ROUND_CEILING  # is this for rounding up the payment?
 
 
@@ -16,6 +18,32 @@ class PairingWaitPage(WaitPage):
         return self.round_number == 1
 
     template_name = 'crosstalk/Waitroom.html'
+
+
+class SetLastRound(Page):
+    """
+    This page is useless. I only need it to set the subgroups/treatments in control and the last round.
+    So it appears for too short for pp to see it.
+    all that because the before_next_page code does not work on a waitpage...
+    and after_all_players_arrive does not work with group_by_arrival_time.
+    """
+
+    def is_displayed(self):
+        return self.round_number == 1
+
+    timeout_seconds = 0.5
+
+    def before_next_page(self):
+        """ random last round code. With the function from above,
+            we attribute the different elements in the list to each group."""
+        list_num_rounds = self.group.get_random_number_of_rounds()
+        group_number_of_rounds = itertools.cycle(list_num_rounds)
+        for g in self.subsession.get_groups():
+            g.last_round = next(group_number_of_rounds)
+            print('New number of rounds', g.last_round)
+        for p in self.subsession.get_players():
+            p.participant.vars['last_round'] = p.group.last_round
+            print('vars last_round is', p.participant.vars['last_round'])
 
 
 class Decision(Page):
@@ -101,7 +129,7 @@ class Decision(Page):
 class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
         for p in self.group.get_players():
-            p.set_payoff()
+            p.set_payoffs()
 
     def is_displayed(self):
         """ Probabilistic display! """
@@ -193,6 +221,10 @@ class End(Page):
             'total_payoff_low': sum([p.payoff_low for p in self.player.in_all_rounds()]),
         }
 
+    # def before_next_page(self):
+    #     for p in self.group.get_players():
+    #         p.set_payoff()
+
 
 class Demographics(Page):
     form_model = 'player'
@@ -222,16 +254,13 @@ class Payment(Page):
 
     def vars_for_template(self):
         return {
-            # 'vars_payment': sum([p.participant.vars['payment'] for p in self.player.in_all_rounds()]),
-            # participant.vars is not summing... so if I were to use it below it would not work...
-
             'total_payoff_high': sum([p.payoff_high for p in self.player.in_all_rounds()]),
             'total_payoff_low': sum([p.payoff_low for p in self.player.in_all_rounds()]),
-            'total_payoff': sum([p.payment for p in self.player.in_all_rounds()]),  # same as End page
+            'total_payoff': sum([p.total_payoff for p in self.player.in_all_rounds()]),  # same as End page
             'participation_fee': self.session.config['participation_fee'],  # set it in the settings like the currency
-            'payment': sum([p.payment.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
+            'payment': sum([p.total_payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
                            ) / Constants.points_per_currency,
-            'final_payment': ((sum([p.payment.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
+            'final_payment': ((sum([p.total_payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
                                    ) / Constants.points_per_currency) + self.session.config['participation_fee'])
         }
 
@@ -261,6 +290,7 @@ class ProlificLink(Page):
 
 page_sequence = [
     PairingWaitPage,
+    SetLastRound,
     Decision,
     ResultsWaitPage,
     Results,

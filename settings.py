@@ -6,7 +6,7 @@ from os import environ
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = {
-    'real_world_currency_per_point': 1.00,
+    'real_world_currency_per_point': 0.016666667,
     'participation_fee': 3.00,
     'doc': "",
 }
@@ -17,7 +17,7 @@ SESSION_CONFIGS = [
     {
         'name': 'crosstalk',
         'display_name': "Crosstalk game",
-        'num_demo_participants': 4,
+        'num_demo_participants': 12,
         'app_sequence': ['introduction_cross', 'crosstalk'],
         'use_browser_bots': False
     },
@@ -87,13 +87,13 @@ ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
 
 # Consider '', None, and '0' to be empty/false
-DEBUG = (environ.get('OTREE_PRODUCTION') in {None, '', '0'})
-DEBUG = True
-DEMO_PAGE_INTRO_HTML = """
-Here are various games implemented with 
-oTree. These games are open
-source, and you can modify them as you wish.
-"""
+# DEBUG = (environ.get('OTREE_PRODUCTION') in {None, '', '0'})
+# DEBUG = True
+# DEMO_PAGE_INTRO_HTML = """
+# Here are various games implemented with
+# oTree. These games are open
+# source, and you can modify them as you wish.
+# """
 
 # don't share this with anybody.
 SECRET_KEY = 'q=ig%=7m1hg%*%^_7e9!%xrrdpi!g+i=n7vhn4l%uuw@!6_#w*'

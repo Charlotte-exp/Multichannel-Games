@@ -1,0 +1,30 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+
+{% block title %}
+
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
+
+{% endblock %}
+
+{% block content %}
+
+<div style="display:none;">
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+</div>
+
+<!---This page is useless. I only need it to set the subgroups/treatments in control and the last round.--->
+
+{% endblock %}
