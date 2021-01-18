@@ -22,6 +22,7 @@
 
 {% block content %}
 
+{% if round_number > 1 %}
 <div class="card-body">
     <p>
         <h4>In the previous round:</h4>
@@ -29,7 +30,6 @@
 </div>
 
 <div class="card-body">
-    {% if round_number > 1 %}
     <div class="card-body small">
         <div class="card bg-light instructions">
             <div class="card-body">
