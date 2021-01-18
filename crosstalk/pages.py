@@ -229,10 +229,10 @@ class Payment(Page):
             'total_payoff_low': sum([p.payoff_low for p in self.player.in_all_rounds()]),
             'total_payoff': sum([p.payment for p in self.player.in_all_rounds()]),  # same as End page
             'participation_fee': self.session.config['participation_fee'],  # set it in the settings like the currency
-            'payment': (sum([p.payment.to_real_world_currency(self.session) for p in self.player.in_all_rounds()])
-                        * Constants.currency_per_point),
-            'final_payment': ((sum([p.payment.to_real_world_currency(self.session) for p in self.player.in_all_rounds()])
-                               * Constants.currency_per_point) + self.session.config['participation_fee'])
+            'payment': sum([p.payment.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
+                           ) / Constants.points_per_currency,
+            'final_payment': ((sum([p.payment.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
+                                   ) / Constants.points_per_currency) + self.session.config['participation_fee'])
         }
 
 

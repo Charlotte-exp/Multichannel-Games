@@ -52,12 +52,10 @@
                     </li>
                     {% endif %}
                 </ul>
+                <p>
+                    In total, taking your initial endowment of 1 pts into account, you earned <b>{{ my_payoff_high }}</b> pts in task A in this round.
+                </p>
             </div>
-        </div>
-        <div class="card-body">
-        <p>
-            In total, taking your initial endowment of 1 pts into account, you earned <b>{{ my_payoff_high }}</b> pts in task A in this round.
-        </p>
         </div>
     </div>
     <div class="col">
@@ -75,7 +73,7 @@
                     </li>
                     {% else %}
                     <li>
-                        to <b>pay 0 pts</b> for PParticipant<font color="blue"> 3({{ opponent_id_low }})</font> to <b>receive 0 pts</b>.
+                        to <b>pay 0 pts</b> for Participant<font color="blue"> 3({{ opponent_id_low }})</font> to <b>receive 0 pts</b>.
                     </li>
                     {% endif %}
                 </ul>

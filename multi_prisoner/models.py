@@ -28,8 +28,7 @@ class Constants(BaseConstants):
     # min_rounds = 20
     # proba_next_round = 0.5
 
-    currency_per_point = 0.6  # 60pts is £1
-    pounds_per_points = currency_per_point * 100
+    points_per_currency = 60  # 60pts is £1
 
     """
     Donation game payoffs
