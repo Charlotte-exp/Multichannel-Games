@@ -6,7 +6,7 @@ from os import environ
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = {
-    'real_world_currency_per_point': 1.00,
+    'real_world_currency_per_point': 0.016666667,
     'participation_fee': 3.00,
     'doc': "",
 }
@@ -17,7 +17,7 @@ SESSION_CONFIGS = [
     {
         'name': 'crosstalk',
         'display_name': "Crosstalk game",
-        'num_demo_participants': 4,
+        'num_demo_participants': 12,
         'app_sequence': ['introduction_cross', 'crosstalk'],
         'use_browser_bots': False
     },

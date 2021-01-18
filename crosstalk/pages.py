@@ -41,6 +41,9 @@ class SetLastRound(Page):
         for g in self.subsession.get_groups():
             g.last_round = next(group_number_of_rounds)
             print('New number of rounds', g.last_round)
+        for p in self.subsession.get_players():
+            p.participant.vars['last_round'] = p.group.last_round
+            print('vars last_round is', p.participant.vars['last_round'])
 
 
 class Decision(Page):
@@ -53,7 +56,7 @@ class Decision(Page):
             return False
         elif self.player.left_hanging == 2:
             return False
-        elif self.subsession.round_number <= self.group.last_round:  # participant.vars['last_round']:
+        elif self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
@@ -126,7 +129,7 @@ class Decision(Page):
 class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(self):
         for p in self.group.get_players():
-            p.set_payoff()
+            p.set_payoffs()
 
     def is_displayed(self):
         """ Probabilistic display! """
@@ -218,6 +221,10 @@ class End(Page):
             'total_payoff_low': sum([p.payoff_low for p in self.player.in_all_rounds()]),
         }
 
+    # def before_next_page(self):
+    #     for p in self.group.get_players():
+    #         p.set_payoff()
+
 
 class Demographics(Page):
     form_model = 'player'
@@ -247,16 +254,13 @@ class Payment(Page):
 
     def vars_for_template(self):
         return {
-            # 'vars_payment': sum([p.participant.vars['payment'] for p in self.player.in_all_rounds()]),
-            # participant.vars is not summing... so if I were to use it below it would not work...
-
             'total_payoff_high': sum([p.payoff_high for p in self.player.in_all_rounds()]),
             'total_payoff_low': sum([p.payoff_low for p in self.player.in_all_rounds()]),
-            'total_payoff': sum([p.payment for p in self.player.in_all_rounds()]),  # same as End page
+            'total_payoff': sum([p.total_payoff for p in self.player.in_all_rounds()]),  # same as End page
             'participation_fee': self.session.config['participation_fee'],  # set it in the settings like the currency
-            'payment': sum([p.payment.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
+            'payment': sum([p.total_payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
                            ) / Constants.points_per_currency,
-            'final_payment': ((sum([p.payment.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
+            'final_payment': ((sum([p.total_payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
                                    ) / Constants.points_per_currency) + self.session.config['participation_fee'])
         }
 

@@ -146,7 +146,7 @@ class Player(BasePlayer):
 
     payoff_high = models.CurrencyField()
     payoff_low = models.CurrencyField()
-    payment = models.CurrencyField()
+    total_payoff = models.CurrencyField()
 
     left_hanging = models.CurrencyField()
 
@@ -168,7 +168,7 @@ class Player(BasePlayer):
                     opponents.append(opponent)
         return opponents
 
-    def set_payoff(self):
+    def set_payoffs(self):
         """
         The payoff function layout is from the prisoner template.
         There is one matrix per game using two separate decision variables.
@@ -210,6 +210,7 @@ class Player(BasePlayer):
         }
         self.payoff_low = payoff_matrix_low[self.decision_low][opponents[1].decision_low]
         # print(self.decision_low)
-        self.payment = self.payoff_high + self.payoff_low
+        self.total_payoff = self.payoff_high + self.payoff_low
+        self.payoff = self.payoff_high + self.payoff_low
         # print('self.payment', self.payment)
         # print('Player ID', self.id_in_group)
