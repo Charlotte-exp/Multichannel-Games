@@ -35,17 +35,6 @@ class Decision(Page):
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
     timeout_seconds = 2 * 60
-    # my_page_timeout_seconds = 90
-    #
-    # def get_timeout_seconds(self):
-    #     round_number = self.subsession.round_number
-    #     timeout = self.my_page_timeout_seconds
-    #     if round_number <= 2:
-    #         return timeout
-    #     else:
-    #         timeout -= (round_number - 2) * 5
-    #         print(timeout)
-    #         return timeout
 
     def before_next_page(self):
         """
@@ -139,6 +128,17 @@ class Results(Page):
 
     timer_text = 'You are about to be automatically moved to the next round decision page'
     timeout_seconds = 2 * 60
+    # my_page_timeout_seconds = 90
+    #
+    # def get_timeout_seconds(self):
+    #     round_number = self.subsession.round_number
+    #     timeout = self.my_page_timeout_seconds
+    #     if round_number <= 2:
+    #         return timeout
+    #     else:
+    #         timeout -= (round_number - 2) * 5
+    #         print(timeout)
+    #         return timeout
 
     def vars_for_template(self):
         me = self.player
@@ -227,19 +227,31 @@ class Payment(Page):
             return True
 
     def vars_for_template(self):
+        """
+        The currency per point and participation fee are set in settings.py. The the currency like that ut displays in
+        the payment section of the admin interface. (the total payoff and payment is not in the data sheet!)
+        to display the number of points per GBP I need to reverse the number though as in settings it's the opposite
+        (GBP per points).
+        """
         return {
             'total_payoff_high': sum([p.payoff_high for p in self.player.in_all_rounds()]),
             'total_payoff_low': sum([p.payoff_low for p in self.player.in_all_rounds()]),
-            'total_payoff': sum([p.total_payoff for p in self.player.in_all_rounds()]),  # same as End page
-            'participation_fee': self.session.config['participation_fee'],  # set it in the settings like the currency
-            'payment': sum([p.total_payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
-                           ) / Constants.points_per_currency,
-            'final_payment': ((sum([p.total_payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
-                                   ) / Constants.points_per_currency) + self.session.config['participation_fee'])
+            'total_payoff': sum([p.total_payoff for p in self.player.in_all_rounds()]),
+            'points_per_currency': 1 / self.session.config['real_world_currency_per_point'],
+            'participation_fee': self.session.config['participation_fee'],
+            'payment': sum([p.total_payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]),
+            'final_payment': sum(
+                [p.total_payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
+                ) + self.session.config['participation_fee']
         }
 
 
 class LeftHanging(Page):
+    """
+    This page is for dropouts. If a participant quits after the waitroom there is a timer on the results
+    and decision page that redirect them to this page. Here depending on who left and who was left hanging,
+    There get a different message (based on their left_hanging value)
+    """
 
     def is_displayed(self):
         """ This function makes the page appear only on the last random-ish round """

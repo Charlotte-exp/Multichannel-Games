@@ -28,8 +28,6 @@ class Constants(BaseConstants):
     # min_rounds = 20
     # proba_next_round = 0.5
 
-    points_per_currency = 60  # 60pts is £1
-
     """
     Donation game payoffs
     b = benefit, c = cost, dd = both defect
@@ -124,7 +122,7 @@ class Player(BasePlayer):
 
     payoff_high = models.CurrencyField()
     payoff_low = models.CurrencyField()
-    payment = models.CurrencyField()
+    total_payoff = models.CurrencyField()
 
     left_hanging = models.CurrencyField()
 
@@ -143,7 +141,7 @@ class Player(BasePlayer):
             for other_player in list_opponents:  #
                 if other_player.id_in_group == opponent_id:
                     opponent.append(other_player)
-                    print('subgroup is', self.opponent)
+                    # print('subgroup is', self.opponent)
         return opponent
 
     def set_payoff(self):
@@ -190,7 +188,7 @@ class Player(BasePlayer):
         Here only the combined payoffs of the two games together is stored
         """
         self.payoff_low = payoff_matrix_low[self.decision_low][opponent[0].decision_low]
-        self.payment = self.payoff_high + self.payoff_low
-        # self.participant.vars['payment'] = self.payment
-        # print('self.payment', self.payment)
+        self.total_payoff = self.payoff_high + self.payoff_low
+        self.payoff = self.payoff_high + self.payoff_low
+        # print('self.total_payoff', self.total_payoff)
         # print('Player ID', self.id_in_group)

@@ -29,8 +29,6 @@ class Constants(BaseConstants):
     # min_rounds = 2
     # proba_next_round = 0.5
 
-    points_per_currency = 60  # 60pts is £1
-
     """
     Donation game payoffs
     b = benefit, c = cost, dd = both defect
