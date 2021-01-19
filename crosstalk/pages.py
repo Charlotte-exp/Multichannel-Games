@@ -20,32 +20,6 @@ class PairingWaitPage(WaitPage):
     template_name = 'crosstalk/Waitroom.html'
 
 
-class SetLastRound(Page):
-    """
-    This page is useless. I only need it to set the subgroups/treatments in control and the last round.
-    So it appears for too short for pp to see it.
-    all that because the before_next_page code does not work on a waitpage...
-    and after_all_players_arrive does not work with group_by_arrival_time.
-    """
-
-    def is_displayed(self):
-        return self.round_number == 1
-
-    timeout_seconds = 0.5
-
-    def before_next_page(self):
-        """ random last round code. With the function from above,
-            we attribute the different elements in the list to each group."""
-        list_num_rounds = self.group.get_random_number_of_rounds()
-        group_number_of_rounds = itertools.cycle(list_num_rounds)
-        for g in self.subsession.get_groups():
-            g.last_round = next(group_number_of_rounds)
-            print('New number of rounds', g.last_round)
-        for p in self.subsession.get_players():
-            p.participant.vars['last_round'] = p.group.last_round
-            print('vars last_round is', p.participant.vars['last_round'])
-
-
 class Decision(Page):
     form_model = 'player'
     form_fields = ['decision_high', 'decision_low']
@@ -60,7 +34,7 @@ class Decision(Page):
             return True
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
-    timeout_seconds = 2 * 20
+    timeout_seconds = 2 * 60
 
     def before_next_page(self):
         """
@@ -153,7 +127,7 @@ class Results(Page):
             return True
 
     timer_text = 'You are about to be automatically moved to the next round decision page'
-    timeout_seconds = 2 * 20
+    timeout_seconds = 2 * 60
     # my_page_timeout_seconds = 90
     #
     # def get_timeout_seconds(self):
@@ -253,19 +227,31 @@ class Payment(Page):
             return True
 
     def vars_for_template(self):
+        """
+        The currency per point and participation fee are set in settings.py. The the currency like that ut displays in
+        the payment section of the admin interface. (the total payoff and payment is not in the data sheet!)
+        to display the number of points per GBP I need to reverse the number though as in settings it's the opposite
+        (GBP per points).
+        """
         return {
             'total_payoff_high': sum([p.payoff_high for p in self.player.in_all_rounds()]),
             'total_payoff_low': sum([p.payoff_low for p in self.player.in_all_rounds()]),
-            'total_payoff': sum([p.total_payoff for p in self.player.in_all_rounds()]),  # same as End page
-            'participation_fee': self.session.config['participation_fee'],  # set it in the settings like the currency
-            'payment': sum([p.total_payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
-                           ) / Constants.points_per_currency,
-            'final_payment': ((sum([p.total_payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
-                                   ) / Constants.points_per_currency) + self.session.config['participation_fee'])
+            'total_payoff': sum([p.total_payoff for p in self.player.in_all_rounds()]),
+            'points_per_currency': 1 / self.session.config['real_world_currency_per_point'],
+            'participation_fee': self.session.config['participation_fee'],
+            'payment': sum([p.total_payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]),
+            'final_payment': sum(
+                [p.total_payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
+                ) + self.session.config['participation_fee']
         }
 
 
 class LeftHanging(Page):
+    """
+    This page is for dropouts. If a participant quits after the waitroom there is a timer on the results
+    and decision page that redirect them to this page. Here depending on who left and who was left hanging,
+    There get a different message (based on their left_hanging value)
+    """
 
     def is_displayed(self):
         """ This function makes the page appear only on the last random-ish round """
@@ -290,7 +276,6 @@ class ProlificLink(Page):
 
 page_sequence = [
     PairingWaitPage,
-    SetLastRound,
     Decision,
     ResultsWaitPage,
     Results,

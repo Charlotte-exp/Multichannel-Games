@@ -24,8 +24,6 @@ class Constants(BaseConstants):
     # min_rounds = 20
     # proba_next_round = 0.5
 
-    points_per_currency = 60  # 60pts is £1
-
     """
     Donation game payoffs
     b = benefit, c = cost, dd = both defect
@@ -43,23 +41,16 @@ class Constants(BaseConstants):
 
 class Subsession(BaseSubsession):
     """
-   Instead of creating_session() we need to use group_by_arrival_time_method().
-   The function makes sure that only high players play with high players.
-   I could only implement that retroactively though and assign treatment in the intro app.
-   The inconveninent is that if 3 people read the instructions, 2 become high and 1 becomes low,
-   if one of the high one gives and quits the other two cannot play together.
+    Instead of creating_session() we need to use group_by_arrival_time_method().
+    The function makes sure that only high players play with high players.
+    I could only implement that retroactively though and assign treatment in the intro app.
+    The inconveninent is that if 3 people read the instructions, 2 become high and 1 becomes low,
+    if one of the high one gives and quits the other two cannot play together.
     """
     def group_by_arrival_time_method(self, waiting_players):
         print("starting group_by_arrival_time_method")
         from collections import defaultdict
         d = defaultdict(list)
-        # for p in waiting_players:
-        #     category = p.participant.vars['treatment']
-        #     players_with_this_category = d[category]
-        #     players_with_this_category.append(p)
-        #     if len(players_with_this_category) == 4:
-        #         print("forming group...")
-        #         return players_with_this_category
         for p in waiting_players:
             category = p.participant.vars['last_round']
             players_with_this_category = d[category]
@@ -68,9 +59,14 @@ class Subsession(BaseSubsession):
                 print("forming group", players_with_this_category)
                 print('last_round is', p.participant.vars['last_round'])
                 return players_with_this_category
+        high_players = [p for p in waiting_players if p.participant.vars['subgroup'] == 'high']
+        low_players = [p for p in waiting_players if p.participant.vars['subgroup'] == 'low']
+        if len(high_players) == 2 and len(low_players) == 2:
+            print('about to create a group')
+            return [high_players[0], high_players[1], low_players[0], low_players[1]]
 
-# Can this be merged?
-
+#  at the mo the group form if one or the other of those conditions above is met. that is either four pp with the same
+#  last_round, or 2 high and 2 low pp join at the same time. AND, but OR. should be an easy fix...
 
 class Group(BaseGroup):
     pass
@@ -85,7 +81,7 @@ class Player(BasePlayer):
 
     left_hanging = models.CurrencyField()
 
-    subgroup = models.StringField()
+    # subgroup = models.StringField()
 
     age = models.IntegerField(
         verbose_name='What is your age?',
@@ -159,7 +155,8 @@ class Player(BasePlayer):
         """
         opponent = self.get_opponent()
         # print([opponent.id_in_group for opponent in opponents])
-        if self.subgroup == 'high':
+        # if self.subgroup == 'high':
+        if self.participant.vars['subgroup'] == 'high':
             payoff_matrix_high = {
                 1:
                     {
@@ -176,9 +173,9 @@ class Player(BasePlayer):
             self.participant.vars['payment'] = self.payoff
             # print('payoff is', self.payoff)
             # print('vars payoff is', self.participant.vars['payment'])
-            print('subgroup', self.subgroup)
 
-        elif self.subgroup == 'low':
+        # elif self.subgroup == 'low':
+        if self.participant.vars['subgroup'] == 'low':
             payoff_matrix_low = {
                 3:
                     {
@@ -201,7 +198,3 @@ class Player(BasePlayer):
             self.participant.vars['payment'] = self.payoff
             # print('payoff is', self.payoff)
             # print('vars payoff is', self.participant.vars['payment'])
-            print('subgroup', self.subgroup)
-
-        # print('treatment is', self.group.treatment)
-        # print('Player ID', self.id_in_group) # I need participant ID to check the random pairing is working

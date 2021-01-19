@@ -22,11 +22,8 @@ class Constants(BaseConstants):
     num_rounds = 1
 
     """variables for randomish next round"""
-    min_rounds = 10
+    min_rounds = 2
     proba_next_round = 0.5
-
-    currency_per_point = 0.6  # 60pts is £1
-    pounds_per_points = currency_per_point * 100
 
     """
     Donation game payoff
@@ -89,6 +86,8 @@ class Player(BasePlayer):
         Any variable defined in Player class becomes a new field attached to the player.
         Variables for the f-string are from vars for template in pages.py (since they need to match)
     """
+
+    subgroup = models.StringField()
 
     q1 = models.IntegerField(
         choices=[

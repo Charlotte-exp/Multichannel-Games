@@ -15,31 +15,32 @@ class PairingWaitPage(WaitPage):
     template_name = 'control_PD/Waitroom.html'
 
 
-class SetGroupThings(Page):
-    """
-    This page is useless. I only need it to set the subgroups/treatments in control and the last round.
-    So it appears for too short for pp to see it.
-    all that because the before_next_page code does not work on a waitpage...
-    and after_all_players_arrive does not work with group_by_arrival_time.
-    """
-
-    def is_displayed(self):
-        return self.round_number == 1
-
-    timeout_seconds = 0.5
-
-    def before_next_page(self):
-        if self.player.id_in_group <= 2:
-            self.player.subgroup = 'high'
-        elif self.player.id_in_group >= 3:
-            self.player.subgroup = 'low'
+# class SetGroupThings(Page):
+#     """
+#     This page is useless. I only need it to set the subgroups/treatments in control and the last round.
+#     So it appears for too short for pp to see it.
+#     all that because the before_next_page code does not work on a waitpage...
+#     and after_all_players_arrive does not work with group_by_arrival_time.
+#     """
+#
+#     def is_displayed(self):
+#         return self.round_number == 1
+#
+#     timeout_seconds = 0.5
+#
+#     def before_next_page(self):
+#         if self.player.id_in_group <= 2:
+#             self.player.subgroup = 'high'
+#         elif self.player.id_in_group >= 3:
+#             self.player.subgroup = 'low'
 
 
 class Decision(Page):
     form_model = 'player'
 
     def get_form_fields(self):
-        if self.player.subgroup == 'high':
+        # if self.player.subgroup == 'high':
+        if self.participant.vars['subgroup'] == 'high':
             return ['decision_high']
         else:
             return ['decision_low']
@@ -54,7 +55,7 @@ class Decision(Page):
             return True
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
-    # timeout_seconds = 2 * 60
+    timeout_seconds = 2 * 60
 
     def before_next_page(self):
         """
@@ -85,7 +86,8 @@ class Decision(Page):
         if self.round_number > 1:
             return {
                 'round_number': self.round_number,
-                'my_treatment': me.subgroup,
+                # 'my_treatment': me.subgroup,
+                'my_treatment': me.participant.vars['subgroup'],
 
                 'opponent_previous_decision_high': opponent_high.in_round(self.round_number - 1).decision_high,
                 'opponent_previous_decision_low': opponent_low.in_round(self.round_number - 1).decision_low,
@@ -100,7 +102,8 @@ class Decision(Page):
         else:
             return {
                 'round_number': self.round_number,
-                'my_treatment': me.subgroup,
+                # 'my_treatment': me.subgroup,
+                'my_treatment': me.participant.vars['subgroup'],
 
                 'cost_high': Constants.c_high,
                 'cost_low': Constants.c_low,
@@ -136,7 +139,7 @@ class Results(Page):
             return True
 
     timer_text = 'You are about to be automatically moved to the next round decision page'
-    # timeout_seconds = 2 * 60
+    timeout_seconds = 2 * 60
     # my_page_timeout_seconds = 90
     #
     # def get_timeout_seconds(self):
@@ -155,7 +158,7 @@ class Results(Page):
         opponent_high = opponent[0]
         opponent_low = opponent[0]
         return {
-            'my_treatment': me.subgroup,
+            'my_treatment': me.participant.vars['subgroup'],
 
             'my_decision_high': me.decision_high,
             'my_decision_low': me.decision_low,
@@ -187,11 +190,10 @@ class End(Page):
 
     def vars_for_template(self):
         me = self.player
-        opponent = me.other_player()
+        opponent = me.get_opponent()
         return {
-            'my_treatment': me.subgroup,
-            'total_payoff': sum([p.payoff for p in self.player.in_all_rounds()]),  # both work!
-            # 'total_payment': sum([p.participant.vars['payment'] for p in self.player.in_all_rounds()]),
+            'my_treatment': me.participant.vars['subgroup'],
+            'total_payoff': sum([p.payoff for p in self.player.in_all_rounds()]),
             'player_in_all_rounds': self.player.in_all_rounds(),
         }
 
@@ -223,18 +225,19 @@ class Payment(Page):
             return True
 
     def vars_for_template(self):
-        participant = self.participant
-        # self.player.payoff = self.participant.vars[self.participant.vars['payment_app']]  # this won't work and I don't why
+        """
+        The currency per point and participation fee are set in settings.py. The the currency like that ut displays in
+        the payment section of the admin interface. (the total payoff and payment is not in the data sheet!)
+        to display the number of points per GBP I need to reverse the number though as in settings it's the opposite
+        (GBP per points).
+        """
         return {
-            # 'vars_payment': sum([p.participant.vars['payment'] for p in self.player.in_all_rounds()]),
-            # this is not summing... so if I were to use it below it would not work...
-            'total_payoff': sum([p.payoff for p in self.player.in_all_rounds()]),  # same as End page
-            'participation_fee': self.session.config['participation_fee'],  # set it in the settings like currency
-            'payment': (sum([p.payoff.to_real_world_currency(self.session) for p in
-                             self.player.in_all_rounds()]) / Constants.points_per_currency),
-            'final_payment': ((sum([p.payoff.to_real_world_currency(self.session) for p in
-                                    self.player.in_all_rounds()]) / Constants.points_per_currency) + self.session.config[
-                                  'participation_fee'])
+            'total_payoff': sum([p.payoff for p in self.player.in_all_rounds()]),
+            'points_per_currency': 1 / self.session.config['real_world_currency_per_point'],
+            'participation_fee': self.session.config['participation_fee'],
+            'bonus': sum([p.payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]),
+            'final_payment': (sum([p.payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()])
+                              ) + self.session.config['participation_fee']
         }
 
 
@@ -255,7 +258,6 @@ class ProlificLink(Page):
 
 page_sequence = [
     PairingWaitPage,
-    SetGroupThings,
     Decision,
     ResultsWaitPage,
     Results,
