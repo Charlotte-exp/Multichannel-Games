@@ -25,9 +25,9 @@ class Constants(BaseConstants):
     players_per_group = 4
     num_rounds = 50
 
-    """variables for randomish end round, used in the intro app at the mo"""
-    min_rounds = 2
-    proba_next_round = 0.5
+    # """variables for randomish end round, used in the intro app at the mo"""
+    # min_rounds = 2
+    # proba_next_round = 0.5
 
     points_per_currency = 60  # 60pts is £1
 
@@ -54,43 +54,44 @@ class Subsession(BaseSubsession):
     The inconveninent is that if 3 people read the instructions, 2 get 5 and 1 gets 6,
     if one of the 5 one gives up and quits the other two cannot play together. So not ideal
     """
-    # def group_by_arrival_time_method(self, waiting_players):
-    #     # print("starting group_by_arrival_time_method")
-    #     from collections import defaultdict
-    #     d = defaultdict(list)
-    #     for p in waiting_players:
-    #         category = p.participant.vars['last_round']
-    #         players_with_this_category = d[category]
-    #         players_with_this_category.append(p)
-    #         if len(players_with_this_category) == 4:
-    #             # print("forming group", players_with_this_category)
-    #             # print('last_round is', p.participant.vars['last_round'])
-    #             return players_with_this_category
-    pass
+    def group_by_arrival_time_method(self, waiting_players):
+        # print("starting group_by_arrival_time_method")
+        from collections import defaultdict
+        d = defaultdict(list)
+        for p in waiting_players:
+            category = p.participant.vars['last_round']
+            players_with_this_category = d[category]
+            players_with_this_category.append(p)
+            if len(players_with_this_category) == 4:
+                # print("forming group", players_with_this_category)
+                # print('last_round is', p.participant.vars['last_round'])
+                return players_with_this_category
+
 
 
 class Group(BaseGroup):
-    """Field of the number of rounds. Each group gets attributed a number of rounds"""
-    last_round = models.IntegerField()
-
-    def get_random_number_of_rounds(self):
-        num_groups = int(self.session.num_participants / 2)
-        list_num_rounds = []
-        for _ in range(num_groups):
-            number = Constants.min_rounds
-            while Constants.proba_next_round < random.random():
-                number += 1
-            list_num_rounds.append(number)
-        return list_num_rounds
-
-    def set_last_round_per_group(self):
-        """ random last round code. With the function from above,
-            we attribute the different elements in the list to each group."""
-        list_num_rounds = self.group.get_random_number_of_rounds()
-        group_number_of_rounds = itertools.cycle(list_num_rounds)
-        for g in self.get_groups():
-            g.last_round = next(group_number_of_rounds)
-            print('New number of rounds', g.last_round)
+    # """Field of the number of rounds. Each group gets attributed a number of rounds"""
+    # last_round = models.IntegerField()
+    #
+    # def get_random_number_of_rounds(self):
+    #     num_groups = int(self.session.num_participants / 2)
+    #     list_num_rounds = []
+    #     for _ in range(num_groups):
+    #         number = Constants.min_rounds
+    #         while Constants.proba_next_round < random.random():
+    #             number += 1
+    #         list_num_rounds.append(number)
+    #     return list_num_rounds
+    #
+    # def set_last_round_per_group(self):
+    #     """ random last round code. With the function from above,
+    #         we attribute the different elements in the list to each group."""
+    #     list_num_rounds = self.group.get_random_number_of_rounds()
+    #     group_number_of_rounds = itertools.cycle(list_num_rounds)
+    #     for g in self.get_groups():
+    #         g.last_round = next(group_number_of_rounds)
+    #         print('New number of rounds', g.last_round)
+    pass
 
 
 class Player(BasePlayer):
