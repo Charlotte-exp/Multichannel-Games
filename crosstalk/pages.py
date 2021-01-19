@@ -20,6 +20,32 @@ class PairingWaitPage(WaitPage):
     template_name = 'crosstalk/Waitroom.html'
 
 
+class SetLastRound(Page):
+    """
+    This page is useless. I only need it to set the subgroups/treatments in control and the last round.
+    So it appears for too short for pp to see it.
+    all that because the before_next_page code does not work on a waitpage...
+    and after_all_players_arrive does not work with group_by_arrival_time.
+    """
+
+    def is_displayed(self):
+        return self.round_number == 1
+
+    timeout_seconds = 0.5
+
+    def before_next_page(self):
+        """ random last round code. With the function from above,
+            we attribute the different elements in the list to each group."""
+        list_num_rounds = self.group.get_random_number_of_rounds()
+        group_number_of_rounds = itertools.cycle(list_num_rounds)
+        for g in self.subsession.get_groups():
+            g.last_round = next(group_number_of_rounds)
+            print('New number of rounds', g.last_round)
+        for p in self.subsession.get_players():
+            p.participant.vars['last_round'] = p.group.last_round
+            print('vars last_round is', p.participant.vars['last_round'])
+
+
 class Decision(Page):
     form_model = 'player'
     form_fields = ['decision_high', 'decision_low']
@@ -276,6 +302,7 @@ class ProlificLink(Page):
 
 page_sequence = [
     PairingWaitPage,
+    SetLastRound,
     Decision,
     ResultsWaitPage,
     Results,
