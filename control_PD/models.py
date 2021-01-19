@@ -65,6 +65,8 @@ class Subsession(BaseSubsession):
             print('about to create a group')
             return [high_players[0], high_players[1], low_players[0], low_players[1]]
 
+#  at the mo the group form if one or the other of those conditions above is met. that is either four pp with the same
+#  last_round, or 2 high and 2 low pp join at the same time. AND, but OR. should be an easy fix...
 
 class Group(BaseGroup):
     pass
