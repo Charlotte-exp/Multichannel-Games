@@ -7,10 +7,10 @@ from .models import Constants
 class PlayerBot(Bot):
     def play_round(self):
         if self.round_number <= self.participant.vars['last_round']:
-            if self.participant.vars['treatment'] == 'high':
+            if self.participant.vars['subgroup'] == 'high':
                 yield pages.Decision, dict(decision_high=1)
             else:
-                if self.participant.vars['treatment'] == 'low':
+                if self.participant.vars['subgroup'] == 'low':
                     yield pages.Decision, dict(decision_low=3)
         # if self.round_number % 2 == 0:
         #     if self.player.id_in_group == 1:

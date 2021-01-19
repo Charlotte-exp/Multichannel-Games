@@ -17,13 +17,6 @@
         {% for p in player_in_all_rounds %}
             <tr>
                 <td>{{ p.round_number }}</td>
-                <!--- {% if my_treatment == 'high' %}
-                <td>{{ p.payoff_high }}</td>
-                <td>{{ p.other_player.payoff_high }}</td>
-                {% else %}
-                <td>{{ p.payoff_low }}</td>
-                <td>{{ p.other_player.payoff_low }}</td>
-                {% endif %} --->
                 <td>{{ p.payoff }} pts</td>
                 {% for q in p.get_opponent %}
                 <td>{{ q.payoff}} pts</td>

@@ -31,9 +31,9 @@ SESSION_CONFIGS = [
     {
         'name': 'control_PD',
         'display_name': "Control group",
-        'num_demo_participants': 4,
+        'num_demo_participants': 12,
         'app_sequence': ['introduction_control', 'control_PD'],
-        'use_browser_bots': False
+        'use_browser_bots': True
     },
     {
         'name': 'control_PD_test',
