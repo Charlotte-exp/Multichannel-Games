@@ -34,7 +34,18 @@ class Decision(Page):
             return True
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
-    timeout_seconds = 2 * 20
+    timeout_seconds = 2 * 60
+    # my_page_timeout_seconds = 90
+    #
+    # def get_timeout_seconds(self):
+    #     round_number = self.subsession.round_number
+    #     timeout = self.my_page_timeout_seconds
+    #     if round_number <= 2:
+    #         return timeout
+    #     else:
+    #         timeout -= (round_number - 2) * 5
+    #         print(timeout)
+    #         return timeout
 
     def before_next_page(self):
         """
@@ -127,18 +138,7 @@ class Results(Page):
             return True
 
     timer_text = 'You are about to be automatically moved to the next round decision page'
-    timeout_seconds = 2 * 20
-    # my_page_timeout_seconds = 90
-    #
-    # def get_timeout_seconds(self):
-    #     round_number = self.subsession.round_number
-    #     timeout = self.my_page_timeout_seconds
-    #     if round_number <= 2:
-    #         return timeout
-    #     else:
-    #         timeout -= (round_number - 2) * 5
-    #         print(timeout)
-    #         return timeout
+    timeout_seconds = 2 * 60
 
     def vars_for_template(self):
         me = self.player
