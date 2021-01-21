@@ -5,7 +5,6 @@ from otree.api import (
 
 import random
 import itertools
-
 import numpy as np
 
 author = 'Charlotte'
@@ -48,10 +47,16 @@ class Constants(BaseConstants):
 
 class Subsession(BaseSubsession):
 
+    def get_random_number_of_rounds(self):
+        number_of_rounds = Constants.min_rounds
+        while Constants.proba_next_round < random.random():
+            number_of_rounds += 1
+        return number_of_rounds
+
     def group_by_arrival_time_method(subsession, waiting_players):
         if len(waiting_players) >= Constants.players_per_group:
             players = [p for _, p in zip(range(4), waiting_players)]
-            last_round = np.random.randint(2, 5)
+            last_round = subsession.get_random_number_of_rounds()
             for p in players:
                 p.participant.vars['last_round'] = last_round
                 p.last_round = p.participant.vars['last_round']
@@ -62,16 +67,6 @@ class Group(BaseGroup):
     # """Field of the number of rounds. Each group gets attributed a number of rounds"""
     # last_round = models.IntegerField()
 
-    def get_random_number_of_rounds(self):
-        num_groups = int(self.session.num_participants / 2)
-        list_num_rounds = []
-        for _ in range(num_groups):
-            number = Constants.min_rounds
-            while Constants.proba_next_round < random.random():
-                number += 1
-            list_num_rounds.append(number)
-        return list_num_rounds
-
     # def set_last_round_per_group(self):
     #     """ random last round code. With the function from above,
     #         we attribute the different elements in the list to each group."""
@@ -80,6 +75,7 @@ class Group(BaseGroup):
     #     for g in self.get_groups():
     #         g.last_round = next(group_number_of_rounds)
     #         print('New number of rounds', g.last_round)
+    pass
 
 
 class Player(BasePlayer):
