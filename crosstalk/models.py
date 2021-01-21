@@ -51,15 +51,16 @@ class Subsession(BaseSubsession):
     def group_by_arrival_time_method(subsession, waiting_players):
         if len(waiting_players) >= Constants.players_per_group:
             players = [p for _, p in zip(range(4), waiting_players)]
-            last_round = np.random.randint(3, 5)
+            last_round = np.random.randint(2, 5)
             for p in players:
                 p.participant.vars['last_round'] = last_round
+                p.last_round = p.participant.vars['last_round']
             return players
 
 
 class Group(BaseGroup):
-    """Field of the number of rounds. Each group gets attributed a number of rounds"""
-    last_round = models.IntegerField()
+    # """Field of the number of rounds. Each group gets attributed a number of rounds"""
+    # last_round = models.IntegerField()
 
     def get_random_number_of_rounds(self):
         num_groups = int(self.session.num_participants / 2)
@@ -87,6 +88,10 @@ class Player(BasePlayer):
     The options for the demographics survey & the decisions in the game.
     Any variable defined in Player class becomes a new field attached to the player.
     """
+
+    """Field of the number of rounds. Each group gets attributed a number of rounds"""
+    last_round = models.IntegerField()
+
     age = models.IntegerField(
         verbose_name='What is your age?',
         min=18, max=100)
