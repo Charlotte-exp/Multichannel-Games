@@ -6,6 +6,8 @@ from otree.api import (
 import random
 import itertools
 
+import numpy as np
+
 author = 'Charlotte'
 
 doc = """
@@ -45,31 +47,20 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    # """
-    # Instead of creating_session() we need to use group_by_arrival_time_method().
-    # The function makes sure that only players with the same last_round will be paired up.
-    # I could only implement that retroactively though and assign last_round in the intro app.
-    # The inconveninent is that if 3 people read the instructions, 2 get 5 and 1 gets 6,
-    # if one of the 5 one gives up and quits the other two cannot play together. So not ideal
-    # """
-    # def group_by_arrival_time_method(self, waiting_players):
-    #     # print("starting group_by_arrival_time_method")
-    #     from collections import defaultdict
-    #     d = defaultdict(list)
-    #     for p in waiting_players:
-    #         category = p.participant.vars['last_round']
-    #         players_with_this_category = d[category]
-    #         players_with_this_category.append(p)
-    #         if len(players_with_this_category) == 4:
-    #             # print("forming group", players_with_this_category)
-    #             # print('last_round is', p.participant.vars['last_round'])
-    #             return players_with_this_category
-    pass
+
+    def group_by_arrival_time_method(subsession, waiting_players):
+        if len(waiting_players) >= Constants.players_per_group:
+            players = [p for _, p in zip(range(4), waiting_players)]
+            last_round = np.random.randint(2, 5)
+            for p in players:
+                p.participant.vars['last_round'] = last_round
+                p.last_round = p.participant.vars['last_round']
+            return players
 
 
 class Group(BaseGroup):
-    """Field of the number of rounds. Each group gets attributed a number of rounds"""
-    last_round = models.IntegerField()
+    # """Field of the number of rounds. Each group gets attributed a number of rounds"""
+    # last_round = models.IntegerField()
 
     def get_random_number_of_rounds(self):
         num_groups = int(self.session.num_participants / 2)
@@ -97,6 +88,10 @@ class Player(BasePlayer):
     The options for the demographics survey & the decisions in the game.
     Any variable defined in Player class becomes a new field attached to the player.
     """
+
+    """Field of the number of rounds. Each group gets attributed a number of rounds"""
+    last_round = models.IntegerField()
+
     age = models.IntegerField(
         verbose_name='What is your age?',
         min=18, max=100)
@@ -162,6 +157,7 @@ class Player(BasePlayer):
         print(self.get_opponent)
         for opponent_id in matches[self.id_in_group]:  # picks the two opponents from the matches dict
             for opponent in list_opponents:  # picks the three other players from the list of other players
+                print(opponent.participant.vars['last_round'])
                 if opponent.id_in_group == opponent_id:
                     opponents.append(opponent)
         return opponents
