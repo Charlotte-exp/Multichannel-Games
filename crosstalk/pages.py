@@ -3,14 +3,21 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 from decimal import *
 
-import itertools
 
 getcontext().rounding = ROUND_CEILING  # is this for rounding up the payment?
 
 
 class PairingWaitPage(WaitPage):
     """
+    The Waitroom. This wait page has two purposes: making sure pps don't wait too long for other players in case there
+    is little traffic, and allows one pp to leave before being grouped with others so that a dropout at the instruction
+    level does not mean all pp in the group are out.
+
     The code below keeps the groups the same across all rounds automatically.
+    We added a special pairing method in models.py.
+
+    The waitroom has a 5min timer after which the pp is given a code to head back to prolific.
+    This is coded on the template below and uses a javascript. (don't forget to paste the correct link!)
     """
     group_by_arrival_time = True
 
@@ -20,38 +27,19 @@ class PairingWaitPage(WaitPage):
     template_name = 'crosstalk/Waitroom.html'
 
 
-# class SetLastRound(Page):
-#     """
-#     This page is useless. I only need it to set the subgroups/treatments in control and the last round.
-#     So it appears for too short for pp to see it.
-#     all that because the before_next_page code does not work on a waitpage...
-#     and after_all_players_arrive does not work with group_by_arrival_time.
-#     """
-
-#     def is_displayed(self):
-#         return self.round_number == 1
-
-#     timeout_seconds = 0.5
-
-#     def before_next_page(self):
-#         """ random last round code. With the function from above,
-#             we attribute the different elements in the list to each group."""
-#         list_num_rounds = self.group.get_random_number_of_rounds()
-#         group_number_of_rounds = itertools.cycle(list_num_rounds)
-#         for g in self.subsession.get_groups():
-#             g.last_round = next(group_number_of_rounds)
-#             print('New number of rounds', g.last_round)
-#         for p in self.subsession.get_players():
-#             p.participant.vars['last_round'] = p.group.last_round
-#             print('vars last_round is', p.participant.vars['last_round'])
-
-
 class Decision(Page):
+    """
+    This is where the players are presented with the PD choice and give their decision. It's simple form fields from Django.
+    There is a timer to checkout for dropouts. If one of the players' timer runs out the others are given a link back to prolific.
+    """
     form_model = 'player'
     form_fields = ['decision_high', 'decision_low']
 
     def is_displayed(self):
-        """ Probabilistic display! """
+        """
+        This page is displayed only if the player is neither left hanging (1) or a dropout (2).
+        And only for the number of rounds assigned to the group by the random number function.
+        """
         if self.player.left_hanging == 1:
             return False
         elif self.player.left_hanging == 2:
@@ -64,10 +52,10 @@ class Decision(Page):
 
     def before_next_page(self):
         """
-        Dropout code! basically if the timer set above runs out, the opponent becomes left_hanging and
-        is jumped to the leftHanging page with a link to Prolific. The dropout also goes to that page but gets
-        a different text.
-        I need to set decisions to avoid an error message that's all
+        Dropout check code! If the timer set above runs out, all the other players in the group become left_hanging = 1
+        and are jumped to the leftHanging page with a link to Prolific. The dropout also goes to that page but gets
+        a different text (left_hanging = 2).
+        Decisions for the missed round are automatically filled to avoid an NONE type error.
         """
         me = self.player
         other_players = me.get_others_in_group()
@@ -79,16 +67,11 @@ class Decision(Page):
             me.decision_high = 1
             me.decision_low = 3
 
-            # attempt at a loop...
-            # for p in other_players:
-            #     return p.left_hanging == 1
-
     # player id for for troubleshooting. If I want to display the player in the group of four though I can keep it.
-
     def vars_for_template(self):
         """
-        This function is for displaying variables in the HTML file (with Django I believe)
-        The variables are inserted into calculation or specifications if needed and given a display name
+        This function is for displaying variables in the HTML file using Django.
+        The variables are inserted into calculation or specifications and given a display name used in the HTML.
         """
         me = self.player
         opponents = me.get_opponent()
@@ -127,24 +110,39 @@ class Decision(Page):
 
 
 class ResultsWaitPage(WaitPage):
+    """
+    This wait page is necessary to compile the payoffs as the results can only be displayed on the results page if all
+    the players have made a decision. Thus players have to wait for the decision of the others before moving on to the
+    results page.
+    I use a template for some special text rather than just the body_text variable.
+    """
     def after_all_players_arrive(self):
+        """ The function that waits for players to arrive to calculate the payoffs like instructed in models.py """
         for p in self.group.get_players():
             p.set_payoffs()
 
     def is_displayed(self):
-        """ Probabilistic display! """
+        """
+        This page is displayed only if the number of rounds assigned to the group by the random number function.
+        Curiously it does not need to be hidden for left_hanging participants...
+        """
         if self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
-    # body_text = "Please wait while the other participant makes their decision."
     template_name = 'crosstalk/ResultsWaitPage.html'
 
 
 class Results(Page):
-    """ This page is for round results """
+    """
+    This page is for the round results. It gives feedback on what the opponents decided for this round.
+    It has a timer so that a dropout is automatically pushed to the decision page where the dropout function is.
+    """
 
     def is_displayed(self):
-        """ Probabilistic display! """
+        """
+        This page is displayed only if the player is neither left hanging (1) or a dropout (2).
+        And only for the number of rounds assigned to the group by the random number function.
+        """
         if self.player.left_hanging == 1:
             return False
         elif self.player.left_hanging == 2:
@@ -167,6 +165,10 @@ class Results(Page):
     #         return timeout
 
     def vars_for_template(self):
+        """
+        This function is for displaying variables in the HTML file using Django.
+        The variables are inserted into calculation or specifications and given a display name used in the HTML.
+        """
         me = self.player
         opponents = me.get_opponent()
         opponent_high = opponents[0]
@@ -194,10 +196,16 @@ class Results(Page):
 
 
 class End(Page):
-    """ This page is for final combined round results """
+    """
+    This page is for final combined round results. It displays the payoffs of each round played for all opponents
+    and sums the total across round of the player.
+    """
 
     def is_displayed(self):
-        """ This function makes the page appear only on the last random-ish round """
+        """
+        This page is displayed only if the player is neither left hanging (1) or a dropout (2).
+        And only appears on the last round.
+        """
         if self.player.left_hanging == 1:
             return False
         elif self.player.left_hanging == 2:
@@ -206,6 +214,13 @@ class End(Page):
             return True
 
     def vars_for_template(self):
+        """
+        This function is for displaying variables in the HTML file using Django.
+        The variables are inserted into calculation or specifications and given a display name used in the HTML.
+        To make the html display each round payoff individually and properly,
+        the list of the payoffs of each opponents had to be zipped together with the player's list each separately
+        so that Django loops through the player's list only once and avoid repetition.
+        """
         me = self.player
         opponents = me.get_opponent()
         opponent_high = opponents[0]
@@ -221,17 +236,17 @@ class End(Page):
             'total_payoff_low': sum([p.payoff_low for p in self.player.in_all_rounds()]),
         }
 
-    # def before_next_page(self):
-    #     for p in self.group.get_players():
-    #         p.set_payoff()
-
 
 class Demographics(Page):
+    """ This page displays survey box to record pp's demographics. it's just made of simple form fields. """
     form_model = 'player'
     form_fields = ['age', 'gender', 'income', 'education', 'ethnicity']
 
     def is_displayed(self):
-        """ This function makes the page appear only on the last random-ish round """
+        """
+        This page is displayed only if the player is neither left hanging (1) or a dropout (2).
+        And only appears on the last round.
+        """
         if self.player.left_hanging == 1:
             return False
         elif self.player.left_hanging == 2:
@@ -241,10 +256,17 @@ class Demographics(Page):
 
 
 class Payment(Page):
-    """ This page is for final payment in GBP """
+    """
+    This page is for final payment in GBP. A lot of the mechanics relating to payment is set in the settings
+    (currency/point exchange rate, currency). It displays the total for each game and the total combined, the participation fee,
+    the conversion rate, the total bonus in GBP and the final payment in GBP of bonus and participation fee combined.
+    """
 
     def is_displayed(self):
-        """ This function makes the page appear only on the last random-ish round """
+        """
+        This page is displayed only if the player is neither left hanging (1) or a dropout (2).
+        And only appears on the last round.
+        """
         if self.player.left_hanging == 1:
             return False
         elif self.player.left_hanging == 2:
@@ -254,10 +276,11 @@ class Payment(Page):
 
     def vars_for_template(self):
         """
-        The currency per point and participation fee are set in settings.py. The the currency like that ut displays in
-        the payment section of the admin interface. (the total payoff and payment is not in the data sheet!)
-        to display the number of points per GBP I need to reverse the number though as in settings it's the opposite
-        (GBP per points).
+        The currency per point and participation fee are set in settings.py. However it can only be set in GBP per point
+        which is not human friendly. So I need to reverse it for display.
+        The bonus and final payment are not saved in the data sheet automatically.
+        I'd have to save the result in a form field under the player class I guess... but it is annoying.
+        If I use the oTree variable "payoff" it all gets displayed in the admin interface and I can download that.
         """
         return {
             'total_payoff_high': sum([p.payoff_high for p in self.player.in_all_rounds()]),
@@ -276,27 +299,25 @@ class LeftHanging(Page):
     """
     This page is for dropouts. If a participant quits after the waitroom there is a timer on the results
     and decision page that redirect them to this page. Here depending on who left and who was left hanging,
-    There get a different message (based on their left_hanging value)
+    they get a different message (based on their left_hanging value).
+    The left-hanging pp get a link to go back to Prolific (don't forget to paste the correct link!).
     """
 
     def is_displayed(self):
-        """ This function makes the page appear only on the last random-ish round """
+        """ This page is displayed only if the player is either left hanging (1) or a dropout (2)."""
         if self.player.left_hanging == 1:
             return True
         elif self.player.left_hanging == 2:
             return True
 
-    # def vars_for_template(self):
-    #     me = self.player
-    #     opponent = me.other_player()
-    #     return {
-    #         'left_hanging': opponent.left_hanging,
-    #         'dropout': me.left_hanging
-    #     }
-
 
 class ProlificLink(Page):
+    """
+    This page redirects pp to prolific automatically with a javascript (don't forget to put paste the correct link!).
+    There is a short text and the link in case it is not automatic.
+    """
     def is_displayed(self):
+        """ This page only appears on the last round. It's after LeftHanging so no need to hide it from dropouts."""
         return self.round_number == self.participant.vars['last_round']
 
 

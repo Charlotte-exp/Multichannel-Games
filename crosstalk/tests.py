@@ -7,7 +7,7 @@ from .models import Constants
 class PlayerBot(Bot):
     def play_round(self):
         if self.round_number <= self.participant.vars['last_round']:
-            yield pages.Decision, {"decision_high": 2, "decision_low": 4}
+            yield pages.Decision, {"decision_high": 1, "decision_low": 3}
             # assert 'Both of you chose to Cooperate' in self.html  # no clue what this is
             # assert self.player.payoff == Constants.both_cooperate_payoff  # no clue what this is
             # if self.round_number % 2 == 0:

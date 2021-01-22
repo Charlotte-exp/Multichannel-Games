@@ -11,22 +11,24 @@ author = 'Charlotte'
 
 doc = """
         Two simultaneous Prisoner's dilemma/donation game between four players, with two different payoffs.
-        Random pairing and player id attribution
+        For the pairings with two opponents to work, the app uses a four player structure, 
+        but one players plays each game against two different other players. 
         Random last round past 20 rounds (50% chance of next round).
-        One players plays each game against two different other players.
-
-        You can also use cmd+/ to comment out an entire section!!
+        Waitpage assigning the round numbers and pairing by arrival time, with a waiting time limited to 5min thanks to 
+        a javascript.
         """
 
 
 class Constants(BaseConstants):
-    """ This game can only work with a group of four participants,
-        even if one player interacts with only 2 other in the group """
+    """
+    Here we set our variables that are constants throughout the game.
+    We set the number of players in a group, the number of rounds (see subsession), the payoffs for each game.
+    """
     name_in_url = 'crosstalk'
     players_per_group = 4
     num_rounds = 50
 
-    """variables for randomish end round, used in the intro app at the mo"""
+    """variables for random-ish last round, mechanics in subsession below"""
     min_rounds = 2
     proba_next_round = 0.5
 
@@ -48,12 +50,23 @@ class Constants(BaseConstants):
 class Subsession(BaseSubsession):
 
     def get_random_number_of_rounds(self):
+        """
+        Creatting the random-ish number of rounds a group plays for. PP plays for at least 20 rounds (set on constants),
+        then they have a 50% chance of another round, and then again 50% chance of another round.
+        This function creates a last round number following this method.
+        """
         number_of_rounds = Constants.min_rounds
         while Constants.proba_next_round < random.random():
             number_of_rounds += 1
         return number_of_rounds
 
     def group_by_arrival_time_method(subsession, waiting_players):
+        """
+        Using the number generated above, it is assigned to each participants in newly formed group when they are
+        in the waitroom. This function is from oTree but had to be twicked with a little to allow to assign a variable
+        after the group is formed rather than group the players based on a pre-assigned variable.
+        We actually pair the four pp ourselves rather than let otree od it based on the number of players we set in constants.
+        """
         if len(waiting_players) >= Constants.players_per_group:
             players = [p for _, p in zip(range(4), waiting_players)]
             last_round = subsession.get_random_number_of_rounds()
@@ -64,17 +77,6 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    # """Field of the number of rounds. Each group gets attributed a number of rounds"""
-    # last_round = models.IntegerField()
-
-    # def set_last_round_per_group(self):
-    #     """ random last round code. With the function from above,
-    #         we attribute the different elements in the list to each group."""
-    #     list_num_rounds = self.group.get_random_number_of_rounds()
-    #     group_number_of_rounds = itertools.cycle(list_num_rounds)
-    #     for g in self.get_groups():
-    #         g.last_round = next(group_number_of_rounds)
-    #         print('New number of rounds', g.last_round)
     pass
 
 
@@ -82,10 +84,10 @@ class Player(BasePlayer):
     """
     These are all variables that depend on a real person's action.
     The options for the demographics survey & the decisions in the game.
+    The last_round variable field is here too.
     Any variable defined in Player class becomes a new field attached to the player.
     """
 
-    """Field of the number of rounds. Each group gets attributed a number of rounds"""
     last_round = models.IntegerField()
 
     age = models.IntegerField(
