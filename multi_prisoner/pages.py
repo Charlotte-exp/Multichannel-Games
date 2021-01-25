@@ -287,6 +287,7 @@ class ProlificLink(Page):
     This page redirects pp to prolific automatically with a javascript (don't forget to put paste the correct link!).
     There is a short text and the link in case it is not automatic.
     """
+
     def is_displayed(self):
         """ This page only appears on the last round. It's after LeftHanging so no need to hide it from dropouts."""
         return self.round_number == self.participant.vars['last_round']

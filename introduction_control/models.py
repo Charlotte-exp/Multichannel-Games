@@ -4,7 +4,6 @@ from otree.api import (
 )
 
 import itertools
-import random
 
 author = 'Charlotte'
 
@@ -20,10 +19,6 @@ class Constants(BaseConstants):
     name_in_url = 'introduction_control'
     players_per_group = 4
     num_rounds = 1
-
-    """variables for randomish next round"""
-    min_rounds = 2
-    proba_next_round = 0.5
 
     """
     Donation game payoff
@@ -45,46 +40,34 @@ class Constants(BaseConstants):
 
 class Subsession(BaseSubsession):
     """
-        This is for the 50% chance of another round. We create a function for clarity below in the creating_session().
-        We create a list of different number of rounds that is as long as there are groups.
+    Here we create the session with high and low treatments assigned to players as a subgroup. It must be done before
+    proper pairing at the waitpage so that pp see the correct payoff in the instructions.
     """
-    def get_random_number_of_rounds(self):
-        num_groups = int(self.session.num_participants / 2)
-        list_num_rounds = []
-        for _ in range(num_groups):
-            number = Constants.min_rounds
-            while Constants.proba_next_round < random.random():
-                number += 1
-            list_num_rounds.append(number)
-        return list_num_rounds
 
     def creating_session(self):
         """
-            Assigns a last_round number to the 4 player group.
-            With the function from above, we attribute the different elements in the list to each group.
-            Then for each player, store the treatment in participant.vars.
+        AWe use itertools to assign treatment regularly to make sure there is a somewhat equal amount of each in the
+        session but also that is it equally distributed in the sample. (So pp don't have to wait to long get matched
+        in a pair. It simply cycles through the list of treatments (high & low) and that's saved in the participant vars.
         """
-        list_num_rounds = self.get_random_number_of_rounds()
-        group_number_of_rounds = itertools.cycle(list_num_rounds)
-        for g in self.get_groups():
-            g.last_round = next(group_number_of_rounds)
-            print('New number of rounds', g.last_round)
+        treatments = itertools.cycle(['high', 'low'])
         for p in self.get_players():
-            p.participant.vars['last_round'] = p.group.last_round
-            print('vars last_round is', p.participant.vars['last_round'])
+            p.subgroup = next(treatments)
+            p.participant.vars['subgroup'] = p.player.subgroup
+            print('subgroup is', p.player.subgroup)
+            print('vars subgroup is', p.participant.vars['subgroup'])
 
 
 class Group(BaseGroup):
-    """Field of the number of rounds. Each group gets attributed a number of rounds"""
-    last_round = models.IntegerField()
+    pass
 
 
 class Player(BasePlayer):
     """
-        These are all variables that depend on a real person's action.
-        The options for the demographics survey & the decisions in the game.
-        Any variable defined in Player class becomes a new field attached to the player.
-        Variables for the f-string are from vars for template in pages.py (since they need to match)
+    These are all variables that depend on a real person's action.
+    The options for the demographics survey & the decisions in the game.
+    Any variable defined in Player class becomes a new field attached to the player, including the subgroup.
+    Variables for the f-string are from vars for template in pages.py (since they need to match)
     """
 
     subgroup = models.StringField()

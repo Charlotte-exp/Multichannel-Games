@@ -7,7 +7,7 @@ getcontext().rounding = ROUND_CEILING  # is this for rounding up the payment?
 
 class Consent(Page):
     def is_displayed(self):
-        return self.round_number == 1  # Exclude this page in the loop
+        return self.round_number == 1
 
 
 class Welcome(Page):
@@ -15,7 +15,7 @@ class Welcome(Page):
     form_fields = ['q1', 'q2']
 
     def is_displayed(self):
-        return self.round_number == 1  # Exclude this page in the loop
+        return self.round_number == 1
 
     def error_message(self, values):
         if values['q1'] != 3:
@@ -31,7 +31,7 @@ class Instructions1(Page):
     form_fields = ['q3', 'q4', 'q5']
 
     def is_displayed(self):
-        return self.round_number == 1  # Exclude this page in the loop
+        return self.round_number == 1
 
     def error_message(self, values):
         if values['q3'] != 2:
@@ -47,7 +47,7 @@ class Instructions2(Page):
     form_fields = ['q6', 'q7', 'q8']
 
     def is_displayed(self):
-        return self.round_number == 1  # Exclude this page in the loop
+        return self.round_number == 1
 
     def error_message(self, values):
         if values['q6'] != 2:

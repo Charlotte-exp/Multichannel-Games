@@ -283,7 +283,7 @@ class Payment(Page):
         me = self.player
         return {
             'total_payoff_high': sum([p.payoff_high for p in me.in_all_rounds()]),
-            'total_payoff_low': sum([p.payoff_low for p in mw.in_all_rounds()]),
+            'total_payoff_low': sum([p.payoff_low for p in me.in_all_rounds()]),
             'total_payoff': sum([p.total_payoff for p in me.in_all_rounds()]),
             'points_per_currency': 1 / self.session.config['real_world_currency_per_point'],
             'participation_fee': self.session.config['participation_fee'],
@@ -315,6 +315,7 @@ class ProlificLink(Page):
     This page redirects pp to prolific automatically with a javascript (don't forget to put paste the correct link!).
     There is a short text and the link in case it is not automatic.
     """
+
     def is_displayed(self):
         """ This page only appears on the last round. It's after LeftHanging so no need to hide it from dropouts."""
         return self.round_number == self.participant.vars['last_round']

@@ -18,7 +18,7 @@ doc = """
 
 class Constants(BaseConstants):
     name_in_url = 'introduction_cross'
-    players_per_group = 4
+    players_per_group = 1
     num_rounds = 1
 
     """
@@ -48,10 +48,11 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    """ These are all variables that depend on a real person's action.
-        The options for the demographics survey & the decisions in the game.
-        Any variable defined in Player class becomes a new field attached to the player.
-        Variables for the f-string are from vars for template in pages.py (since they need to match)
+    """
+    These are all variables that depend on a real person's action.
+    The options for the demographics survey & the decisions in the game.
+    Any variable defined in Player class becomes a new field attached to the player.
+    Variables for the f-string are from vars for template in pages.py (since they need to match)
     """
 
     q1 = models.IntegerField(
