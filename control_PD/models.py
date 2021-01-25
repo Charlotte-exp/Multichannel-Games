@@ -3,6 +3,8 @@ from otree.api import (
     Currency as c, currency_range
 )
 
+import random
+
 author = 'Charlotte'
 
 doc = """
@@ -20,9 +22,9 @@ class Constants(BaseConstants):
     players_per_group = 4
     num_rounds = 50
 
-    # """ variables for randomish end round, used in the intro app at the mo"""
-    # min_rounds = 20
-    # proba_next_round = 0.5
+    """ variables for randomish end round, used in the intro app at the mo"""
+    min_rounds = 20
+    proba_next_round = 0.5
 
     """
     Donation game payoffs
@@ -47,26 +49,42 @@ class Subsession(BaseSubsession):
     The inconveninent is that if 3 people read the instructions, 2 become high and 1 becomes low,
     if one of the high one gives and quits the other two cannot play together.
     """
+
+    def get_random_number_of_rounds(self):
+        """
+        Creating the random-ish number of rounds a group plays for. PP plays for at least 20 rounds (set on constants),
+        then they have a 50% chance of another round, and then again 50% chance of another round.
+        This function creates a last round number following this method.
+        """
+        number_of_rounds = Constants.min_rounds
+        while Constants.proba_next_round < random.random():
+            number_of_rounds += 1
+        return number_of_rounds
+
     def group_by_arrival_time_method(self, waiting_players):
-        print("starting group_by_arrival_time_method")
-        from collections import defaultdict
-        d = defaultdict(list)
-        for p in waiting_players:
-            category = p.participant.vars['last_round']
-            players_with_this_category = d[category]
-            players_with_this_category.append(p)
-            if len(players_with_this_category) == 4:
-                print("forming group", players_with_this_category)
-                print('last_round is', p.participant.vars['last_round'])
-                return players_with_this_category
         high_players = [p for p in waiting_players if p.participant.vars['subgroup'] == 'high']
         low_players = [p for p in waiting_players if p.participant.vars['subgroup'] == 'low']
         if len(high_players) == 2 and len(low_players) == 2:
-            print('about to create a group')
             return [high_players[0], high_players[1], low_players[0], low_players[1]]
+
+    # def group_by_arrival_time_method(subsession, waiting_players):
+    #     """
+    #     Using the number generated above, it is assigned to each participants in newly formed group when they are
+    #     in the waitroom. This function is from oTree but had to be tweaked with a little to allow to assign a variable
+    #     after the group is formed rather than group the players based on a pre-assigned variable.
+    #     We form the group of four here rather than let group_by_arrival_time do it automatically (with the Constants)
+    #     """
+    #     if len(waiting_players) >= Constants.players_per_group:
+    #         players = [p for _, p in zip(range(4), waiting_players)]
+    #         last_round = subsession.get_random_number_of_rounds()
+    #         for p in players:
+    #             p.participant.vars['last_round'] = last_round
+    #             p.last_round = p.participant.vars['last_round']  # p.vars do not appear in the data put player vars do.
+    #         return players
 
 #  at the mo the group form if one or the other of those conditions above is met. that is either four pp with the same
 #  last_round, or 2 high and 2 low pp join at the same time. AND, but OR. should be an easy fix...
+
 
 class Group(BaseGroup):
     pass
@@ -80,8 +98,6 @@ class Player(BasePlayer):
     """
 
     left_hanging = models.CurrencyField()
-
-    # subgroup = models.StringField()
 
     age = models.IntegerField(
         verbose_name='What is your age?',
@@ -129,11 +145,15 @@ class Player(BasePlayer):
     )
 
     def get_opponent(self):
-        """ This is were the magic happens. we cannot just get_others_in_group() as there are 3 possible opponents and we want 2.
-            We create a dictionary, matches, that matches the correct two opponents IN THE RIGHT ORDER with each player.
-            We create a list of all the possible opponents in the group (so 3 players without oneself).
-            We create an empty matrix of opponents to be filled.
-            We create two looped loops.  """
+        """
+        Since we have 4 players in a group but only want pairs to play each other, we need our own custom function
+        to assign the correct opponent to the correct player. Hence we cannot just use get_others_in_group()
+        as there are 3 possible opponents and we want just one.
+        We create a dictionary (matches) that matches the correct opponent with each player.
+        We create a list of all the possible opponents in the group (so 3 players without oneself).
+        Then for each player, we pick the matching opponents from the dic and the 3 other players,
+        and the id that match in both lists make the new opponents list.
+        """
         matches = {1: [2], 2: [1], 3: [4], 4: [3]}
         list_opponents = self.get_others_in_group()
         # print(self.get_others_in_group())
@@ -147,15 +167,13 @@ class Player(BasePlayer):
 
     def set_payoff(self):
         """
-        The payoff function layout is from the prisoner template.
-        there is one matrix per treatment using two one decision variable.
-        Bottom lines calculate the payoff based on actual choices,.
-        The if statement contains .group because the treatment variable is defined in group.
-        If defined in player it is not needed.
+        The payoff function layout is from the prisoner template. There is one matrix per game using two separate
+        decision variables. Participant get one or the other matrix based on subgroup.
+        Bottom lines calculate the payoff based on actual choices depending on subgroup.
+        There is only one payoff for control. The opponent variables need to match our new set_opponent function.
         """
         opponent = self.get_opponent()
         # print([opponent.id_in_group for opponent in opponents])
-        # if self.subgroup == 'high':
         if self.participant.vars['subgroup'] == 'high':
             payoff_matrix_high = {
                 1:
@@ -170,11 +188,8 @@ class Player(BasePlayer):
                     }
             }
             self.payoff = payoff_matrix_high[self.decision_high][opponent[0].decision_high]
-            self.participant.vars['payment'] = self.payoff
             # print('payoff is', self.payoff)
-            # print('vars payoff is', self.participant.vars['payment'])
 
-        # elif self.subgroup == 'low':
         if self.participant.vars['subgroup'] == 'low':
             payoff_matrix_low = {
                 3:
@@ -188,13 +203,5 @@ class Player(BasePlayer):
                         4: Constants.endowment_low + Constants.dd_low
                     }
             }
-            """
-            The payoff variable alone can be used as such if the whole game is in the same app.
-            If using multiple apps or setting hte payment on another app, then one must use the participant.vars
-            I could have written participant.vars = payoff matrix directly,
-            but then it means I need to use the participant.vars code everywhere I call the payoff!
-            """
             self.payoff = payoff_matrix_low[self.decision_low][opponent[0].decision_low]
-            self.participant.vars['payment'] = self.payoff
             # print('payoff is', self.payoff)
-            # print('vars payoff is', self.participant.vars['payment'])

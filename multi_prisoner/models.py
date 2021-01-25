@@ -4,29 +4,31 @@ from otree.api import (
 )
 
 import random
-import itertools
 
 author = 'Charlotte'
 
 doc = """
         Two simultaneous Prisoner's dilemma/donation game between two players with two different payoffs.
-        Random pairing and player id attribution
+        For the pairings to match that of crosstalk, the app uses a four player structure, 
+        even if participants only interact in pairs of two
         Random last round past 20 rounds (50% chance of next round).
-
-        You can also use cmd+/ to comment out an entire section!!
+        Waitpage assigning the round numbers and pairing by arrival time, with a waiting time limited to 5min thanks to 
+        a javascript.
         """
 
 
 class Constants(BaseConstants):
-    """ This game can only work with a group of four participants,
-        even if one player interacts with only 2 other in the group """
+    """
+    Here we set our variables that are constants throughout the game.
+    We set the number of players in a group, the number of rounds (see subsession), the payoffs for each game.
+    """
     name_in_url = 'multi_prisoner'
     players_per_group = 4
     num_rounds = 50
 
-    # """variables for randomish end round, used in the intro app at the mo"""
-    # min_rounds = 20
-    # proba_next_round = 0.5
+    """variables for randomish end round, used in the intro app at the mo"""
+    min_rounds = 2
+    proba_next_round = 0.5
 
     """
     Donation game payoffs
@@ -44,25 +46,32 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    """
-    Instead of creating_session() we need to use group_by_arrival_time_method().
-    The function makes sure that only players with the same last_round will be paired up.
-    I could only implement that retroactively though and assign last_round in the intro app.
-    The inconveninent is that if 3 people read the instructions, 2 get 5 and 1 gets 6,
-    if one of the 5 one gives up and quits the other two cannot play together. So not ideal
-    """
-    def group_by_arrival_time_method(self, waiting_players):
-        # print("starting group_by_arrival_time_method")
-        from collections import defaultdict
-        d = defaultdict(list)
-        for p in waiting_players:
-            category = p.participant.vars['last_round']
-            players_with_this_category = d[category]
-            players_with_this_category.append(p)
-            if len(players_with_this_category) == 4:
-                # print("forming group", players_with_this_category)
-                # print('last_round is', p.participant.vars['last_round'])
-                return players_with_this_category
+
+    def get_random_number_of_rounds(self):
+        """
+        Creating the random-ish number of rounds a group plays for. PP plays for at least 20 rounds (set on constants),
+        then they have a 50% chance of another round, and then again 50% chance of another round.
+        This function creates a last round number following this method.
+        """
+        number_of_rounds = Constants.min_rounds
+        while Constants.proba_next_round < random.random():
+            number_of_rounds += 1
+        return number_of_rounds
+
+    def group_by_arrival_time_method(subsession, waiting_players):
+        """
+        Using the number generated above, it is assigned to each participants in newly formed group when they are
+        in the waitroom. This function is from oTree but had to be tweaked with a little to allow to assign a variable
+        after the group is formed rather than group the players based on a pre-assigned variable.
+        We form the group of four here rather than let group_by_arrival_time do it automatically (with the Constants)
+        """
+        if len(waiting_players) >= Constants.players_per_group:
+            players = [p for _, p in zip(range(4), waiting_players)]
+            last_round = subsession.get_random_number_of_rounds()
+            for p in players:
+                p.participant.vars['last_round'] = last_round
+                p.last_round = p.participant.vars['last_round']  # p.vars do not appear in the data put player vars do.
+            return players
 
 
 class Group(BaseGroup):
@@ -73,8 +82,12 @@ class Player(BasePlayer):
     """
     These are all variables that depend on a real person's action.
     The options for the demographics survey & the decisions in the game.
+    The last_round variable field is here too.
     Any variable defined in Player class becomes a new field attached to the player.
     """
+
+    last_round = models.IntegerField()
+
     age = models.IntegerField(
         verbose_name='What is your age?',
         min=18, max=100)
@@ -127,11 +140,15 @@ class Player(BasePlayer):
     left_hanging = models.CurrencyField()
 
     def get_opponent(self):
-        """ This is were the magic happens. we cannot just get_others_in_group() as there are 3 possible opponents and we want 2.
-            We create a dictionary, matches, that matches the correct two opponents IN THE RIGHT ORDER with each player.
-            We create a list of all the possible opponents in the group (so 3 players without oneself).
-            We create an empty matrix of opponents to be filled.
-            We create two looped loops.  """
+        """
+        Since we have 4 players in a group but only want pairs to play eahc other, we need our own custom function
+        to assign the correct opponent to the correct player. Hence we cannot just use get_others_in_group()
+        as there are 3 possible opponents and we want just one.
+        We create a dictionary (matches) that matches the correct opponent with each player.
+        We create a list of all the possible opponents in the group (so 3 players without oneself).
+        Then for each player, we pick the matching opponents from the dic and the 3 other players,
+        and the id that match in both lists make the new opponents list.
+        """
         matches = {1: [2], 2: [1], 3: [4], 4: [3]}
         list_opponents = self.get_others_in_group()
         # print(self.get_others_in_group())
@@ -146,10 +163,10 @@ class Player(BasePlayer):
 
     def set_payoff(self):
         """
-        The payoff function layout is from the prisoner template.
-        There is one matrix per game using two separate decision variables.
-        Bottom lines calculate the payoff based on actual choices, again, one for each game.
-        They are added for the round total (self.payment).
+        The payoff function layout is from the prisoner template. There is one matrix per game using two separate
+        decision variables. Bottom lines calculate the payoff based on actual choices with, again, one for each game.
+        They are added up for the round total (self.total_payoff). The opponent variables need to match our new
+        set_opponent function.
         """
         opponent = self.get_opponent()
         # print([opponent.id_in_group for opponent in opponents])
@@ -180,13 +197,6 @@ class Player(BasePlayer):
                 }
         }
 
-        """
-        The payoff variable alone can be used as such if the whole game is in the same app.
-        If using multiple apps or setting the payment on another app, then one must use the participant.vars
-        I could have written participant.vars = payoff matrix directly,
-        but then it means I need to use the participant.vars code everywhere I call the payoff!
-        Here only the combined payoffs of the two games together is stored
-        """
         self.payoff_low = payoff_matrix_low[self.decision_low][opponent[0].decision_low]
         self.total_payoff = self.payoff_high + self.payoff_low
         self.payoff = self.payoff_high + self.payoff_low
