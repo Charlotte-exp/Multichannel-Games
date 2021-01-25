@@ -5,6 +5,11 @@ from decimal import *
 getcontext().rounding = ROUND_CEILING  # is this for rounding up the payment?
 
 
+class Consent(Page):
+    def is_displayed(self):
+        return self.round_number == 1  # Exclude this page in the loop
+
+
 class Welcome(Page):
     form_model = 'player'
     form_fields = ['q1', 'q2']
@@ -66,11 +71,6 @@ class Instructions2(Page):
             'sum_p1': sucker_high+reward_low,
             'sum_p2': temptation_high+reward_low,
         }
-
-
-class Consent(Page):
-    def is_displayed(self):
-        return self.round_number == 1  # Exclude this page in the loop
 
 
 page_sequence = [

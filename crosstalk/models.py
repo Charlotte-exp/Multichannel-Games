@@ -4,8 +4,6 @@ from otree.api import (
 )
 
 import random
-import itertools
-import numpy as np
 
 author = 'Charlotte'
 
@@ -51,7 +49,7 @@ class Subsession(BaseSubsession):
 
     def get_random_number_of_rounds(self):
         """
-        Creatting the random-ish number of rounds a group plays for. PP plays for at least 20 rounds (set on constants),
+        Creating the random-ish number of rounds a group plays for. PP plays for at least 20 rounds (set on constants),
         then they have a 50% chance of another round, and then again 50% chance of another round.
         This function creates a last round number following this method.
         """
@@ -63,16 +61,16 @@ class Subsession(BaseSubsession):
     def group_by_arrival_time_method(subsession, waiting_players):
         """
         Using the number generated above, it is assigned to each participants in newly formed group when they are
-        in the waitroom. This function is from oTree but had to be twicked with a little to allow to assign a variable
+        in the waitroom. This function is from oTree but had to be tweaked with a little to allow to assign a variable
         after the group is formed rather than group the players based on a pre-assigned variable.
-        We actually pair the four pp ourselves rather than let otree od it based on the number of players we set in constants.
+        We form the group of four here rather than let group_by_arrival_time do it automatically (with the Constants)
         """
         if len(waiting_players) >= Constants.players_per_group:
             players = [p for _, p in zip(range(4), waiting_players)]
             last_round = subsession.get_random_number_of_rounds()
             for p in players:
                 p.participant.vars['last_round'] = last_round
-                p.last_round = p.participant.vars['last_round']
+                p.last_round = p.participant.vars['last_round']  # p.vars do not appear in the data put player vars do.
             return players
 
 
@@ -142,33 +140,34 @@ class Player(BasePlayer):
     left_hanging = models.CurrencyField()
 
     def get_opponent(self):
-        """ This is were the magic happens. we cannot just get_others_in_group() as there are 3 possible opponents and we want 2.
-            We create a dictionary, matches, that matches the correct two opponents IN THE RIGHT ORDER with each player.
-            We create a list of all the possible opponents in the group (so 3 players without oneself).
-            We create an empty matrix of opponents to be filled.
-            We create two looped loops.  """
+        """
+        We need our own custom function to assign the correct opponent to the correct player. Hence we cannot just use
+        get_others_in_group() as there are 3 possible opponents and we want 2.
+        We create a dictionary (matches) that matches the correct two opponents IN THE RIGHT ORDER with each player.
+        We create a list of all the possible opponents in the group (so 3 players without oneself).
+        Then for each player, we pick the matching opponents from the dic and the 3 other players,
+        and the two id that match in both lists make the new opponents list.
+        """
         matches = {1: [2, 4], 2: [1, 3], 3: [4, 2], 4: [3, 1]}
         list_opponents = self.get_others_in_group()
         #print(self.get_others_in_group())
         #print(self.id_in_group)
         opponents = []
         print(self.get_opponent)
-        for opponent_id in matches[self.id_in_group]:  # picks the two opponents from the matches dict
-            for opponent in list_opponents:  # picks the three other players from the list of other players
-                print(opponent.participant.vars['last_round'])
+        for opponent_id in matches[self.id_in_group]:
+            for opponent in list_opponents:
+                # print(opponent.participant.vars['last_round'])
                 if opponent.id_in_group == opponent_id:
                     opponents.append(opponent)
         return opponents
 
     def set_payoffs(self):
         """
-        The payoff function layout is from the prisoner template.
-        There is one matrix per game using two separate decision variables.
-        Bottom lines calculate the payoff based on actual choices, again, one for each game.
-        They are added for the round total (self.payment).
-        The opponent variables need to match our new set_opponent function.
-        Because order matters, for the high payoff it is always the first element [0] in the opponents vector,
-        and for the low payoff it is always teh second element [1] in the opponents vector.
+        The payoff function layout is from the prisoner template. There is one matrix per game using two separate
+        decision variables. Bottom lines calculate the payoff based on actual choices, again, one for each game.
+        They are added for the round total (self.total_payoff). The opponent variables need to match our new
+        set_opponent function. Because order matters, for the high payoff it is always the first element [0]
+        in the opponents vector, and for the low payoff it is always teh second element [1] in the opponents vector.
         (elements here is the player id in the list).
         """
         opponents = self.get_opponent()

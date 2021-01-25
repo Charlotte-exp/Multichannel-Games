@@ -12,10 +12,8 @@ class PairingWaitPage(WaitPage):
     The Waitroom. This wait page has two purposes: making sure pps don't wait too long for other players in case there
     is little traffic, and allows one pp to leave before being grouped with others so that a dropout at the instruction
     level does not mean all pp in the group are out.
-
     The code below keeps the groups the same across all rounds automatically.
     We added a special pairing method in models.py.
-
     The waitroom has a 5min timer after which the pp is given a code to head back to prolific.
     This is coded on the template below and uses a javascript. (don't forget to paste the correct link!)
     """
@@ -29,8 +27,8 @@ class PairingWaitPage(WaitPage):
 
 class Decision(Page):
     """
-    This is where the players are presented with the PD choice and give their decision. It's simple form fields from Django.
-    There is a timer to checkout for dropouts. If one of the players' timer runs out the others are given a link back to prolific.
+    This is where the pp are presented with the PD options and give their decision. It's simple form fields from Django.
+    There is a timer to check for dropouts. If one of the players' timer runs out the others are linked back to prolific
     """
     form_model = 'player'
     form_fields = ['decision_high', 'decision_low']
@@ -232,8 +230,8 @@ class End(Page):
             'player_and_opponent_high': zip(me.in_all_rounds(), opponent_high.in_all_rounds()),
             'player_and_opponent_low': zip(me.in_all_rounds(), opponent_low.in_all_rounds()),
 
-            'total_payoff_high': sum([p.payoff_high for p in self.player.in_all_rounds()]),
-            'total_payoff_low': sum([p.payoff_low for p in self.player.in_all_rounds()]),
+            'total_payoff_high': sum([p.payoff_high for p in me.in_all_rounds()]),
+            'total_payoff_low': sum([p.payoff_low for p in me.in_all_rounds()]),
         }
 
 
@@ -258,7 +256,7 @@ class Demographics(Page):
 class Payment(Page):
     """
     This page is for final payment in GBP. A lot of the mechanics relating to payment is set in the settings
-    (currency/point exchange rate, currency). It displays the total for each game and the total combined, the participation fee,
+    (currency/point exchange rate, currency). It displays the total for each game and the total combined, the show-up fee,
     the conversion rate, the total bonus in GBP and the final payment in GBP of bonus and participation fee combined.
     """
 
@@ -282,15 +280,16 @@ class Payment(Page):
         I'd have to save the result in a form field under the player class I guess... but it is annoying.
         If I use the oTree variable "payoff" it all gets displayed in the admin interface and I can download that.
         """
+        me = self.player
         return {
-            'total_payoff_high': sum([p.payoff_high for p in self.player.in_all_rounds()]),
-            'total_payoff_low': sum([p.payoff_low for p in self.player.in_all_rounds()]),
-            'total_payoff': sum([p.total_payoff for p in self.player.in_all_rounds()]),
+            'total_payoff_high': sum([p.payoff_high for p in me.in_all_rounds()]),
+            'total_payoff_low': sum([p.payoff_low for p in mw.in_all_rounds()]),
+            'total_payoff': sum([p.total_payoff for p in me.in_all_rounds()]),
             'points_per_currency': 1 / self.session.config['real_world_currency_per_point'],
             'participation_fee': self.session.config['participation_fee'],
-            'payment': sum([p.total_payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]),
+            'payment': sum([p.total_payoff.to_real_world_currency(self.session) for p in me.in_all_rounds()]),
             'final_payment': sum(
-                [p.total_payoff.to_real_world_currency(self.session) for p in self.player.in_all_rounds()]
+                [p.total_payoff.to_real_world_currency(self.session) for p in me.in_all_rounds()]
                 ) + self.session.config['participation_fee']
         }
 
