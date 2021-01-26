@@ -21,6 +21,8 @@ class Constants(BaseConstants):
     players_per_group = None
     num_rounds = 1
 
+    points_per_currency = 60
+
     """
     Donation game payoff
     """
