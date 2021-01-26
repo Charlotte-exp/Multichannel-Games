@@ -4,6 +4,11 @@ from otree.api import (
 )
 
 import itertools
+import sentry_sdk
+sentry_sdk.init(
+    "https://1392aa053c874b259b803689a03915fe@o493514.ingest.sentry.io/5607882",
+    traces_sample_rate=1.0
+)
 
 author = 'Charlotte'
 
