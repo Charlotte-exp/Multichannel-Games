@@ -133,6 +133,10 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect
     )
 
+    comment_box = models.LongStringField(
+        verbose_name=''
+    )
+
     payoff_high = models.CurrencyField()
     payoff_low = models.CurrencyField()
     total_payoff = models.CurrencyField()
@@ -153,7 +157,7 @@ class Player(BasePlayer):
         #print(self.get_others_in_group())
         #print(self.id_in_group)
         opponents = []
-        print(self.get_opponent)
+        # print(self.get_opponent)
         for opponent_id in matches[self.id_in_group]:
             for opponent in list_opponents:
                 # print(opponent.participant.vars['last_round'])
