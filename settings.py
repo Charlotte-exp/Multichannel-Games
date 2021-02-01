@@ -19,7 +19,7 @@ SESSION_CONFIGS = [
         'display_name': "Crosstalk game",
         'num_demo_participants': 12,
         'app_sequence': ['introduction_cross', 'crosstalk'],
-        'use_browser_bots': True
+        'use_browser_bots': False
     },
     {
         'name': 'multi_prisoner',
@@ -81,7 +81,7 @@ ROOMS = [
 # for flexibility, you can set it in the environment variable OTREE_AUTH_LEVEL
 AUTH_LEVEL = environ.get('OTREE_AUTH_LEVEL')
 
-ADMIN_USERNAME = 'admin'
+ADMIN_USERNAME = 'charlotte'
 # for security, best to set admin password in an environment variable
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
