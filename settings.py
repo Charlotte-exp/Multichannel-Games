@@ -19,7 +19,7 @@ SESSION_CONFIGS = [
         'display_name': "Crosstalk game",
         'num_demo_participants': 12,
         'app_sequence': ['introduction_cross', 'crosstalk'],
-        'use_browser_bots': True
+        'use_browser_bots': False
     },
     {
         'name': 'multi_prisoner',
