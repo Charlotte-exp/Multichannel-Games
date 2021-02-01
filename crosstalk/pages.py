@@ -276,21 +276,19 @@ class Payment(Page):
         """
         The currency per point and participation fee are set in settings.py. However it can only be set in GBP per point
         which is not human friendly. So I need to reverse it for display.
-        The bonus and final payment are not saved in the data sheet automatically.
-        I'd have to save the result in a form field under the player class I guess... but it is annoying.
-        If I use the oTree variable "payoff" it all gets displayed in the admin interface and I can download that.
+        The bonus and final payment are not saved in the data sheet automatically, only the total number of points.
+        However, using participant.payoff makes it display in the payment tab so that can use that for the payment.
+        Also the participant.payoff variable is set in oTree to automatically add the payoff from all rounds.
         """
         me = self.player
         return {
             'total_payoff_high': sum([p.payoff_high for p in me.in_all_rounds()]),
             'total_payoff_low': sum([p.payoff_low for p in me.in_all_rounds()]),
-            'total_payoff': sum([p.total_payoff for p in me.in_all_rounds()]),
+            'total_payoff': self.participant.payoff,
             'points_per_currency': 1 / self.session.config['real_world_currency_per_point'],
             'participation_fee': self.session.config['participation_fee'],
-            'payment': sum([p.total_payoff.to_real_world_currency(self.session) for p in me.in_all_rounds()]),
-            'final_payment': sum(
-                [p.total_payoff.to_real_world_currency(self.session) for p in me.in_all_rounds()]
-                ) + self.session.config['participation_fee']
+            'bonus': sum([self.participant.payoff.to_real_world_currency(self.session)]),
+            'final_payment':  self.participant.payoff_plus_participation_fee()
         }
 
 
