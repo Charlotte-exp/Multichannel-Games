@@ -61,29 +61,16 @@ class Subsession(BaseSubsession):
             number_of_rounds += 1
         return number_of_rounds
 
-    def group_by_arrival_time_method(self, waiting_players):
+    def group_by_arrival_time_method(subsession, waiting_players):
         high_players = [p for p in waiting_players if p.participant.vars['subgroup'] == 'high']
         low_players = [p for p in waiting_players if p.participant.vars['subgroup'] == 'low']
-        if len(high_players) == 2 and len(low_players) == 2:
-            return [high_players[0], high_players[1], low_players[0], low_players[1]]
-
-    # def group_by_arrival_time_method(subsession, waiting_players):
-    #     """
-    #     Using the number generated above, it is assigned to each participants in newly formed group when they are
-    #     in the waitroom. This function is from oTree but had to be tweaked with a little to allow to assign a variable
-    #     after the group is formed rather than group the players based on a pre-assigned variable.
-    #     We form the group of four here rather than let group_by_arrival_time do it automatically (with the Constants)
-    #     """
-    #     if len(waiting_players) >= Constants.players_per_group:
-    #         players = [p for _, p in zip(range(4), waiting_players)]
-    #         last_round = subsession.get_random_number_of_rounds()
-    #         for p in players:
-    #             p.participant.vars['last_round'] = last_round
-    #             p.last_round = p.participant.vars['last_round']  # p.vars do not appear in the data put player vars do.
-    #         return players
-
-#  at the mo the group form if one or the other of those conditions above is met. that is either four pp with the same
-#  last_round, or 2 high and 2 low pp join at the same time. AND, but OR. should be an easy fix...
+        if len(high_players) >= 2 and len(low_players) >= 2:
+            players = [high_players[0], high_players[1], low_players[0], low_players[1]]
+            last_round = subsession.get_random_number_of_rounds()
+            for p in players:
+                p.participant.vars['last_round'] = last_round
+                p.last_round = p.participant.vars['last_round']
+            return players
 
 
 class Group(BaseGroup):
@@ -97,6 +84,7 @@ class Player(BasePlayer):
     Any variable defined in Player class becomes a new field attached to the player.
     """
 
+    last_round = models.IntegerField()
     left_hanging = models.CurrencyField()
 
     age = models.IntegerField(

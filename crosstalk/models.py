@@ -87,6 +87,7 @@ class Player(BasePlayer):
     """
 
     last_round = models.IntegerField()
+    left_hanging = models.CurrencyField()
 
     age = models.IntegerField(
         verbose_name='What is your age?',
@@ -136,8 +137,6 @@ class Player(BasePlayer):
     payoff_high = models.CurrencyField()
     payoff_low = models.CurrencyField()
     total_payoff = models.CurrencyField()
-
-    left_hanging = models.CurrencyField()
 
     def get_opponent(self):
         """
