@@ -23,7 +23,7 @@ class PlayerBot(Bot):
 
         if self.round_number == self.participant.vars['last_round']:
             yield pages.End
-            # yield pages.Demographics, {"age": '22', "gender": 'Female', "income": '£10.000 - £29.999',
-            #                            "education": 'Postgraduate degree', "ethnicity": 'White'}
+            yield pages.Demographics, {"age": '22', "gender": 'Female', "income": '£10.000 - £29.999',
+                                       "education": 'Postgraduate degree', "ethnicity": 'White'}
             yield pages.Payment
             yield pages.ProlificLink

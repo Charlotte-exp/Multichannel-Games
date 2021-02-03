@@ -17,7 +17,7 @@ doc = """
 
 class Constants(BaseConstants):
     name_in_url = 'introduction_control'
-    players_per_group = 4
+    players_per_group = None
     num_rounds = 1
 
     currency_per_point = 60
@@ -55,8 +55,8 @@ class Subsession(BaseSubsession):
         treatments = itertools.cycle(['high', 'low'])
         for p in self.get_players():
             p.subgroup = next(treatments)
-            p.participant.vars['subgroup'] = p.player.subgroup
-            print('subgroup is', p.player.subgroup)
+            p.participant.vars['subgroup'] = p.subgroup
+            print('subgroup is', p.subgroup)
             print('vars subgroup is', p.participant.vars['subgroup'])
 
 

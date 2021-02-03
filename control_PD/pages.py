@@ -264,15 +264,10 @@ class Payment(Page):
         I'd have to save the result in a form field under the player class I guess... but it is annoying.
         Since I use the oTree variable "payoff" it all gets displayed in the admin interface and I can download that.
         """
-        me = self.player
         return {
-            # 'total_payoff': sum([p.payoff for p in me.in_all_rounds()]),
             'total_payoff': self.participant.payoff,
             'points_per_currency': 1 / self.session.config['real_world_currency_per_point'],
             'participation_fee': self.session.config['participation_fee'],
-            # 'bonus': sum([p.payoff.to_real_world_currency(self.session) for p in me.in_all_rounds()]),
-            # 'final_payment': (sum([p.payoff.to_real_world_currency(self.session) for p in me.in_all_rounds()])
-            #                   ) + self.session.config['participation_fee'],
             'bonus': self.participant.payoff.to_real_world_currency(self.session),
             'final_payment': self.participant.payoff_plus_participation_fee()
         }
@@ -311,7 +306,7 @@ page_sequence = [
     ResultsWaitPage,
     Results,
     End,
-    # Demographics,
+    Demographics,
     Payment,
     LeftHanging,
     ProlificLink,
