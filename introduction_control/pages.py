@@ -65,22 +65,19 @@ class Instructions2(Page):
     def error_message(self, values):
         if values['q6'] != 1:
             return 'Answer to question 1 is incorrect. Check the instructions again and give a new answer'
-        if values['q7'] != 3:
-            return 'Answer to question 2 is incorrect. Check the instructions again and give a new answer'
-        if values['q8'] != 3:
-            return 'Answer to question 3 is incorrect. Check the instructions again and give a new answer'
+        if self.participant.vars['subgroup'] == 'high':
+            if values['q7'] != 3:
+                return 'Answer to question 2 is incorrect. Check the instructions again and give a new answer'
+            if values['q8'] != 3:
+                return 'Answer to question 3 is incorrect. Check the instructions again and give a new answer'
+        if self.participant.vars['subgroup'] == 'low':
+            if values['q7'] != 2:
+                return 'Answer to question 2 is incorrect. Check the instructions again and give a new answer'
+            if values['q8'] != 2:
+                return 'Answer to question 3 is incorrect. Check the instructions again and give a new answer'
 
     def vars_for_template(self):
-        """We have the payoffs for each treatment in both games here."""
         return{
-            'sucker_high': -Constants.endowment_high + Constants.c_high,
-            'temptation_high': Constants.endowment_high + Constants.b_high,
-            'reward_high': Constants.endowment_high + Constants.b_high - Constants.c_high,
-
-            'sucker_low': -Constants.endowment_low + Constants.c_low,
-            'temptation_low': Constants.endowment_low + Constants.b_low,
-            'reward_low': Constants.endowment_low + Constants.b_low - Constants.c_low,
-
             'my_treatment': self.participant.vars['subgroup']
         }
 
