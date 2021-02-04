@@ -73,9 +73,20 @@ div {
 
 <div class="card-body">
     <h4>Please answer the following questions to continue:</h4>
-    {% for field in form %}
-        {% formfield field %}
-    {% endfor %}
+        {% if my_treatment == 'high' %}
+            <p>
+                {% formfield player.q3a label='' %}
+                {% formfield player.q4 label='' %}
+                {% formfield player.q5 label='' %}
+            </p>
+        {% endif %}
+        {% if my_treatment == 'low' %}
+            <p>
+                {% formfield player.q3b label='' %}
+                {% formfield player.q4 label='' %}
+                {% formfield player.q5 label='' %}
+            </p>
+        {% endif %}
 </div>
 
     <p>

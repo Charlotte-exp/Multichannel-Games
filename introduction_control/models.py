@@ -94,7 +94,7 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect
     )
 
-    q3 = models.IntegerField(
+    q3a = models.IntegerField(
         choices=[
             [1, 'You will earn 0 pts.'],
             [2, f'You will earn {Constants.b_high} pts.'],
@@ -102,6 +102,17 @@ class Player(BasePlayer):
         ],
         verbose_name=f'What amount will you receive from Participant 2 '
                      f'if they choose to pay {Constants.c_high} pts',
+        widget=widgets.RadioSelect
+    )
+
+    q3b = models.IntegerField(
+        choices=[
+            [1, 'You will earn 0 pts.'],
+            [2, f'You will earn {Constants.b_low} pts.'],
+            [3, 'You will earn 4 pts.']
+        ],
+        verbose_name=f'What amount will you receive from Participant 2 '
+                     f'if they choose to pay {Constants.c_low} pts',
         widget=widgets.RadioSelect
     )
 
