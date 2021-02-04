@@ -9,6 +9,11 @@ class Consent(Page):
     def is_displayed(self):
         return self.round_number == 1
 
+    def vars_for_template(self):
+        return {
+            'participation_fee': self.session.config['participation_fee'],
+        }
+
 
 class Welcome(Page):
     form_model = 'player'
@@ -84,7 +89,7 @@ class Instructions2(Page):
 
 page_sequence = [
     Consent,
-    Welcome,
-    Instructions1,
-    Instructions2,
+    # Welcome,
+    # Instructions1,
+    # Instructions2,
 ]
