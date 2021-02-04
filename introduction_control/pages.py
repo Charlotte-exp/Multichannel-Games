@@ -9,15 +9,6 @@ class Consent(Page):
     def is_displayed(self):
         return self.round_number == 1
 
-    # def before_next_page(self):
-    #     if self.player.id_in_group <= 2:
-    #         self.player.subgroup = 'high'
-    #         # self.participant.vars['subgroup'] = self.player.subgroup
-    #     elif self.player.id_in_group >= 3:
-    #         self.player.subgroup = 'low'
-    #         # self.participant.vars['subgroup'] = self.player.subgroup
-    #     self.participant.vars['subgroup'] = self.player.subgroup
-
 
 class Welcome(Page):
     form_model = 'player'
@@ -41,7 +32,7 @@ class Instructions1(Page):
         return self.round_number == 1
 
     def error_message(self, values):
-        if values['q3'] != 1:
+        if values['q3'] != 2:
             return 'Answer to question 1 is incorrect. Check the instructions again and give a new answer'
         if values['q4'] != 2:
             return 'Answer to question 2 is incorrect. Check the instructions again and give a new answer'
@@ -50,7 +41,7 @@ class Instructions1(Page):
 
     def vars_for_template(self):
         return{
-            'my_treatment': self.participant.vars['treatment']
+            'my_treatment': self.participant.vars['subgroup']
         }
 
 
@@ -87,7 +78,7 @@ class Instructions2(Page):
 
 page_sequence = [
     Consent,
-    # Welcome,
-    # Instructions1,
-    # Instructions2,
+    Welcome,
+    Instructions1,
+    Instructions2,
 ]
