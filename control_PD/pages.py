@@ -237,6 +237,20 @@ class Demographics(Page):
             return True
 
 
+class CommentBox(Page):
+    form_model = 'player'
+    form_fields = ['comment_box']
+
+    def is_displayed(self):
+        """ This function makes the page appear only on the last random-ish round """
+        if self.player.left_hanging == 1:
+            return False
+        elif self.player.left_hanging == 2:
+            return False
+        elif self.subsession.round_number == self.participant.vars['last_round']:
+            return True
+
+
 class Payment(Page):
     """
     This page is for final payment in GBP. A lot of the mechanics relating to payment is set in the settings
@@ -307,6 +321,7 @@ page_sequence = [
     Results,
     End,
     Demographics,
+    CommentBox,
     Payment,
     LeftHanging,
     ProlificLink,

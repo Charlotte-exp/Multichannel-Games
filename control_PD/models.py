@@ -114,6 +114,10 @@ class Player(BasePlayer):
         verbose_name='What is your ethnicity?',
         widget=widgets.RadioSelect)
 
+    comment_box = models.LongStringField(
+        verbose_name=''
+    )
+
     decision_high = models.IntegerField(
         choices=[
             [1, f'You pay {Constants.c_high} pts for Participant 2 to receive {Constants.b_high} pts.'],
