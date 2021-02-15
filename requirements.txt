@@ -1,3 +1,4 @@
+# oTree-may-not-overwrite-this-file
 -r requirements_base.txt
 psycopg2>=2.5.1
 numpy==1.18.5
