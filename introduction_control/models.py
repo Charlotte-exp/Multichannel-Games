@@ -25,13 +25,13 @@ class Constants(BaseConstants):
     """
     Donation game payoff
     """
-    b_high = c(5)
-    c_high = c(1)
+    b_high = c(30)
+    c_high = c(10)
     dd_high = c(0)
     endowment_high = c_high
 
-    b_low = c(2)
-    c_low = c(1)
+    b_low = c(15)
+    c_low = c(10)
     dd_low = c(0)
     endowment_low = c_low
 
