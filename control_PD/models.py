@@ -23,7 +23,7 @@ class Constants(BaseConstants):
     num_rounds = 50
 
     """ variables for randomish end round, used in the intro app at the mo"""
-    min_rounds = 2
+    min_rounds = 5
     proba_next_round = 0.5
 
     """
