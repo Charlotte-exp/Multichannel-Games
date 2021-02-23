@@ -24,16 +24,16 @@
         <ul>
             {% if my_treatment == 'high' %}
             <li>
-                You <b>pay {{ Constants.c_high }} pts</b> for Participant 2 to <b>receive {{ Constants.b_high }} pts</b>.
+                You <b>lose {{ Constants.c_high }} pts</b> for Participant 2 to <b>receive {{ Constants.b_high }} pts</b>.
             </li>
             {% endif %}
             {% if my_treatment == 'low' %}
             <li>
-                You <b>pay {{ Constants.c_low }} pts</b> for Participant 2 to <b>receive {{ Constants.b_low }} pts</b>.
+                You <b>lose {{ Constants.c_low }} pts</b> for Participant 2 to <b>receive {{ Constants.b_low }} pts</b>.
             </li>
             {% endif %}
             <li>
-                You <b>pay 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
+                You <b>lose 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
             </li>
         </ul>
     </div>
@@ -59,33 +59,33 @@
             {% if my_treatment == 'high' %}
             <ul>
                 <li>
-                    to <b>pay {{ Constants.c_high }} pts</b> for Participant 2 to <b>receive {{ Constants.b_high }} pts</b>.
+                    to <b>lose {{ Constants.c_high }} pts</b> for Participant 2 to <b>receive {{ Constants.b_high }} pts</b>.
                 </li>
             </ul>
             <p>Participant 2 chose:</p>
             <ul>
                 <li>
-                    to <b>pay 0 pts</b> for Participant 1 to <b>receive 0 pts</b>.
+                    to <b>lose 0 pts</b> for Participant 1 to <b>receive 0 pts</b>.
                 </li>
             </ul>
             <p>
-                As a result, taking the initial endowment of 1 pts into account, Participant 1 earned <b>{{ Constants.sucker_high }}</b> points and Participant 2 earned <b>{{ Constants.temptation_high }}</b> points in this round.
+                As a result, Participant 1 earned <b>{{ Constants.sucker_high }}</b> points and Participant 2 earned <b>{{ Constants.temptation_high }}</b> points in this round.
             </p>
             {% endif %}
             {% if my_treatment == 'low' %}
                 <ul>
                 <li>
-                    to <b>pay {{ Constants.c_low }} pts</b> for Participant 2 to <b>receive {{ Constants.b_low }} pts</b>.
+                    to <b>lose {{ Constants.c_low }} pts</b> for Participant 2 to <b>receive {{ Constants.b_low }} pts</b>.
                 </li>
             </ul>
             <p>Participant 2 chose:</p>
             <ul>
                 <li>
-                    to <b>pay 0 pts</b> for Participant 1 to <b>receive 0 pts</b>.
+                    to <b>lose 0 pts</b> for Participant 1 to <b>receive 0 pts</b>.
                 </li>
             </ul>
             <p>
-                As a result, taking the initial endowment of 1 pts into account, Participant 1 earned <b>{{ Constants.sucker_low }}</b> points and Participant 2 earned <b>{{ Constants.temptation_low }}</b> points in this round.
+                As a result, Participant 1 earned <b>{{ Constants.sucker_low }}</b> points and Participant 2 earned <b>{{ Constants.temptation_low }}</b> points in this round.
             </p>
             {% endif %}
             </div>
@@ -102,33 +102,33 @@
             {% if my_treatment == 'high' %}
             <ul>
                 <li>
-                    to <b>pay {{ Constants.c_high }} pts</b> for Participant 2 to <b>receive {{ Constants.b_high }} pts</b>.
+                    to <b>lose {{ Constants.c_high }} pts</b> for Participant 2 to <b>receive {{ Constants.b_high }} pts</b>.
                 </li>
             </ul>
             <p>Participant 2 chose:</p>
             <ul>
                 <li>
-                    to <b>pay {{ Constants.c_high }} pts</b> for Participant 1 to <b>receive {{ Constants.b_high }} pts</b>.
+                    to <b>lose {{ Constants.c_high }} pts</b> for Participant 1 to <b>receive {{ Constants.b_high }} pts</b>.
                 </li>
             </ul>
             <p>
-                As a result, taking the initial endowment of 1 pts into account, Participant 1 earned <b>{{ Constants.reward_high }}</b> points and Participant 2 earned <b>{{ Constants.reward_high }}</b> points in this round.
+                As a result, Participant 1 earned <b>{{ Constants.reward_high }}</b> points and Participant 2 earned <b>{{ Constants.reward_high }}</b> points in this round.
             </p>
             {% endif %}
             {% if my_treatment == 'low' %}
                 <ul>
                 <li>
-                    to <b>pay {{ Constants.c_low }} pts</b> for Participant 2 to <b>receive {{ Constants.b_low }} pts</b>.
+                    to <b>lose {{ Constants.c_low }} pts</b> for Participant 2 to <b>receive {{ Constants.b_low }} pts</b>.
                 </li>
             </ul>
             <p>Participant 2 chose:</p>
             <ul>
                 <li>
-                    to <b>pay {{ Constants.c_low }} pts</b> for Participant 1 to <b>receive {{ Constants.b_low }} pts</b>.
+                    to <b>lose {{ Constants.c_low }} pts</b> for Participant 1 to <b>receive {{ Constants.b_low }} pts</b>.
                 </li>
             </ul>
             <p>
-                As a result, taking the initial endowment of 1 pts into account, Participant 1 earned <b>{{ Constants.reward_low }}</b> points and Participant 2 earned <b>{{ Constants.reward_low }}</b> points in this round.
+                As a result, Participant 1 earned <b>{{ Constants.reward_low }}</b> points and Participant 2 earned <b>{{ Constants.reward_low }}</b> points in this round.
             </p>
             {% endif %}
             </div>
