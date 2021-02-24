@@ -19,6 +19,7 @@ class Constants(BaseConstants):
     name_in_url = 'introduction_control'
     players_per_group = None
     num_rounds = 1
+    min_round = 20
 
     currency_per_point = 60
 

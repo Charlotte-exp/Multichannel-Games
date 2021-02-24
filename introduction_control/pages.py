@@ -56,7 +56,9 @@ class Instructions1(Page):
 
     def vars_for_template(self):
         return{
-            'my_treatment': self.participant.vars['subgroup']
+            'my_treatment': self.participant.vars['subgroup'],
+
+            'initial_endowment': Constants.endowment_high * Constants.min_round,
         }
 
 

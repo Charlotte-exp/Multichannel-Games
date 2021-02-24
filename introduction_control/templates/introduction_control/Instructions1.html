@@ -22,7 +22,6 @@ div {
     <p>
         In each round, you and Participant 2 will interact with each other in a task. In this task, you and your co-participant must choose between two options.
         The total points you earn in each round will depend on what you and Participant 2 independently decide.
-        In each round, you and the other participant are both endowed with {{ Constants.endowment_high }} points.
     </p>
     {% else %}
     <p>
@@ -69,6 +68,18 @@ div {
         After that round, there will again be a 50% chance of another round,
         and after that round, there will again be another 50% chance of another round, and so on until the tasks end.
     </p>
+    {% if my_treatment == 'high' %}
+        <p>
+            You and the other participant are both endowed with {{ initial_endowment }} points at the start of the game, 10 for each round,
+            and will get {{ Constants.endowment_high }} more points on each additional round.
+        </p>
+    {% else %}
+        <p>
+            You and the other participant are both endowed with {{ initial_endowment }} points at the start of the game, 10 for each round,
+            and will get {{ Constants.endowment_low }} more points on each additional round.
+        </p>
+    {% endif %}
+
 </div>
 
 <div class="card-body">
