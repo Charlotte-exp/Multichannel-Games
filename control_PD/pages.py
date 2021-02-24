@@ -147,7 +147,7 @@ class Results(Page):
             return True
 
     timer_text = 'You are about to be automatically moved to the next round decision page'
-    timeout_seconds = 2 * 600
+    timeout_seconds = 2 * 60
     # my_page_timeout_seconds = 90
     #
     # def get_timeout_seconds(self):
@@ -222,8 +222,11 @@ class End(Page):
         me = self.player
         return {
             'my_treatment': me.participant.vars['subgroup'],
-            'total_payoff': sum([p.payoff for p in me.in_all_rounds()]),
             'player_in_all_rounds': me.in_all_rounds(),
+
+            'total_payoff': sum([p.payoff for p in me.in_all_rounds()]),
+            'my_result_high': me.payoff - Constants.endowment_high,
+            'my_result_low': me.payoff - Constants.endowment_low,
         }
 
 

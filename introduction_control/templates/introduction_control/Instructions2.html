@@ -68,8 +68,14 @@
                     to <b>lose 0 pts</b> for Participant 1 to <b>receive 0 pts</b>.
                 </li>
             </ul>
+            <hr size="6" width="50%" align="left" color="black">
             <p>
-                As a result, Participant 1 earned <b>{{ Constants.sucker_high }}</b> points and Participant 2 earned <b>{{ Constants.temptation_high }}</b> points in this round.
+                Your points in this round:
+                -{{ cost_high }} + {{ 0 }} = <b>{{ sucker_high }}</b>
+            </p>
+            <p>
+                Participant 2's points in this round:
+                {{ 0 }} + {{ benefit_high }} = <b>{{ temptation_high }}</b>
             </p>
             {% endif %}
             {% if my_treatment == 'low' %}
@@ -84,8 +90,14 @@
                     to <b>lose 0 pts</b> for Participant 1 to <b>receive 0 pts</b>.
                 </li>
             </ul>
+            <hr size="6" width="50%" align="left" color="black">
             <p>
-                As a result, Participant 1 earned <b>{{ Constants.sucker_low }}</b> points and Participant 2 earned <b>{{ Constants.temptation_low }}</b> points in this round.
+                Your points in this round:
+                -{{ cost_low }} + {{ 0 }} = <b>{{ sucker_low }}</b>
+            </p>
+            <p>
+                Participant 2's points in this round:
+                {{ 0 }} + {{ benefit_low }} = <b>{{ temptation_low }}</b>
             </p>
             {% endif %}
             </div>
@@ -111,8 +123,14 @@
                     to <b>lose {{ Constants.c_high }} pts</b> for Participant 1 to <b>receive {{ Constants.b_high }} pts</b>.
                 </li>
             </ul>
+            <hr size="6" width="50%" align="left" color="black">
             <p>
-                As a result, Participant 1 earned <b>{{ Constants.reward_high }}</b> points and Participant 2 earned <b>{{ Constants.reward_high }}</b> points in this round.
+                Your points in this round:
+                -{{ cost_high }} + {{ benefit_high }} = <b>{{ reward_high }}</b>
+            </p>
+            <p>
+                Participant 2's points in this round:
+                -{{ cost_high }} + {{ benefit_high }} = <b>{{ reward_high }}</b>
             </p>
             {% endif %}
             {% if my_treatment == 'low' %}
@@ -127,8 +145,14 @@
                     to <b>lose {{ Constants.c_low }} pts</b> for Participant 1 to <b>receive {{ Constants.b_low }} pts</b>.
                 </li>
             </ul>
+            <hr size="6" width="50%" align="left" color="black">
             <p>
-                As a result, Participant 1 earned <b>{{ Constants.reward_low }}</b> points and Participant 2 earned <b>{{ Constants.reward_low }}</b> points in this round.
+                Your points in this round:
+                -{{ cost_low }} + {{ benefit_high }} = <b>{{ reward_low }}</b>
+            </p>
+            <p>
+                Participant 2's points in this round:
+                -{{ cost_low }} + {{ benefit_low }} = <b>{{ reward_low }}</b>
             </p>
             {% endif %}
             </div>

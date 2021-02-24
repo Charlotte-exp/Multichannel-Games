@@ -83,7 +83,20 @@ class Instructions2(Page):
 
     def vars_for_template(self):
         return{
-            'my_treatment': self.participant.vars['subgroup']
+            'my_treatment': self.participant.vars['subgroup'],
+
+            'cost_high': Constants.c_high,
+            'cost_low': Constants.c_low,
+            'benefit_high': Constants.b_high,
+            'benefit_low': Constants.b_low,
+
+            'sucker_high': -Constants.c_high,
+            'temptation_high': Constants.b_high,
+            'reward_high': Constants.b_high - Constants.c_high,
+
+            'sucker_low': -Constants.c_low,
+            'temptation_low': Constants.b_low,
+            'reward_low': Constants.b_low - Constants.c_low,
         }
 
 
