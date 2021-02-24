@@ -40,6 +40,15 @@ class Constants(BaseConstants):
     dd_low = c(0)
     endowment_low = c_low
 
+    """Without endowment!! (for the round results)"""
+    sucker_high = -c_high
+    temptation_high = b_high
+    reward_high = b_high - c_high
+
+    sucker_low = -c_low
+    temptation_low = b_low
+    reward_low = b_low - c_low
+
 
 class Subsession(BaseSubsession):
     """
