@@ -70,13 +70,15 @@ div {
     </p>
     {% if my_treatment == 'high' %}
         <p>
-            You and the other participant are both endowed with {{ initial_endowment }} points at the start of the game, 10 for each round,
-            and will get {{ Constants.endowment_high }} more points on each additional round.
+            You and the other participant are both endowed with {{ initial_endowment_high }} points
+            at the start of the game ({{ Constants.endowment_high }} points for each of the 20 rounds).
+            For any additional round that may occur after the 20th round, you receive an additional endowment of {{ Constants.endowment_high }} points.
         </p>
     {% else %}
         <p>
-            You and the other participant are both endowed with {{ initial_endowment }} points at the start of the game, 10 for each round,
-            and will get {{ Constants.endowment_low }} more points on each additional round.
+            You and the other participant are both endowed with {{ initial_endowment_low }} points
+            at the start of the game ({{ Constants.endowment_low }} points for each of the 20 rounds).
+            For any additional round that may occur after the 20th round, you receive an additional endowment of {{ Constants.endowment_low }} points.
         </p>
     {% endif %}
 
