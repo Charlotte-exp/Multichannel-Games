@@ -6,8 +6,8 @@ from os import environ
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = {
-    'real_world_currency_per_point': 1/60,
-    'participation_fee': 3.00,
+    'real_world_currency_per_point': 1/500,
+    'participation_fee': 2.00,
     'doc': "",
 }
 

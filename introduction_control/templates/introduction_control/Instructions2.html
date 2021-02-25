@@ -169,11 +169,22 @@
     <h4>
         <b>Please answer the following questions to continue:</b>
     </h4>
-
-    {% for field in form %}
-        {% formfield field %}
-    {% endfor %}
+    {% if my_treatment == 'high' %}
+            <p>
+                {% formfield player.q6h %}
+                {% formfield player.q7h %}
+                {% formfield player.q8h %}
+            </p>
+        {% endif %}
+        {% if my_treatment == 'low' %}
+            <p>
+                {% formfield player.q6l %}
+                {% formfield player.q7l %}
+                {% formfield player.q8l %}
+            </p>
+        {% endif %}
 </div>
+
 
     <p>
         <div style="display: flex; justify-content: flex-end">
