@@ -22,7 +22,6 @@ div {
     <p>
         In each round, you and Participant 2 will interact with each other in a task. In this task, you and your co-participant must choose between two options.
         The total points you earn in each round will depend on what you and Participant 2 independently decide.
-        In each round, you and the other participant are both endowed with {{ Constants.endowment_high }} points.
     </p>
     {% else %}
     <p>
@@ -44,15 +43,15 @@ div {
         <ul>
             {% if my_treatment == 'high' %}
             <li>
-                You <b>pay {{ Constants.c_high}} pts</b> for Participant 2 to <b>receive {{Constants.b_high }} pts</b>.
+                You <b>lose {{ Constants.c_high}} pts</b> for Participant 2 to <b>receive {{Constants.b_high }} pts</b>.
             </li>
             {% else %}
             <li>
-                You <b>pay {{ Constants.c_low}} pts</b> for Participant 2 to <b>receive {{Constants.b_low }} pts</b>.
+                You <b>lose {{ Constants.c_low}} pts</b> for Participant 2 to <b>receive {{Constants.b_low }} pts</b>.
             </li>
             {% endif %}
             <li>
-                You <b>pay 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
+                You <b>lose 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
             </li>
         </ul>
         <p>
@@ -69,22 +68,36 @@ div {
         After that round, there will again be a 50% chance of another round,
         and after that round, there will again be another 50% chance of another round, and so on until the tasks end.
     </p>
+    {% if my_treatment == 'high' %}
+        <p>
+            You and the other participant are both endowed with {{ initial_endowment_high }} points
+            at the start of the game ({{ Constants.endowment_high }} points for each of the 20 rounds).
+            For any additional round that may occur after the 20th round, you receive an additional endowment of {{ Constants.endowment_high }} points.
+        </p>
+    {% else %}
+        <p>
+            You and the other participant are both endowed with {{ initial_endowment_low }} points
+            at the start of the game ({{ Constants.endowment_low }} points for each of the 20 rounds).
+            For any additional round that may occur after the 20th round, you receive an additional endowment of {{ Constants.endowment_low }} points.
+        </p>
+    {% endif %}
+
 </div>
 
 <div class="card-body">
     <h4>Please answer the following questions to continue:</h4>
         {% if my_treatment == 'high' %}
             <p>
-                {% formfield player.q3a label='' %}
-                {% formfield player.q4 label='' %}
-                {% formfield player.q5 label='' %}
+                {% formfield player.q3a %}
+                {% formfield player.q4 %}
+                {% formfield player.q5 %}
             </p>
         {% endif %}
         {% if my_treatment == 'low' %}
             <p>
-                {% formfield player.q3b label='' %}
-                {% formfield player.q4 label='' %}
-                {% formfield player.q5 label='' %}
+                {% formfield player.q3b %}
+                {% formfield player.q4 %}
+                {% formfield player.q5 %}
             </p>
         {% endif %}
 </div>

@@ -30,15 +30,24 @@ class Constants(BaseConstants):
     Donation game payoffs
     b = benefit, c = cost, dd = both defect
     """
-    b_high = c(5)
-    c_high = c(1)
+    b_high = c(20)
+    c_high = c(10)
     dd_high = c(0)
     endowment_high = c_high
 
-    b_low = c(2)
-    c_low = c(1)
+    b_low = c(15)
+    c_low = c(10)
     dd_low = c(0)
     endowment_low = c_low
+
+    """Without endowment!! (for the round results)"""
+    sucker_high = -c_high
+    temptation_high = b_high
+    reward_high = b_high - c_high
+
+    sucker_low = -c_low
+    temptation_low = b_low
+    reward_low = b_low - c_low
 
 
 class Subsession(BaseSubsession):
@@ -116,8 +125,8 @@ class Player(BasePlayer):
 
     decision_high = models.IntegerField(
         choices=[
-            [1, f'You pay {Constants.c_high} pts for Participant 2 to receive {Constants.b_high} pts.'],
-            [2, 'You pay 0 pts for Participant 2 to receive 0 pts.'],
+            [1, f'You lose {Constants.c_high} pts for Participant 2 to receive {Constants.b_high} pts.'],
+            [2, 'You lose 0 pts for Participant 2 to receive 0 pts.'],
         ],
         doc="""This player's decision""",
         widget=widgets.RadioSelect
@@ -125,8 +134,8 @@ class Player(BasePlayer):
 
     decision_low = models.IntegerField(
         choices=[
-            [3, f'You pay {Constants.c_low} pts for Participant 2 to receive {Constants.b_low} pts.'],
-            [4, 'You pay 0 pts for Participant 2 to receive 0 pts.'],
+            [3, f'You lose {Constants.c_low} pts for Participant 2 to receive {Constants.b_low} pts.'],
+            [4, 'You lose 0 pts for Participant 2 to receive 0 pts.'],
         ],
         doc="""This player's decision""",
         widget=widgets.RadioSelect

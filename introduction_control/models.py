@@ -19,29 +19,30 @@ class Constants(BaseConstants):
     name_in_url = 'introduction_control'
     players_per_group = None
     num_rounds = 1
+    min_round = 20
 
     currency_per_point = 60
 
     """
     Donation game payoff
     """
-    b_high = c(5)
-    c_high = c(1)
+    b_high = c(20)
+    c_high = c(10)
     dd_high = c(0)
     endowment_high = c_high
 
-    b_low = c(2)
-    c_low = c(1)
+    b_low = c(15)
+    c_low = c(10)
     dd_low = c(0)
     endowment_low = c_low
 
-    sucker_high = -endowment_high + c_high
-    temptation_high = endowment_high + b_high
-    reward_high = endowment_high + b_high - c_high
+    sucker_high = -c_high
+    temptation_high = b_high
+    reward_high = b_high - c_high
 
-    sucker_low = -endowment_low + c_low
-    temptation_low = endowment_low + b_low
-    reward_low = endowment_low + b_low - c_low
+    sucker_low = -c_low
+    temptation_low = b_low
+    reward_low = b_low - c_low
 
 
 class Subsession(BaseSubsession):
@@ -101,8 +102,8 @@ class Player(BasePlayer):
     q3a = models.IntegerField(
         choices=[
             [1, 'You will earn 0 pts.'],
-            [2, f'You will earn {Constants.b_high} pts.'],
-            [3, 'You will earn 10 pts.']
+            [2, f'You will earn {Constants.c_high} pts.'],
+            [3, f'You will earn {Constants.b_high} pts.']
         ],
         verbose_name=f'What amount will you receive from Participant 2 '
                      f'if they choose to pay {Constants.c_high} pts',
@@ -112,8 +113,8 @@ class Player(BasePlayer):
     q3b = models.IntegerField(
         choices=[
             [1, 'You will earn 0 pts.'],
-            [2, f'You will earn {Constants.b_low} pts.'],
-            [3, 'You will earn 4 pts.']
+            [2, f'You will earn {Constants.c_low} pts.'],
+            [3, f'You will earn {Constants.b_low} pts.']
         ],
         verbose_name=f'What amount will you receive from Participant 2 '
                      f'if they choose to pay {Constants.c_low} pts',
@@ -140,31 +141,61 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect
     )
 
-    q6 = models.IntegerField(
+    q6h = models.IntegerField(
         choices=[
             [1, f'{Constants.sucker_high} points'],
-            [2, '3 points'],
-            [3, '10 points']
+            [2, '0 points'],
+            [3, f'{Constants.b_high} points']
         ],
         verbose_name='In Example 1, how many points did Participant 1 earn?',
         widget=widgets.RadioSelect
     )
 
-    q7 = models.IntegerField(
+    q7h = models.IntegerField(
         choices=[
             [1, '0 points'],
-            [2, f'{Constants.temptation_low} points'],
+            [2, f'{Constants.c_high} points'],
             [3, f'{Constants.temptation_high} points']
         ],
         verbose_name='In Example 1, how many points did Participant 2 earn?',
         widget=widgets.RadioSelect
     )
 
-    q8 = models.IntegerField(
+    q8h = models.IntegerField(
+        choices=[
+            [1, f'{Constants.sucker_high} points'],
+            [2, f'{Constants.reward_high} points'],
+            [3, f'{Constants.b_high} points']
+        ],
+        verbose_name='In Example 2, how many points did Participant 2 earn?',
+        widget=widgets.RadioSelect
+    )
+
+    q6l = models.IntegerField(
+        choices=[
+            [1, f'{Constants.sucker_low} points'],
+            [2, '0 points'],
+            [3, f'{Constants.b_low} points']
+        ],
+        verbose_name='In Example 1, how many points did Participant 1 earn?',
+        widget=widgets.RadioSelect
+    )
+
+    q7l = models.IntegerField(
         choices=[
             [1, '0 points'],
+            [2, f'{Constants.c_low} points'],
+            [3, f'{Constants.temptation_low} points']
+        ],
+        verbose_name='In Example 1, how many points did Participant 2 earn?',
+        widget=widgets.RadioSelect
+    )
+
+    q8l = models.IntegerField(
+        choices=[
+            [1, f'{Constants.sucker_low} points'],
             [2, f'{Constants.reward_low} points'],
-            [3, f'{Constants.reward_high} points']
+            [3, f'{Constants.b_low} points']
         ],
         verbose_name='In Example 2, how many points did Participant 2 earn?',
         widget=widgets.RadioSelect

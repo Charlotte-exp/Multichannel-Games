@@ -148,17 +148,6 @@ class Results(Page):
 
     timer_text = 'You are about to be automatically moved to the next round decision page'
     timeout_seconds = 2 * 60
-    # my_page_timeout_seconds = 90
-    #
-    # def get_timeout_seconds(self):
-    #     round_number = self.subsession.round_number
-    #     timeout = self.my_page_timeout_seconds
-    #     if round_number <= 2:
-    #         return timeout
-    #     else:
-    #         timeout -= (round_number - 2) * 5
-    #         print(timeout)
-    #         return timeout
 
     def vars_for_template(self):
         """
@@ -178,13 +167,21 @@ class Results(Page):
             'opponent_decision_low': opponent_low.decision_low,
 
             'my_payoff': me.payoff,
-            'opponent_payoff_high': opponent_high.payoff,
-            'opponent_payoff_low': opponent_low.payoff,
+            'my_result_high': me.payoff - Constants.endowment_high,
+            'my_result_low': me.payoff - Constants.endowment_low,
 
             'cost_high': Constants.c_high,
             'cost_low': Constants.c_low,
             'benefit_high': Constants.b_high,
             'benefit_low': Constants.b_low,
+
+            'sucker_high': -Constants.c_high,
+            'temptation_high': Constants.b_high,
+            'reward_high': Constants.b_high - Constants.c_high,
+
+            'sucker_low': -Constants.c_low,
+            'temptation_low': Constants.b_low,
+            'reward_low': Constants.b_low - Constants.c_low,
         }
 
 
@@ -214,8 +211,11 @@ class End(Page):
         me = self.player
         return {
             'my_treatment': me.participant.vars['subgroup'],
-            'total_payoff': sum([p.payoff for p in me.in_all_rounds()]),
             'player_in_all_rounds': me.in_all_rounds(),
+
+            'total_payoff': sum([p.payoff for p in me.in_all_rounds()]),
+            'my_result_high': me.payoff - Constants.endowment_high,
+            'my_result_low': me.payoff - Constants.endowment_low,
         }
 
 

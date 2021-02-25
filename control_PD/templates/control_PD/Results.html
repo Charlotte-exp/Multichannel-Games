@@ -31,11 +31,11 @@
             <ul>
                 {% if my_decision_high == 1 %}
                 <li>
-                    to <b>pay {{ cost_high }} pts</b> for Participant 2 to <b>receive {{ benefit_high }} pts</b>.
+                    to <b>lose {{ cost_high }} pts</b> for Participant 2 to <b>receive {{ benefit_high }} pts</b>.
                 </li>
                 {% else %}
                 <li>
-                    to <b>pay 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
+                    to <b>lose 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
                 </li>
                 {% endif %}
             </ul>
@@ -43,14 +43,39 @@
             <ul>
                 {% if opponent_decision_high == 1 %}
                 <li>
-                    to <b>pay {{ cost_high }} pts</b> for you to <b>receive {{ benefit_high }} pts</b>.
+                    to <b>lose {{ cost_high }} pts</b> for you to <b>receive {{ benefit_high }} pts</b>.
                 </li>
                 {% else %}
                 <li>
-                    to <b>pay 0 pts</b> for you to <b>receive 0 pts</b>.
+                    to <b>lose 0 pts</b> for you to <b>receive 0 pts</b>.
                 </li>
                 {% endif %}
             </ul>
+            <hr size="6" width="50%" align="left" color="black">
+            {% if my_decision_high == 1 and opponent_decision_high == 1 %}
+            <p>
+                Your points in this round:
+                -{{ cost_high }} + {{ benefit_high }} = <b>{{ my_result_high }}</b>
+            </p>
+            {% endif %}
+            {% if my_decision_high == 1 and opponent_decision_high == 2 %}
+            <p>
+                Your points in this round:
+                -{{ cost_high }} + {{ 0 }} = <b>{{ my_result_high }}</b>
+            </p>
+            {% endif %}
+            {% if my_decision_high == 2 and opponent_decision_high == 1 %}
+            <p>
+                Your points in this round:
+                {{ 0 }} + {{ benefit_high }} = <b>{{ my_result_high }}</b>
+            </p>
+            {% endif %}
+            {% if my_decision_high == 2 and opponent_decision_high == 2 %}
+            <p>
+                Your points in this round:
+                {{ 0 }} + {{ 0 }} = <b>{{ my_result_high }}</b>
+            </p>
+            {% endif %}
         {% endif %}
         {% if my_treatment == 'low' %}
             <p>
@@ -60,11 +85,11 @@
                 <ul>
                     {% if my_decision_low == 3 %}
                     <li>
-                        to <b>pay {{ cost_low }} pts</b> for Participant 2 to <b>receive {{ benefit_low }} pts</b>.
+                        to <b>lose {{ cost_low }} pts</b> for Participant 2 to <b>receive {{ benefit_low }} pts</b>.
                     </li>
                     {% else %}
                     <li>
-                        to <b>pay 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
+                        to <b>lose 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
                     </li>
                     {% endif %}
                 </ul>
@@ -72,18 +97,41 @@
                 <ul>
                     {% if opponent_decision_low == 3 %}
                     <li>
-                        to <b>pay {{ cost_low }} pts</b> for you to <b>receive {{ benefit_low }} pts</b>.
+                        to <b>lose {{ cost_low }} pts</b> for you to <b>receive {{ benefit_low }} pts</b>.
                     </li>
                     {% else %}
                     <li>
-                        to <b>pay 0 pts</b> for you to <b>receive 0 pts</b>.
+                        to <b>lose 0 pts</b> for you to <b>receive 0 pts</b>.
                     </li>
                     {% endif %}
                 </ul>
+                <hr size="6" width="50%" align="left" color="black">
+                {% if my_decision_low == 3 and opponent_decision_low == 3 %}
+                <p>
+                    Your points in this round:
+                    -{{ cost_low }} + {{ benefit_low }} = <b>{{ my_result_low }}</b>
+                </p>
+                {% endif %}
+                {% if my_decision_low == 3 and opponent_decision_low == 4 %}
+                <p>
+                    Your points in this round:
+                    -{{ cost_low }} + {{ 0 }} = <b>{{ my_result_low }}</b>
+                </p>
+                {% endif %}
+                {% if my_decision_low == 4 and opponent_decision_low == 3 %}
+                <p>
+                    Your points in this round:
+                    {{ 0 }} + {{ benefit_low }} = <b>{{ my_result_low }}</b>
+                </p>
+                {% endif %}
+                {% if my_decision_low == 4 and opponent_decision_low == 4 %}
+                <p>
+                    Your points in this round:
+                    {{ 0 }} + {{ 0 }} = <b>{{ my_result_low }}</b>
+                </p>
+                {% endif %}
         {% endif %}
-        <p>
-            In total, taking your initial endowment of 1 pts into account, you earned <b>{{ my_payoff }}</b> pts in this round.
-        </p>
+
     </div>
 </div>
 
