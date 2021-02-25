@@ -148,17 +148,6 @@ class Results(Page):
 
     timer_text = 'You are about to be automatically moved to the next round decision page'
     timeout_seconds = 2 * 60
-    # my_page_timeout_seconds = 90
-    #
-    # def get_timeout_seconds(self):
-    #     round_number = self.subsession.round_number
-    #     timeout = self.my_page_timeout_seconds
-    #     if round_number <= 2:
-    #         return timeout
-    #     else:
-    #         timeout -= (round_number - 2) * 5
-    #         print(timeout)
-    #         return timeout
 
     def vars_for_template(self):
         """
