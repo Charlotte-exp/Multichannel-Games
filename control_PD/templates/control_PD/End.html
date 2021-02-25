@@ -8,7 +8,12 @@
 {% block content %}
 
 <div class="card-body">
-    Here are your total points across all rounds, including the endowment of {{ endowment_high }} pts per round.
+    {% if my_treatment == 'high' %}
+    Here are your total points across all rounds, including the endowment of {{ Constants.endowment_high }} pts per round.
+    {% else %}
+    Here are your total points across all rounds, including the endowment of {{ Constants.endowment_low }} pts per round.
+    [% endif %}
+
 </div>
     <table class="table">
         <tr>

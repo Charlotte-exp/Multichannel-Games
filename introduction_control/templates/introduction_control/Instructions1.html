@@ -86,16 +86,16 @@ div {
     <h4>Please answer the following questions to continue:</h4>
         {% if my_treatment == 'high' %}
             <p>
-                {% formfield player.q3a label='' %}
-                {% formfield player.q4 label='' %}
-                {% formfield player.q5 label='' %}
+                {% formfield player.q3a %}
+                {% formfield player.q4 %}
+                {% formfield player.q5 %}
             </p>
         {% endif %}
         {% if my_treatment == 'low' %}
             <p>
-                {% formfield player.q3b label='' %}
-                {% formfield player.q4 label='' %}
-                {% formfield player.q5 label='' %}
+                {% formfield player.q3b %}
+                {% formfield player.q4 %}
+                {% formfield player.q5 %}
             </p>
         {% endif %}
 </div>
