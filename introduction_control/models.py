@@ -21,7 +21,8 @@ class Constants(BaseConstants):
     num_rounds = 1
     min_round = 20
 
-    currency_per_point = 60
+    session_time = 20
+    conversion = '20pts = £0.05'
 
     """
     Donation game payoff
@@ -57,6 +58,7 @@ class Subsession(BaseSubsession):
         session but also that is it equally distributed in the sample. (So pp don't have to wait to long get matched
         in a pair. It simply cycles through the list of treatments (high & low) and that's saved in the participant vars.
         """
+
         treatments = itertools.cycle(['high', 'low'])
         for p in self.get_players():
             p.subgroup = next(treatments)

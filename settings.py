@@ -6,7 +6,7 @@ from os import environ
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = {
-    'real_world_currency_per_point': 1/500,
+    'real_world_currency_per_point': 1/400,
     'participation_fee': 2.00,
     'doc': "",
 }
@@ -33,7 +33,7 @@ SESSION_CONFIGS = [
         'display_name': "Control group",
         'num_demo_participants': 12,
         'app_sequence': ['introduction_control', 'control_PD'],
-        'use_browser_bots': False
+        'use_browser_bots': True
     },
     {
         'name': 'control_PD_test',
