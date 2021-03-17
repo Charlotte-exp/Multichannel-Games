@@ -128,7 +128,7 @@ class Player(BasePlayer):
     decision_high = models.IntegerField(
         choices=[
             [1, f'You lose {Constants.c_high} pts for Participant 2 to receive {Constants.b_high} pts.'],
-            [2, 'You lose 0 pts for Participant 2 to receive 0 pts.'],
+            [0, 'You lose 0 pts for Participant 2 to receive 0 pts.'],
         ],
         doc="""This player's decision""",
         widget=widgets.RadioSelect
@@ -136,8 +136,8 @@ class Player(BasePlayer):
 
     decision_low = models.IntegerField(
         choices=[
-            [3, f'You lose {Constants.c_low} pts for Participant 2 to receive {Constants.b_low} pts.'],
-            [4, 'You lose 0 pts for Participant 2 to receive 0 pts.'],
+            [1, f'You lose {Constants.c_low} pts for Participant 2 to receive {Constants.b_low} pts.'],
+            [0, 'You lose 0 pts for Participant 2 to receive 0 pts.'],
         ],
         doc="""This player's decision""",
         widget=widgets.RadioSelect
