@@ -178,12 +178,12 @@ class Player(BasePlayer):
                 1:
                     {
                         1: Constants.endowment_high + (Constants.b_high - Constants.c_high),
-                        2: Constants.endowment_high + (-Constants.c_high)
+                        0: Constants.endowment_high + (-Constants.c_high)
                     },
-                2:
+                0:
                     {
                         1: Constants.endowment_high + Constants.b_high,
-                        2: Constants.endowment_high + Constants.dd_high
+                        0: Constants.endowment_high + Constants.dd_high
                     }
             }
             self.payoff = payoff_matrix_high[self.decision_high][opponent[0].decision_high]
@@ -191,15 +191,15 @@ class Player(BasePlayer):
 
         if self.participant.vars['subgroup'] == 'low':
             payoff_matrix_low = {
-                3:
+                1:
                     {
-                        3: Constants.endowment_low + (Constants.b_low - Constants.c_low),
-                        4: Constants.endowment_low + (-Constants.c_low)
+                        1: Constants.endowment_low + (Constants.b_low - Constants.c_low),
+                        0: Constants.endowment_low + (-Constants.c_low)
                     },
-                4:
+                0:
                     {
-                        3: Constants.endowment_low + Constants.b_low,
-                        4: Constants.endowment_low + Constants.dd_low
+                        1: Constants.endowment_low + Constants.b_low,
+                        0: Constants.endowment_low + Constants.dd_low
                     }
             }
             self.payoff = payoff_matrix_low[self.decision_low][opponent[0].decision_low]
