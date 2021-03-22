@@ -59,6 +59,16 @@ class Subsession(BaseSubsession):
         in a pair. It simply cycles through the list of treatments (high & low) and that's saved in the participant vars.
         """
 
+        self.session.vars['conversion'] = Constants.conversion
+
+        self.session.vars['b_high'] = Constants.b_high
+        self.session.vars['c_high'] = Constants.c_high
+        self.session.vars['endowment_high'] = Constants.endowment_high
+
+        self.session.vars['b_low'] = Constants.b_low
+        self.session.vars['c_low'] = Constants.c_low
+        self.session.vars['endowment_low'] = Constants.endowment_low
+
         treatments = itertools.cycle(['high', 'low'])
         for p in self.get_players():
             p.subgroup = next(treatments)

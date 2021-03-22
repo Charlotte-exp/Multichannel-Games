@@ -272,6 +272,10 @@ class Payment(Page):
             'final_payment': self.participant.payoff_plus_participation_fee()
         }
 
+    def before_next_page(self):
+        for p in self.group.get_players():
+            p.report_vars_for_database()
+
 
 class LeftHanging(Page):
     """

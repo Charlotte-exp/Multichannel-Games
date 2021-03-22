@@ -7,23 +7,23 @@ from .models import Constants
 class PlayerBot(Bot):
     def play_round(self):
         if self.round_number <= self.participant.vars['last_round']:
-        #     if self.participant.vars['subgroup'] == 'high':
-        #         yield pages.Decision, dict(decision_high=1)
-        #     else:
-        #         if self.participant.vars['subgroup'] == 'low':
-        #             yield pages.Decision, dict(decision_low=1)
-            if self.round_number % 2 == 0:
-                if self.participant.vars['subgroup'] == 'high':
-                    yield pages.Decision, dict(decision_high=1)
-                else:
-                    if self.participant.vars['subgroup'] == 'low':
-                        yield pages.Decision, dict(decision_low=1)
+            if self.participant.vars['subgroup'] == 'high':
+                yield pages.Decision, dict(decision_high=1)
             else:
-                if self.participant.vars['subgroup'] == 'high':
-                    yield pages.Decision, dict(decision_high=0)
-                else:
-                    if self.participant.vars['subgroup'] == 'low':
-                        yield pages.Decision, dict(decision_low=0)
+                if self.participant.vars['subgroup'] == 'low':
+                    yield pages.Decision, dict(decision_low=1)
+        #     if self.round_number % 2 == 0:
+        #         if self.participant.vars['subgroup'] == 'high':
+        #             yield pages.Decision, dict(decision_high=1)
+        #         else:
+        #             if self.participant.vars['subgroup'] == 'low':
+        #                 yield pages.Decision, dict(decision_low=1)
+        #     else:
+        #         if self.participant.vars['subgroup'] == 'high':
+        #             yield pages.Decision, dict(decision_high=0)
+        #         else:
+        #             if self.participant.vars['subgroup'] == 'low':
+        #                 yield pages.Decision, dict(decision_low=0)
             yield pages.Results
 
         if self.round_number == self.participant.vars['last_round']:

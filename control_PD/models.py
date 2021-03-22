@@ -204,3 +204,33 @@ class Player(BasePlayer):
             }
             self.payoff = payoff_matrix_low[self.decision_low][opponent[0].decision_low]
             # print('payoff is', self.payoff)
+
+    report_subgroup = models.StringField()
+    report_conversion = models.StringField()
+    report_b_high = models.CurrencyField()
+    report_c_high = models.CurrencyField()
+    report_endowment_high = models.CurrencyField()
+    report_b_low = models.CurrencyField()
+    report_c_low = models.CurrencyField()
+    report_endowment_low = models.CurrencyField()
+
+    def report_vars_for_database(self):
+        vars_fields = [
+            'subgroup',
+        ]
+
+        constants_fields = [
+            'conversion',
+            'b_high',
+            'c_high',
+            'endowment_high',
+            'b_low',
+            'c_low',
+            'endowment_low',
+        ]
+
+        for field in vars_fields:
+            setattr(self, 'report_{}'.format(field), self.participant.vars.get(field))
+
+        for field in constants_fields:
+            setattr(self, 'report_{}'.format(field), self.session.vars.get(field))
