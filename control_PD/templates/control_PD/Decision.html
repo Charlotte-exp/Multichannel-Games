@@ -64,7 +64,7 @@
                 {% if my_treatment == 'low' %}
                     <p>You chose:</p>
                     <ul>
-                        {% if previous_decision_low == 3 %}
+                        {% if previous_decision_low == 1 %}
                         <li>
                             to <b>lose {{ cost_low }} pts</b> for Participant 2 to <b>receive {{ benefit_low}} pts</b>.
                         </li>
@@ -76,7 +76,7 @@
                     </ul>
                     <p> Participant 2 chose:</p>
                     <ul>
-                        {% if opponent_previous_decision_low == 3 %}
+                        {% if opponent_previous_decision_low == 1 %}
                         <li>
                             to <b>lose {{ cost_low }} pts</b> for you to <b>receive {{ benefit_low }} pts</b>.
                         </li>

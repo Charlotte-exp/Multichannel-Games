@@ -11,14 +11,19 @@ class PlayerBot(Bot):
                 yield pages.Decision, dict(decision_high=1)
             else:
                 if self.participant.vars['subgroup'] == 'low':
-                    yield pages.Decision, dict(decision_low=3)
-        # if self.round_number % 2 == 0:
-        #     if self.player.id_in_group == 1:
-        #         yield pages.Decision, dict(decision="cooperate")
-        # else:
-        #     if self.player.id_in_group == 1:
-        #         yield pages.Decision, dict(decision="defect")
-            # yield pages.Decision, dict(decision_high="defect", decision_low="defect")
+                    yield pages.Decision, dict(decision_low=1)
+        #     if self.round_number % 2 == 0:
+        #         if self.participant.vars['subgroup'] == 'high':
+        #             yield pages.Decision, dict(decision_high=1)
+        #         else:
+        #             if self.participant.vars['subgroup'] == 'low':
+        #                 yield pages.Decision, dict(decision_low=1)
+        #     else:
+        #         if self.participant.vars['subgroup'] == 'high':
+        #             yield pages.Decision, dict(decision_high=0)
+        #         else:
+        #             if self.participant.vars['subgroup'] == 'low':
+        #                 yield pages.Decision, dict(decision_low=0)
             yield pages.Results
 
         if self.round_number == self.participant.vars['last_round']:

@@ -128,7 +128,7 @@ class Player(BasePlayer):
     decision_high = models.IntegerField(
         choices=[
             [1, f'You lose {Constants.c_high} pts for Participant 2 to receive {Constants.b_high} pts.'],
-            [2, 'You lose 0 pts for Participant 2 to receive 0 pts.'],
+            [0, 'You lose 0 pts for Participant 2 to receive 0 pts.'],
         ],
         doc="""This player's decision""",
         widget=widgets.RadioSelect
@@ -136,8 +136,8 @@ class Player(BasePlayer):
 
     decision_low = models.IntegerField(
         choices=[
-            [3, f'You lose {Constants.c_low} pts for Participant 2 to receive {Constants.b_low} pts.'],
-            [4, 'You lose 0 pts for Participant 2 to receive 0 pts.'],
+            [1, f'You lose {Constants.c_low} pts for Participant 2 to receive {Constants.b_low} pts.'],
+            [0, 'You lose 0 pts for Participant 2 to receive 0 pts.'],
         ],
         doc="""This player's decision""",
         widget=widgets.RadioSelect
@@ -178,12 +178,12 @@ class Player(BasePlayer):
                 1:
                     {
                         1: Constants.endowment_high + (Constants.b_high - Constants.c_high),
-                        2: Constants.endowment_high + (-Constants.c_high)
+                        0: Constants.endowment_high + (-Constants.c_high)
                     },
-                2:
+                0:
                     {
                         1: Constants.endowment_high + Constants.b_high,
-                        2: Constants.endowment_high + Constants.dd_high
+                        0: Constants.endowment_high + Constants.dd_high
                     }
             }
             self.payoff = payoff_matrix_high[self.decision_high][opponent[0].decision_high]
@@ -191,16 +191,46 @@ class Player(BasePlayer):
 
         if self.participant.vars['subgroup'] == 'low':
             payoff_matrix_low = {
-                3:
+                1:
                     {
-                        3: Constants.endowment_low + (Constants.b_low - Constants.c_low),
-                        4: Constants.endowment_low + (-Constants.c_low)
+                        1: Constants.endowment_low + (Constants.b_low - Constants.c_low),
+                        0: Constants.endowment_low + (-Constants.c_low)
                     },
-                4:
+                0:
                     {
-                        3: Constants.endowment_low + Constants.b_low,
-                        4: Constants.endowment_low + Constants.dd_low
+                        1: Constants.endowment_low + Constants.b_low,
+                        0: Constants.endowment_low + Constants.dd_low
                     }
             }
             self.payoff = payoff_matrix_low[self.decision_low][opponent[0].decision_low]
             # print('payoff is', self.payoff)
+
+    report_subgroup = models.StringField()
+    report_conversion = models.StringField()
+    report_b_high = models.CurrencyField()
+    report_c_high = models.CurrencyField()
+    report_endowment_high = models.CurrencyField()
+    report_b_low = models.CurrencyField()
+    report_c_low = models.CurrencyField()
+    report_endowment_low = models.CurrencyField()
+
+    def report_vars_for_database(self):
+        vars_fields = [
+            'subgroup',
+        ]
+
+        constants_fields = [
+            'conversion',
+            'b_high',
+            'c_high',
+            'endowment_high',
+            'b_low',
+            'c_low',
+            'endowment_low',
+        ]
+
+        for field in vars_fields:
+            setattr(self, 'report_{}'.format(field), self.participant.vars.get(field))
+
+        for field in constants_fields:
+            setattr(self, 'report_{}'.format(field), self.session.vars.get(field))
