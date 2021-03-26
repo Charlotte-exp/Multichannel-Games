@@ -22,7 +22,7 @@ class Constants(BaseConstants):
     min_round = 20
 
     session_time = 20
-    conversion = '10pts = £0.02'
+    conversion = '15pts = £0.02'
 
     """
     Donation game payoff
