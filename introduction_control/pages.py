@@ -58,8 +58,8 @@ class Instructions1(Page):
         return{
             'my_treatment': self.participant.vars['subgroup'],
 
-            'initial_endowment_high': Constants.endowment_high * Constants.min_round,
-            'initial_endowment_low': Constants.endowment_low * Constants.min_round,
+            'initial_endowment_high': Constants.endowment_high * Constants.min_rounds,
+            'initial_endowment_low': Constants.endowment_low * Constants.min_rounds,
         }
 
 

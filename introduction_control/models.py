@@ -19,7 +19,7 @@ class Constants(BaseConstants):
     name_in_url = 'introduction_control'
     players_per_group = None
     num_rounds = 1
-    min_round = 20
+    min_rounds = 20
 
     session_time = 20
     conversion = '20pts = £0.05'
