@@ -26,7 +26,7 @@ class Constants(BaseConstants):
     min_rounds = 8
     proba_next_round = 0.5
 
-    conversion = '20pts = £0.05'
+    conversion = '10pts = £0.20'
 
     """
     Donation game payoffs
