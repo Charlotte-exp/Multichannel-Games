@@ -20,10 +20,10 @@ doc = """
 class Constants(BaseConstants):
     name_in_url = 'control_PD'
     players_per_group = 4
-    num_rounds = 50
+    num_rounds = 30
 
     """ variables for randomish end round, used in the intro app at the mo"""
-    min_rounds = 20
+    min_rounds = 8
     proba_next_round = 0.5
 
     conversion = '20pts = £0.05'
@@ -32,13 +32,13 @@ class Constants(BaseConstants):
     Donation game payoffs
     b = benefit, c = cost, dd = both defect
     """
-    b_high = c(20)
-    c_high = c(10)
+    b_high = c(4)
+    c_high = c(2)
     dd_high = c(0)
     endowment_high = c_high
 
-    b_low = c(15)
-    c_low = c(10)
+    b_low = c(3)
+    c_low = c(2)
     dd_low = c(0)
     endowment_low = c_low
 

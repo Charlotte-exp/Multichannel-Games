@@ -19,7 +19,7 @@ class Constants(BaseConstants):
     name_in_url = 'introduction_control'
     players_per_group = None
     num_rounds = 1
-    min_rounds = 20
+    min_rounds = 8
 
     session_time = 20
     conversion = '20pts = £0.05'
@@ -27,13 +27,13 @@ class Constants(BaseConstants):
     """
     Donation game payoff
     """
-    b_high = c(20)
-    c_high = c(10)
+    b_high = c(4)
+    c_high = c(2)
     dd_high = c(0)
     endowment_high = c_high
 
-    b_low = c(15)
-    c_low = c(10)
+    b_low = c(3)
+    c_low = c(2)
     dd_low = c(0)
     endowment_low = c_low
 
