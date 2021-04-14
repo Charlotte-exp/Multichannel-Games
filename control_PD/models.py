@@ -23,7 +23,7 @@ class Constants(BaseConstants):
     num_rounds = 50
 
     """ variables for randomish end round, used in the intro app at the mo"""
-    min_rounds = 2
+    min_rounds = 20
     proba_next_round = 0.5
 
     conversion = '20pts = £0.05'
@@ -124,6 +124,10 @@ class Player(BasePlayer):
                  'White', 'Other'],
         verbose_name='What is your ethnicity?',
         widget=widgets.RadioSelect)
+
+    comment_box = models.LongStringField(
+        verbose_name=''
+    )
 
     decision_high = models.IntegerField(
         choices=[
