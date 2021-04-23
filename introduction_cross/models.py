@@ -20,8 +20,10 @@ class Constants(BaseConstants):
     name_in_url = 'introduction_cross'
     players_per_group = None
     num_rounds = 1
+    min_rounds = 20
 
-    currency_per_point = 60
+    session_time = 20
+    conversion = '20pts = £0.05'
 
     """
     Donation game payoff
