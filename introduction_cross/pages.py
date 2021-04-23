@@ -39,7 +39,7 @@ class Instructions1(Page):
         return self.round_number == 1
 
     def error_message(self, values):
-        if values['q3'] != 2:
+        if values['q3'] != 3:
             return 'Answer to question 1 is incorrect. Check the instructions again and give a new answer'
         if values['q4'] != 2:
             return 'Answer to question 2 is incorrect. Check the instructions again and give a new answer'
@@ -61,11 +61,11 @@ class Instructions2(Page):
         return self.round_number == 1
 
     def error_message(self, values):
-        if values['q6'] != 2:
+        if values['q6'] != 1:
             return 'Answer to question 1 is incorrect. Check the instructions again and give a new answer'
         if values['q7'] != 3:
             return 'Answer to question 2 is incorrect. Check the instructions again and give a new answer'
-        if values['q8'] != 3:
+        if values['q8'] != 2:
             return 'Answer to question 3 is incorrect. Check the instructions again and give a new answer'
 
     def vars_for_template(self):
@@ -74,10 +74,18 @@ class Instructions2(Page):
         sucker_high = -Constants.endowment_high + Constants.c_high
         # punishment = Constants.endowment_low + Constants.dd_low
         return{
-            'total_high_p1': sucker_high,
-            'total_high_p2': temptation_high,
-            'total_low_p1': reward_low,
-            'total_low_p2': reward_low,
+            'cost_high': Constants.c_high,
+            'cost_low': Constants.c_low,
+            'benefit_high': Constants.b_high,
+            'benefit_low': Constants.b_low,
+
+            'sucker_high': -Constants.c_high,
+            'temptation_high': Constants.b_high,
+            'reward_high': Constants.b_high - Constants.c_high,
+
+            'sucker_low': -Constants.c_low,
+            'temptation_low': Constants.b_low,
+            'reward_low': Constants.b_low - Constants.c_low,
 
             'sum_p1': sucker_high+reward_low,
             'sum_p2': temptation_high+reward_low,
