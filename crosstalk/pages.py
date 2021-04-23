@@ -63,7 +63,7 @@ class Decision(Page):
             other_players[2].left_hanging = 1
             me.left_hanging = 2
             me.decision_high = 1
-            me.decision_low = 3
+            me.decision_low = 1
 
     # player id for for troubleshooting. If I want to display the player in the group of four though I can keep it.
     def vars_for_template(self):
@@ -149,7 +149,7 @@ class Results(Page):
             return True
 
     timer_text = 'You are about to be automatically moved to the next round decision page'
-    timeout_seconds = 2 * 60
+    timeout_seconds = 2 * 6000
     # my_page_timeout_seconds = 90
     #
     # def get_timeout_seconds(self):
@@ -179,8 +179,8 @@ class Results(Page):
 
             'my_payoff_high': me.payoff_high,
             'my_payoff_low': me.payoff_low,
-            'opponent_payoff_high': opponent_high.payoff_high,
-            'opponent_payoff_low': opponent_low.payoff_low,
+            'my_result_high': me.payoff_high - Constants.endowment_high,
+            'my_result_low': me.payoff_low - Constants.endowment_low,
 
             'cost_high': Constants.c_high,
             'cost_low': Constants.c_low,
@@ -245,6 +245,20 @@ class Demographics(Page):
         This page is displayed only if the player is neither left hanging (1) or a dropout (2).
         And only appears on the last round.
         """
+        if self.player.left_hanging == 1:
+            return False
+        elif self.player.left_hanging == 2:
+            return False
+        elif self.subsession.round_number == self.participant.vars['last_round']:
+            return True
+
+
+class CommentBox(Page):
+    form_model = 'player'
+    form_fields = ['comment_box']
+
+    def is_displayed(self):
+        """ This function makes the page appear only on the last random-ish round """
         if self.player.left_hanging == 1:
             return False
         elif self.player.left_hanging == 2:
@@ -326,6 +340,7 @@ page_sequence = [
     Results,
     End,
     Demographics,
+    CommentBox,
     Payment,
     LeftHanging,
     ProlificLink,

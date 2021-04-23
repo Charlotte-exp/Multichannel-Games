@@ -18,12 +18,16 @@ doc = """
 
 
 class Constants(BaseConstants):
+    """
+    Here we set our variables that are constants throughout the game.
+    We set the number of players in a group, the number of rounds (see subsession), the payoffs for each game.
+    """
     name_in_url = 'control_PD'
     players_per_group = 4
     num_rounds = 50
 
     """ variables for randomish end round, used in the intro app at the mo"""
-    min_rounds = 20
+    min_rounds = 2
     proba_next_round = 0.5
 
     conversion = '20pts = £0.05'

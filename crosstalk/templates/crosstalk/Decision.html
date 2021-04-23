@@ -73,7 +73,7 @@
                     </p>
                     <p>You chose:</p>
                     <ul>
-                        {% if previous_decision_low == 3 %}
+                        {% if previous_decision_low == 1 %}
                         <p>
                             to <b>pay {{ cost_low }} pts</b> for Participant<font color="blue"> 3</font> to <b>receive {{ benefit_low }} pts</b>.
                         </p>
@@ -85,7 +85,7 @@
                     </ul>
                     <p> Participant<font color="blue"> 3({{ opponent_low_id }})</font> chose:</p>
                     <ul>
-                        {% if opponent_previous_decision_low == 3 %}
+                        {% if opponent_previous_decision_low == 1 %}
                         <p>
                             to <b>pay {{ cost_low }} pts</b> for you to <b>receive {{ benefit_low }} pts</b>
                         </p>
