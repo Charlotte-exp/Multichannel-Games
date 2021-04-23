@@ -8,7 +8,7 @@ class PlayerBot(Bot):
     def play_round(self):
         if self.round_number == 1:
             yield pages.Consent
-            # yield pages.Welcome, {"q1": '2', "q2": '3'}
-            # yield pages.Instructions1, {"q3": '3', "q4": '2', "q5": '2'}
-            # yield pages.Instructions2, {"q6": '1', "q7": '3', "q8": '2'}
+            yield pages.Welcome, {"q1": '2', "q2": '3'}
+            yield pages.Instructions1, {"q3": '3', "q4": '2', "q5": '2'}
+            yield pages.Instructions2, {"q6": '1', "q7": '3', "q8": '2'}
 

@@ -315,6 +315,7 @@ page_sequence = [
     Results,
     End,
     Demographics,
+    CommentBox,
     Payment,
     LeftHanging,
     ProlificLink,

@@ -30,6 +30,8 @@ class Constants(BaseConstants):
     min_rounds = 3
     proba_next_round = 0.5
 
+    conversion = '20pts = £0.05'
+
     """
     Donation game payoffs
     b = benefit, c = cost, dd = both defect
@@ -147,7 +149,7 @@ class Player(BasePlayer):
 
     decision_low = models.IntegerField(
         choices=[
-            [3, f'You pay {Constants.c_low} pts for Participant 2 to receive {Constants.b_low} pts.'],
+            [1, f'You pay {Constants.c_low} pts for Participant 2 to receive {Constants.b_low} pts.'],
             [0, 'You pay 0 pts for Participant 2 to receive 0 pts.'],
         ],
         doc="""This player's decision""",
@@ -207,9 +209,9 @@ class Player(BasePlayer):
             1:
                 {
                     1: Constants.endowment_low + (Constants.b_low - Constants.c_low),
-                    3: Constants.endowment_low + (-Constants.c_low)
+                    0: Constants.endowment_low + (-Constants.c_low)
                 },
-            2:
+            0:
                 {
                     1: Constants.endowment_low + Constants.b_low,
                     0: Constants.endowment_low + Constants.dd_low
