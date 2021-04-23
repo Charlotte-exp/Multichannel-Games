@@ -46,6 +46,12 @@ class Instructions1(Page):
         if values['q5'] != 2:
             return 'Answer to question 3 is incorrect. Check the instructions again and give a new answer'
 
+    def vars_for_template(self):
+        return{
+            'initial_endowment_high': Constants.endowment_high * Constants.min_rounds,
+            'initial_endowment_low': Constants.endowment_low * Constants.min_rounds,
+        }
+
 
 class Instructions2(Page):
     form_model = 'player'
