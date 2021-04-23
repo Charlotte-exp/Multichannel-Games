@@ -149,7 +149,7 @@ class Results(Page):
             return True
 
     timer_text = 'You are about to be automatically moved to the next round decision page'
-    timeout_seconds = 2 * 60
+    timeout_seconds = 2 * 6000
     # my_page_timeout_seconds = 90
     #
     # def get_timeout_seconds(self):
@@ -179,8 +179,8 @@ class Results(Page):
 
             'my_payoff_high': me.payoff_high,
             'my_payoff_low': me.payoff_low,
-            'opponent_payoff_high': opponent_high.payoff_high,
-            'opponent_payoff_low': opponent_low.payoff_low,
+            'my_result_high': me.payoff_high - Constants.endowment_high,
+            'my_result_low': me.payoff_low - Constants.endowment_low,
 
             'cost_high': Constants.c_high,
             'cost_low': Constants.c_low,

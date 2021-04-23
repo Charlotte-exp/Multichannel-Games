@@ -2,7 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-    Results for this round
+    Round Results
 {% endblock %}
 
 {% block styles %}
@@ -52,9 +52,31 @@
                     </li>
                     {% endif %}
                 </ul>
+                <hr size="6" width="50%" align="left" color="black">
+                {% if my_decision_high == 1 and opponent_decision_high == 1 %}
                 <p>
-                    In total, taking your initial endowment of 1 pts into account, you earned <b>{{ my_payoff_high }}</b> pts in task A in this round.
+                    Your points in this round:
+                    -{{ cost_high }} + {{ benefit_high }} = <b>{{ my_result_high }}</b>
                 </p>
+                {% endif %}
+                {% if my_decision_high == 1 and opponent_decision_high == 0 %}
+                <p>
+                    Your points in this round:
+                    -{{ cost_high }} + {{ 0 }} = <b>{{ my_result_high }}</b>
+                </p>
+                {% endif %}
+                {% if my_decision_high == 0 and opponent_decision_high == 1 %}
+                <p>
+                    Your points in this round:
+                    {{ 0 }} + {{ benefit_high }} = <b>{{ my_result_high }}</b>
+                </p>
+                {% endif %}
+                {% if my_decision_high == 0 and opponent_decision_high == 0 %}
+                <p>
+                    Your points in this round:
+                    {{ 0 }} + {{ 0 }} = <b>{{ my_result_high }}</b>
+                </p>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -89,9 +111,31 @@
                     </li>
                     {% endif %}
                 </ul>
+                <hr size="6" width="50%" align="left" color="black">
+                {% if my_decision_low == 1 and opponent_decision_low == 1 %}
                 <p>
-                    In total, taking your initial endowment of 1 pts into account, you earned <b>{{ my_payoff_low }}</b> pts in task B in this round.
+                    Your points in this round:
+                    -{{ cost_low }} + {{ benefit_low }} = <b>{{ my_result_low }}</b>
                 </p>
+                {% endif %}
+                {% if my_decision_low == 1 and opponent_decision_low == 0 %}
+                <p>
+                    Your points in this round:
+                    -{{ cost_low }} + {{ 0 }} = <b>{{ my_result_low }}</b>
+                </p>
+                {% endif %}
+                {% if my_decision_low == 0 and opponent_decision_low == 1 %}
+                <p>
+                    Your points in this round:
+                    {{ 0 }} + {{ benefit_low }} = <b>{{ my_result_low }}</b>
+                </p>
+                {% endif %}
+                {% if my_decision_low == 0 and opponent_decision_low == 0 %}
+                <p>
+                    Your points in this round:
+                    {{ 0 }} + {{ 0 }} = <b>{{ my_result_low }}</b>
+                </p>
+                {% endif %}
             </div>
         </div>
     </div>
