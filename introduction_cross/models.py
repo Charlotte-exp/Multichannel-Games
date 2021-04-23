@@ -110,7 +110,7 @@ class Player(BasePlayer):
             [2, '50%'],
             [3, '100%']
         ],
-        verbose_name='What are the chances that there will be another round after the 21st round?',
+        verbose_name=f'What are the chances that there will be another round after the {Constants.min_rounds}th round?',
         widget=widgets.RadioSelect
     )
 
