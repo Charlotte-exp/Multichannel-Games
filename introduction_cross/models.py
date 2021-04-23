@@ -116,9 +116,9 @@ class Player(BasePlayer):
 
     q6 = models.IntegerField(
         choices=[
-            [1, f'y points'],
-            [2, f'x points'],
-            [3, f'{Constants.sucker_high+Constants.reward_low} points']
+            [1, f'{Constants.sucker_high + Constants.reward_low}  points'],
+            [2, f'{Constants.reward_low} points'],
+            [3, f'{Constants.temptation_high + Constants.reward_low} points']
         ],
         verbose_name='Across both tasks, how many points did Participant 1 earn in total?',
         widget=widgets.RadioSelect
