@@ -62,7 +62,7 @@ class Decision(Page):
             other_players[2].left_hanging = 1
             me.left_hanging = 2
             me.decision_high = 1
-            me.decision_low = 3
+            me.decision_low = 1
 
     def vars_for_template(self):
         """
@@ -140,7 +140,7 @@ class Results(Page):
             return True
 
     timer_text = 'You are about to be automatically moved to the next round decision page'
-    timeout_seconds = 2 * 60
+    timeout_seconds = 2 * 6000
     # my_page_timeout_seconds = 90
     #
     # def get_timeout_seconds(self):

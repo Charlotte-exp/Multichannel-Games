@@ -44,8 +44,24 @@ class Constants(BaseConstants):
     dd_low = c(0)
     endowment_low = c_low
 
+    """Without endowment!! (for the round results)"""
+    sucker_high = -c_high
+    temptation_high = b_high
+    reward_high = b_high - c_high
+
+    sucker_low = -c_low
+    temptation_low = b_low
+    reward_low = b_low - c_low
+
 
 class Subsession(BaseSubsession):
+    """
+     Instead of creating_session() we need to use group_by_arrival_time_method().
+     The function makes sure that only high players play with high players.
+     I could only implement that retroactively though and assign treatment in the intro app.
+     The inconveninent is that if 3 people read the instructions, 2 become high and 1 becomes low,
+     if one of the high one gives and quits the other two cannot play together.
+     """
 
     def get_random_number_of_rounds(self):
         """
@@ -116,10 +132,14 @@ class Player(BasePlayer):
         verbose_name='What is your ethnicity?',
         widget=widgets.RadioSelect)
 
+    comment_box = models.LongStringField(
+        verbose_name=''
+    )
+
     decision_high = models.IntegerField(
         choices=[
             [1, f'You pay {Constants.c_high} pts for Participant 2 to receive {Constants.b_high} pts.'],
-            [2, 'You pay 0 pts for Participant 2 to receive 0 pts.'],
+            [0, 'You pay 0 pts for Participant 2 to receive 0 pts.'],
         ],
         doc="""This player's decision""",
         widget=widgets.RadioSelect
@@ -128,7 +148,7 @@ class Player(BasePlayer):
     decision_low = models.IntegerField(
         choices=[
             [3, f'You pay {Constants.c_low} pts for Participant 2 to receive {Constants.b_low} pts.'],
-            [4, 'You pay 0 pts for Participant 2 to receive 0 pts.'],
+            [0, 'You pay 0 pts for Participant 2 to receive 0 pts.'],
         ],
         doc="""This player's decision""",
         widget=widgets.RadioSelect
@@ -173,26 +193,26 @@ class Player(BasePlayer):
             1:
                 {
                     1: Constants.endowment_high + (Constants.b_high - Constants.c_high),
-                    2: Constants.endowment_high + (-Constants.c_high)
+                    0: Constants.endowment_high + (-Constants.c_high)
                 },
-            2:
+            0:
                 {
                     1: Constants.endowment_high + Constants.b_high,
-                    2: Constants.endowment_high + Constants.dd_high
+                    0: Constants.endowment_high + Constants.dd_high
                 }
         }
         self.payoff_high = payoff_matrix_high[self.decision_high][opponent[0].decision_high]
 
         payoff_matrix_low = {
-            3:
+            1:
                 {
-                    3: Constants.endowment_low + (Constants.b_low - Constants.c_low),
-                    4: Constants.endowment_low + (-Constants.c_low)
+                    1: Constants.endowment_low + (Constants.b_low - Constants.c_low),
+                    3: Constants.endowment_low + (-Constants.c_low)
                 },
-            4:
+            2:
                 {
-                    3: Constants.endowment_low + Constants.b_low,
-                    4: Constants.endowment_low + Constants.dd_low
+                    1: Constants.endowment_low + Constants.b_low,
+                    0: Constants.endowment_low + Constants.dd_low
                 }
         }
 

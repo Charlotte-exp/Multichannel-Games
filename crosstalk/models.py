@@ -27,7 +27,7 @@ class Constants(BaseConstants):
     num_rounds = 50
 
     """variables for random-ish last round, mechanics in subsession below"""
-    min_rounds = 2
+    min_rounds = 3
     proba_next_round = 0.5
 
     conversion = '20pts = £0.05'
