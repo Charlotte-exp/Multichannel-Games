@@ -25,10 +25,10 @@
             </h4>
             <ul>
                 <li>
-                    You <b>pay {{ Constants.c_high }} pts</b> for Participant 2 to <b>receive {{ Constants.b_high }} pts</b>.
+                    You <b>lose {{ Constants.c_high }} pts</b> for Participant 2 to <b>receive {{ Constants.b_high }} pts</b>.
                 </li>
                 <li>
-                    You <b>pay 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
+                    You <b>lose 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
                 </li>
             </ul>
             </div>
@@ -42,10 +42,10 @@
             </h4>
             <ul>
                 <li>
-                    You <b>pay {{ Constants.c_low }}</b> ptsfor Participant 2 to <b>receive {{ Constants.b_low }} pts</b>.
+                    You <b>lose {{ Constants.c_low }}</b> ptsfor Participant 2 to <b>receive {{ Constants.b_low }} pts</b>.
                 </li>
                 <li>
-                    You <b>pay 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
+                    You <b>lose 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
                 </li>
             </ul>
             </div>
@@ -71,17 +71,23 @@
             <p>Participant 1 chose:</p>
             <ul>
                 <li>
-                    to <b>pay {{ Constants.c_high }} pts</b> for Participant 2 to <b>receive {{ Constants.b_high }} pts</b>.
+                    to <b>lose {{ Constants.c_high }} pts</b> for Participant 2 to <b>receive {{ Constants.b_high }} pts</b>.
                 </li>
             </ul>
             <p> Participant 2 chose:</p>
             <ul>
                 <li>
-                    to <b>pay 0 pts</b> for Participant 1 to <b>receive 0 pts</b>.
+                    to <b>lose 0 pts</b> for Participant 1 to <b>receive 0 pts</b>.
                 </li>
             </ul>
+            <hr size="6" width="50%" align="left" color="black">
             <p>
-                As a result, taking the initial endowment of 1 pts into account, Participant 1 earned <b>{{ total_high_p1 }} pts</b> and Participant 2 earned <b>{{ total_high_p2 }} pts</b> in Task A in this round.
+                Your points in this round:
+                -{{ cost_high }} + {{ 0 }} = <b>{{ sucker_high }}</b>
+            </p>
+            <p>
+                Participant 2's points in this round:
+                {{ 0 }} + {{ benefit_high }} = <b>{{ temptation_high }}</b>
             </p>
             </div>
         </div>
@@ -95,17 +101,23 @@
             <p>Participant 1 chose:</p>
             <ul>
                 <li>
-                    to <b>pay {{ Constants.c_low }} pts</b> for Participant 2 to <b>receive {{ Constants.b_low }} pts</b>.
+                    to <b>lose {{ Constants.c_low }} pts</b> for Participant 2 to <b>receive {{ Constants.b_low }} pts</b>.
                 </li>
             </ul>
             <p> Participant 2 chose:</p>
             <ul>
                 <li>
-                    to <b>pay {{ Constants.c_low }} pts</b> for Participant 1 to <b>receive {{ Constants.b_low }} pts</b>.
+                    to <b>lose {{ Constants.c_low }} pts</b> for Participant 1 to <b>receive {{ Constants.b_low }} pts</b>.
                 </li>
             </ul>
+            <hr size="6" width="50%" align="left" color="black">
             <p>
-                As a result, taking the initial endowment of 1 pts into account, Participant 1 earned <b>{{ total_low_p1 }} pts</b> and Participant 2 earned <b>{{ total_low_p2 }} pts</b> in Task B in this round.
+                Your points in this round:
+                -{{ cost_low }} + {{ benefit_low }} = <b>{{ reward_low }}</b>
+            </p>
+            <p>
+                Participant 2's points in this round:
+                -{{ cost_low }} + {{ benefit_low }} = <b>{{ reward_low }}</b>
             </p>
             </div>
         </div>

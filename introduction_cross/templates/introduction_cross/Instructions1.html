@@ -43,10 +43,10 @@ div {
             </h4>
             <ul>
                 <li>
-                    You <b>pay {{ Constants.c_high }}</b> pts for Participant <font color="blue">2</font> to <b>receive {{ Constants.b_high }}</b> pts
+                    You <b>lose {{ Constants.c_high }}</b> pts for Participant <font color="blue">2</font> to <b>receive {{ Constants.b_high }}</b> pts
                 </li>
                 <li>
-                    You <b>pay 0</b> pts for Participant <font color="blue">2</font> to <b>receive 0</b> pts
+                    You <b>lose 0</b> pts for Participant <font color="blue">2</font> to <b>receive 0</b> pts
                 </li>
             </ul>
             <p>
@@ -67,10 +67,10 @@ div {
             </h4>
             <ul>
                 <li>
-                    You <b>pay {{ Constants.c_low }}</b> pts for Participant <font color="blue">3</font> to <b>receive {{ Constants.b_low }}</b> pts
+                    You <b>lose {{ Constants.c_low }}</b> pts for Participant <font color="blue">3</font> to <b>receive {{ Constants.b_low }}</b> pts
                 </li>
                 <li>
-                    You <b>pay 0</b> pts for Participant <font color="blue">3</font> to <b>receive 0</b> pts
+                    You <b>lose 0</b> pts for Participant <font color="blue">3</font> to <b>receive 0</b> pts
                 </li>
             </ul>
             <p>
@@ -95,7 +95,7 @@ div {
         and after that round, there will again be another 50% chance of another round, and so on until the tasks end.
     </p>
     <p>
-        You and the other participant are both endowed with {{ initial_endowment_high }} points
+        You and the other participants are both endowed with {{ initial_endowment_high }} points
         at the start of the game ({{ Constants.endowment_high }} points for Task A
         and {{ Constants.endowment_low }} points for Task B, for each of the {{ Constants.min_rounds }} rounds).
         For any additional round that may occur after the {{ Constants.min_rounds }}th round,
