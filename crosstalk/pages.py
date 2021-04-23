@@ -63,7 +63,7 @@ class Decision(Page):
             other_players[2].left_hanging = 1
             me.left_hanging = 2
             me.decision_high = 1
-            me.decision_low = 3
+            me.decision_low = 1
 
     # player id for for troubleshooting. If I want to display the player in the group of four though I can keep it.
     def vars_for_template(self):
