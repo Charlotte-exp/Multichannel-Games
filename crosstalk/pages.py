@@ -46,7 +46,7 @@ class Decision(Page):
             return True
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
-    timeout_seconds = 2 * 60
+    timeout_seconds = 2 * 6000
 
     def before_next_page(self):
         """

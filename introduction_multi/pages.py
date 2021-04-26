@@ -50,7 +50,9 @@ class Instructions1(Page):
         return{
             'initial_endowment_high': Constants.endowment_high * Constants.min_rounds,
             'initial_endowment_low': Constants.endowment_low * Constants.min_rounds,
+            'initial_endowment_joint': (Constants.endowment_high + Constants.endowment_low) * Constants.min_rounds,
         }
+
 
 class Instructions2(Page):
     form_model = 'player'
@@ -86,8 +88,8 @@ class Instructions2(Page):
             'temptation_low': Constants.b_low,
             'reward_low': Constants.b_low - Constants.c_low,
 
-            'sum_p1': sucker_high+reward_low,
-            'sum_p2': temptation_high+reward_low,
+            'sum_p1': Constants.sucker_high + Constants.reward_low,
+            'sum_p2': Constants.temptation_high + Constants.reward_low,
         }
 
 

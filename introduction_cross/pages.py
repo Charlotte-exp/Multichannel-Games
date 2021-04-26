@@ -50,6 +50,7 @@ class Instructions1(Page):
         return{
             'initial_endowment_high': Constants.endowment_high * Constants.min_rounds,
             'initial_endowment_low': Constants.endowment_low * Constants.min_rounds,
+            'initial_endowment_joint': (Constants.endowment_high + Constants.endowment_low) * Constants.min_rounds
         }
 
 
@@ -90,7 +91,7 @@ class Instructions2(Page):
 
 page_sequence = [
     Consent,
-    # Welcome,
-    # Instructions1,
-    # Instructions2,
+    Welcome,
+    Instructions1,
+    Instructions2,
 ]

@@ -26,7 +26,7 @@ SESSION_CONFIGS = [
         'display_name': "Multichannel Game",
         'num_demo_participants': 12,
         'app_sequence': ['introduction_multi', 'multi_prisoner'],
-        'use_browser_bots': True
+        'use_browser_bots': False
     },
     {
         'name': 'control_PD',
@@ -56,6 +56,10 @@ USE_POINTS = True
 POINTS_CUSTOM_NAME = ''
 
 ROOMS = [
+    {
+        'name': 'Control1',
+        'display_name': 'Control 1',
+    },
     {
         'name': 'econ101',
         'display_name': 'Econ 101 class',
