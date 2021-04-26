@@ -52,6 +52,7 @@ class Instructions1(Page):
             'initial_endowment_low': Constants.endowment_low * Constants.min_rounds,
         }
 
+
 class Instructions2(Page):
     form_model = 'player'
     form_fields = ['q6', 'q7', 'q8']
