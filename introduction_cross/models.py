@@ -20,7 +20,7 @@ class Constants(BaseConstants):
     name_in_url = 'introduction_cross'
     players_per_group = None
     num_rounds = 1
-    min_rounds = 20
+    min_rounds = 8
 
     session_time = 20
     conversion = '20pts = £0.05'
@@ -136,9 +136,9 @@ class Player(BasePlayer):
 
     q8 = models.IntegerField(
         choices=[
-            [1, f'{Constants.sucker_high} points'],
-            [2, f'{Constants.reward_high} points'],
-            [3, f'{Constants.b_high} points']
+            [1, f'{Constants.sucker_low} points'],
+            [2, f'{Constants.reward_low} points'],
+            [3, f'{Constants.b_low} points']
         ],
         verbose_name='In Task B, how many points did Participant 3 earn?',
         widget=widgets.RadioSelect
