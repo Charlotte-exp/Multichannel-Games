@@ -35,13 +35,6 @@ SESSION_CONFIGS = [
         'app_sequence': ['introduction_control', 'control_PD'],
         'use_browser_bots': False
     },
-    {
-        'name': 'control_PD_test',
-        'display_name': "PD fro testing",
-        'num_demo_participants': 4,
-        'app_sequence': ['introduction_control', 'control_PD_test'],
-        'use_browser_bots': True
-    },
 ]
 # see the end of this file for the inactive session configs
 
