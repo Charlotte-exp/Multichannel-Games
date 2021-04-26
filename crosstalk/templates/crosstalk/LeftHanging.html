@@ -2,18 +2,23 @@
 {% load otree static %}
 
 {% block title %}
-    Dropouts
+
+    {% if player.left_hanging == 1 %}
+        Dropout victims
+    {% else %}
+        Dropouts
+    {% endif %}
+
 {% endblock %}
+
 {% block content %}
 
 {% if player.left_hanging == 1 %}
     <div>
-        <p>Looks like one of the other participants left the study. We're really sorry about that. </p>
-            <p>Please use the following link to get back to Prolific and receive the show-up fee now,
-                and a bonus payment for your time in the study in about 3-5 days:
-                <b><a href="https://app.prolific.co/submissions/complete?cc=F39B323F">
-                https://app.prolific.co/submissions/complete?cc=F39B323F </a></b>.
-            </p>
+        <p>
+            Looks like one of the other participants left the study. We're really sorry about that.
+            Please go back to the main page to receive your show-up fee and a small bonus for your time.
+        </p>
    </div>
 {% else %}
     <div>
