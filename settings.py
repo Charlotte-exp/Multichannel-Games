@@ -57,6 +57,10 @@ POINTS_CUSTOM_NAME = ''
 
 ROOMS = [
     {
+        'name': 'Control1',
+        'display_name': 'Control 1',
+    },
+    {
         'name': 'econ101',
         'display_name': 'Econ 101 class',
         'participant_label_file': '_rooms/econ101.txt',

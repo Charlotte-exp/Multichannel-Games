@@ -50,6 +50,7 @@ class Instructions1(Page):
         return{
             'initial_endowment_high': Constants.endowment_high * Constants.min_rounds,
             'initial_endowment_low': Constants.endowment_low * Constants.min_rounds,
+            'initial_endowment_join': (Constants.endowment_high + Constants.endowment_low) * Constants.min_rounds,
         }
 
 
