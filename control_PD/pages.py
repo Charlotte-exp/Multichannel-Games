@@ -147,7 +147,7 @@ class Results(Page):
             return True
 
     timer_text = 'You are about to be automatically moved to the next round decision page'
-    timeout_seconds = 2 * 6000
+    timeout_seconds = 2 * 60
 
     def vars_for_template(self):
         """
