@@ -3,7 +3,7 @@
 
 
 {% block title %}
-    Round Decision {{ subsession.round_number }}
+    Round Decision
 {% endblock %}
 
 {% block styles %}
@@ -49,7 +49,7 @@
                         </p>
                         {% endif %}
                     </ul>
-                    <p> Participant<font color="blue"> 2({{ opponent_high_id }})</font> chose:</p>
+                    <p> Participant <font color="blue">2</font> chose:</p>
                     <ul>
                         {% if opponent_previous_decision_high == 1 %}
                         <p>
@@ -83,7 +83,7 @@
                         </p>
                         {% endif %}
                     </ul>
-                    <p> Participant<font color="blue"> 3({{ opponent_low_id }})</font> chose:</p>
+                    <p> Participant <font color="blue">3</font> chose:</p>
                     <ul>
                         {% if opponent_previous_decision_low == 1 %}
                         <p>
