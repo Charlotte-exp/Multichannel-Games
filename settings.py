@@ -50,17 +50,16 @@ POINTS_CUSTOM_NAME = ''
 
 ROOMS = [
     {
-        'name': 'Control1',
-        'display_name': 'Control 1',
+        'name': 'multichannel_ct',
+        'display_name': 'Control',
     },
-    {
-        'name': 'econ101',
-        'display_name': 'Econ 101 class',
-        'participant_label_file': '_rooms/econ101.txt',
+{
+        'name': 'multichannel_mu',
+        'display_name': 'Multichannel',
     },
-    {
-        'name': 'live_demo',
-        'display_name': 'Room for live demo (no participant labels)',
+{
+        'name': 'multichannel_cr',
+        'display_name': 'Crosstalk',
     },
 ]
 
@@ -181,3 +180,18 @@ INSTALLED_APPS = ['otree']
 #     'num_demo_participants': 3,
 #     'app_sequence': ['guess_two_thirds', 'payment_info'],
 # },
+
+
+# Inactive rooms
+
+# ROOMS = [
+#     {
+#         'name': 'econ101',
+#         'display_name': 'Econ 101 class',
+#         'participant_label_file': '_rooms/econ101.txt',
+#     },
+#     {
+#         'name': 'live_demo',
+#         'display_name': 'Room for live demo (no participant labels)',
+#     },
+# ]
