@@ -6,4 +6,8 @@ from .models import Constants
 
 class PlayerBot(Bot):
     def play_round(self):
-        pass
+        if self.round_number == 1:
+            yield pages.Consent
+            yield pages.Welcome
+            yield pages.Instructions
+

@@ -3,16 +3,34 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
-class MyPage(Page):
-    pass
+class Consent(Page):
+    def is_displayed(self):
+        return self.round_number == 1
+
+    def vars_for_template(self):
+        return {
+            'participation_fee': self.session.config['participation_fee'],
+        }
 
 
-class ResultsWaitPage(WaitPage):
-    pass
+class Welcome(Page):
+    def is_displayed(self):
+        return self.round_number == 1
+
+
+class Instructions(Page):
+    form_model = 'player'
+
+    def is_displayed(self):
+        return self.round_number == 1
 
 
 class Results(Page):
     pass
 
 
-page_sequence = [MyPage, ResultsWaitPage, Results]
+page_sequence = [
+    Consent,
+    Welcome,
+    Instructions,
+]
