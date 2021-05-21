@@ -36,11 +36,11 @@ SESSION_CONFIGS = [
         'use_browser_bots': False
     },
     {
-        'name': 'control_PD_test',
-        'display_name': "PD fro testing",
-        'num_demo_participants': 4,
-        'app_sequence': ['introduction_control', 'control_PD_test'],
-        'use_browser_bots': True
+        'name': 'frechette_PD',
+        'display_name': "control with Dal bo and frechette format",
+        'num_demo_participants': 12,
+        'app_sequence': ['introduction_frechette', 'frechette_PD'],
+        'use_browser_bots': False
     },
 ]
 # see the end of this file for the inactive session configs
