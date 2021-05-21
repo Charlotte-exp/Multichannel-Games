@@ -137,7 +137,6 @@ class Results(Page):
         return {
             'my_decision': me.decision,
             'opponent_decision': opponent.decision,
-
             'my_payoff': me.payoff,
         }
 

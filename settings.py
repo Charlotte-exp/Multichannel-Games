@@ -37,7 +37,7 @@ SESSION_CONFIGS = [
     },
     {
         'name': 'frechette_PD',
-        'display_name': "control with Dal bo and frechette format",
+        'display_name': "Control with Dal Bo and Fréchette format",
         'num_demo_participants': 12,
         'app_sequence': ['introduction_frechette', 'frechette_PD'],
         'use_browser_bots': False
