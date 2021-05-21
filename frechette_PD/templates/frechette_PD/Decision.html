@@ -1,0 +1,67 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+
+{% block title %}
+    Round Decision {{ subsession.round_number }}
+{% endblock %}
+
+{% block styles %}
+
+    <script>
+        setTimeout(
+        function () {
+            alert("Please make your decision soon.");
+        },
+        90*1000 // 90 seconds
+    );
+    </script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="card bg-light instructions">
+    <div class="card-body">
+        <h4>Task A</h4>
+        <table class="table">
+            <tr>
+                <td colspan="2" rowspan="2">{% formfield player.decision_high label='' %}</td>
+                <td colspan="2">You pay {{ cost_high }} points for Participant 2 to receive {{ benefit_high }} points.</td>
+            </tr>
+            <tr>
+                <td>You pay 0 points for Participant 2 to receive 0 points.</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+{% endblock %}
+
+{% block scripts %}
+
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
+
+    <script>
+        $(function () {
+            $('.otree-timer__time-left').on('update.countdown', function (event) {
+                if (event.offset.totalSeconds === 10) {
+                    $('.otree-timer').show();
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

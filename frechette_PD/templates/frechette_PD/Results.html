@@ -2,12 +2,55 @@
 {% load otree static %}
 
 {% block title %}
-    Page title
+    Round Results
+{% endblock %}
+
+{% block styles %}
+
+    <script>
+        setTimeout(
+        function () {
+            alert("Don't let the other participant wait too long. Please advance to the next page soon.");
+        },
+        60*1000 // 60 seconds
+    );
+    </script>
+
 {% endblock %}
 
 {% block content %}
 
-    {% next_button %}
+
+
+
+
+</div>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
 {% endblock %}
 
 
+{% block scripts %}
+
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
+
+    <script>
+        $(function () {
+            $('.otree-timer__time-left').on('update.countdown', function (event) {
+                if (event.offset.totalSeconds === 10) {
+                    $('.otree-timer').show();
+                }
+            });
+        });
+    </script>
+
+{% endblock %}
