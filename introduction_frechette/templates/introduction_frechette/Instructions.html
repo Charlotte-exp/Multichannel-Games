@@ -5,7 +5,18 @@
     Introduction
 {% endblock %}
 
-{% block content %}>
+
+{% block content %}
+<style>
+/* (A) SHARED CLASS */
+.box {
+padding: 10px;
+border: 2px solid dodgerblue;
+border-radius: 5px;
+background: dodgerblue;
+color: white;
+}
+</style>
 
 <div>
     <ol>
@@ -24,31 +35,31 @@
         </li>
         <li>
             The choices and the payoffs in each round are as follows:
-            <div class="form-group required">
-                <table class="table table-bordered text-center" style="width: auto; margin: auto">
-                    <tr>
-                        <th colspan="2" rowspan="2"></th>
-                        <th colspan="2">The Other Participant</th>
-                    </tr>
-                    <tr>
-                        <th>A</th>
-                        <th>B/th>
-                    </tr>
-                    <tr>
-                        <th rowspan="2"><span>You</span></th>
-                        <td><button name="decision" value="Cooperate" class="btn btn-primary btn-large">I choose A</button></td>
-                        <td>{{Constants.reward}}, {{Constants.reward}}</td>
-                        <td>{{ Constants.sucker }}, {{Constants.temptation}}</td>
-                    </tr>
-                    <tr>
-                        <td><button name="decision" value="Defect" class="btn btn-primary btn-large">I choose B</button></td>
-                        <td>{{Constants.temptation}}, {{ Constants.sucker }}</td>
-                        <td>{{Constants.punishment}}, {{Constants.punishment}}</td>
-                    </tr>
-                </table>
-            </div>
         </li>
     </ol>
+    <div class="form-group required">
+        <table class="table table-bordered text-center" style="width: auto; margin: auto">
+            <tr>
+                <th colspan="2" rowspan="2"></th>
+                <th colspan="2">The Other Participant</th>
+            </tr>
+            <tr>
+                <th>1</th>
+                <th>2</th>
+            </tr>
+            <tr>
+                <th rowspan="2"><span>You</span></th>
+                <td><div class="box">1</div></td>
+                <td>{{Constants.reward}}, {{Constants.reward}}</td>
+                <td>{{ Constants.sucker }}, {{Constants.temptation}}</td>
+            </tr>
+            <tr>
+                <td><div class="box">2</div></td>
+                <td>{{Constants.temptation}}, {{ Constants.sucker }}</td>
+                <td>{{Constants.punishment}}, {{Constants.punishment}}</td>
+            </tr>
+        </table>
+    </div>
     <p>
         The first entry in each cell represents your payoff,
         while the second entry represents the payoff of the person you are matched with.

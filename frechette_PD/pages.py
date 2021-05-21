@@ -3,7 +3,7 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
-class PairingWaitPage(Page):
+class PairingWaitPage(WaitPage):
     """
     The Waitroom. This wait page has two purposes: making sure pps don't wait too long for other players in case there
     is little traffic, and allows one pp to leave before being grouped with others so that a dropout at the instruction
@@ -18,7 +18,7 @@ class PairingWaitPage(Page):
     def is_displayed(self):
         return self.round_number == 1
 
-    template_name = 'control_PD/Waitroom.html'
+    template_name = 'frechette_PD/Waitroom.html'
 
 
 class Decision(Page):
@@ -139,7 +139,6 @@ class Results(Page):
             'opponent_decision': opponent.decision,
 
             'my_payoff': me.payoff,
-            'my_result': me.payoff - Constants.endowment,
         }
 
 
@@ -168,11 +167,9 @@ class End(Page):
         """
         me = self.player
         return {
-            'my_treatment': me.participant.vars['subgroup'],
             'player_in_all_rounds': me.in_all_rounds(),
 
             'total_payoff': sum([p.payoff for p in me.in_all_rounds()]),
-            'my_result': me.payoff - Constants.endowment,
         }
 
 
@@ -258,6 +255,7 @@ class LeftHanging(Page):
             return True
         elif self.player.left_hanging == 2:
             return True
+
 
 class ProlificLink(Page):
     """
