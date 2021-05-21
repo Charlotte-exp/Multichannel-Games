@@ -1,0 +1,94 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Introduction
+{% endblock %}
+
+{% block content %}>
+
+<div>
+    <ol>
+        <li>
+            In this experiment you will be asked to make decisions in several rounds.
+            You will be randomly paired with another person for a sequence of rounds.
+            Each sequence of rounds is referred to as a match.
+        </li>
+        <li>
+            The length of a match is at least 20 round, after which it is randomly determined.
+            For each subsequent round past the 20th round,
+            there is a 50% probability that the match will continue for at least another round.
+            This is as if we would flip a coin after each round and continue if tails and end if heads.
+            So, for instance, if you are in round 20, the probability there will be a third round is 50% and if you are in round 27,
+            the probability there will be another round is also 50%.
+        </li>
+        <li>
+            The choices and the payoffs in each round are as follows:
+            <div class="form-group required">
+                <table class="table table-bordered text-center" style="width: auto; margin: auto">
+                    <tr>
+                        <th colspan="2" rowspan="2"></th>
+                        <th colspan="2">The Other Participant</th>
+                    </tr>
+                    <tr>
+                        <th>A</th>
+                        <th>B/th>
+                    </tr>
+                    <tr>
+                        <th rowspan="2"><span>You</span></th>
+                        <td><button name="decision" value="Cooperate" class="btn btn-primary btn-large">I choose A</button></td>
+                        <td>{{Constants.reward}}, {{Constants.reward}}</td>
+                        <td>{{ Constants.sucker }}, {{Constants.temptation}}</td>
+                    </tr>
+                    <tr>
+                        <td><button name="decision" value="Defect" class="btn btn-primary btn-large">I choose B</button></td>
+                        <td>{{Constants.temptation}}, {{ Constants.sucker }}</td>
+                        <td>{{Constants.punishment}}, {{Constants.punishment}}</td>
+                    </tr>
+                </table>
+            </div>
+        </li>
+    </ol>
+    <p>
+        The first entry in each cell represents your payoff,
+        while the second entry represents the payoff of the person you are matched with.
+    </p>
+    <p>
+        - As you can see, this shows the payoff associated with each choice.
+        Once you and the person you are paired with have made your choices,
+        those choices will be highlighted and your payoff for the round will appear.
+    </p>
+    <p>
+        That is, if:
+    </p>
+    <ul>
+        <li>
+            You select 1 and the other selects 1, you each make {{Constants.reward}}.
+        </li>
+        <li>
+            You select 1 and the other selects 2, you make {{ Constants.sucker }} while the other makes {{Constants.temptation}}.
+        </li>
+        <li>
+            You select 2 and the other selects 2, you make {{Constants.temptation}} while the other makes {{ Constants.sucker }}.
+        <li>
+            You select 2 and the other selects 2, you each make {{Constants.punishment}}.
+        </li>
+    </ul>
+    <p>
+        Before we start, let me remind you that:
+    </p>
+    <p>
+        - The length of a match is randomly determined.
+        After each round, there is a 50% probability that the match will continue for at least another round.
+        You will play with the same person for the entire match.
+    </p>
+
+</div>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+{% endblock %}

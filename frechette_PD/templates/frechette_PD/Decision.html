@@ -21,19 +21,28 @@
 
 {% block content %}
 
-<div class="card bg-light instructions">
-    <div class="card-body">
-        <h4>Task A</h4>
-        <table class="table">
-            <tr>
-                <td colspan="2" rowspan="2">{% formfield player.decision_high label='' %}</td>
-                <td colspan="2">You pay {{ cost_high }} points for Participant 2 to receive {{ benefit_high }} points.</td>
-            </tr>
-            <tr>
-                <td>You pay 0 points for Participant 2 to receive 0 points.</td>
-            </tr>
-        </table>
-    </div>
+<div class="form-group required">
+    <table class="table table-bordered text-center" style="width: auto; margin: auto">
+        <tr>
+            <th colspan="2" rowspan="2"></th>
+            <th colspan="2">The Other Participant</th>
+        </tr>
+        <tr>
+            <th>A</th>
+            <th>B/th>
+        </tr>
+        <tr>
+            <th rowspan="2"><span>You</span></th>
+            <td><button name="decision" value="Cooperate" class="btn btn-primary btn-large">I choose 1</button></td>
+            <td>{{Constants.reward}}, {{Constants.reward}}</td>
+            <td>{{ Constants.sucker }}, {{Constants.temptation}}</td>
+        </tr>
+        <tr>
+            <td><button name="decision" value="Defect" class="btn btn-primary btn-large">I choose 2</button></td>
+            <td>{{Constants.temptation}}, {{ Constants.sucker }}</td>
+            <td>{{Constants.punishment}}, {{Constants.punishment}}</td>
+        </tr>
+    </table>
 </div>
 
 
