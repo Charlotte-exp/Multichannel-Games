@@ -13,11 +13,6 @@ class Consent(Page):
         }
 
 
-class Welcome(Page):
-    def is_displayed(self):
-        return self.round_number == 1
-
-
 class Instructions(Page):
     form_model = 'player'
 
@@ -31,6 +26,5 @@ class Results(Page):
 
 page_sequence = [
     Consent,
-    Welcome,
     Instructions,
 ]

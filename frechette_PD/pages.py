@@ -107,6 +107,10 @@ class ResultsWaitPage(WaitPage):
 
 
 class Results(Page):
+    pass
+
+
+class Previous(Page):
     """
         This page is for the round results. It gives feedback on what the opponents decided for this round.
         It has a timer so that a dropout is automatically pushed to the decision page where the dropout function is.

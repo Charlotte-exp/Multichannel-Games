@@ -1,8 +1,9 @@
 {% extends "global/Page.html" %}
 {% load otree static %}
 
+
 {% block title %}
-    Round Results
+    Round Decision {{ subsession.round_number }}
 {% endblock %}
 
 {% block styles %}
@@ -10,9 +11,9 @@
     <script>
         setTimeout(
         function () {
-            alert("Don't let the other participant wait too long. Please advance to the next page soon.");
+            alert("Please make your decision soon.");
         },
-        60*1000 // 60 seconds
+        90*1000 // 90 seconds
     );
     </script>
 
@@ -20,45 +21,43 @@
 
 {% block content %}
 
-
-<div class="card-body">
-    <p>
-        Your actions from the previous match:
-    </p>
-    <table class="table table-bordered text-center" style="width: 300px; margin: auto">
+{% if my_decision == 1 & opponent_decision == 1 %}
+<div class="form-group required">
+    <table class="table table-bordered text-center" style="width: auto; margin: auto">
         <tr>
-            <td><div class="box">Your Choice</div></td>
-            {% if my_decision == 0 %}
-            <td>{{2}}</td>
-            {% else %}
-            <td>{{my_decision}}</td>
-            {% endif %}
+            <th colspan="2" rowspan="2"></th>
+            <th colspan="2">The Other Participant</th>
         </tr>
         <tr>
-            <td><div class="box">Other's Choice</div></td>
-            {% if opponent_decision == 0 %}
-            <td>{{2}}</td>
-            {% else %}
-            <td>{{opponent_decision}}</td>
-            {% endif %}
+            <th>1</th>
+            <th>2</th>
+        </tr>
+        <tr>
+            <th rowspan="2"><span>You</span></th>
+            <td><button name="decision" value="1" class="btn btn-primary btn-large">1</button></td>
+            <td>{{Constants.reward}}, {{Constants.reward}}</td>
+            <td>{{ Constants.sucker }}, {{Constants.temptation}}</td>
+        </tr>
+        <tr>
+            <td><button name="decision" value="0" class="btn btn-primary btn-large">2</button></td>
+            <td>{{Constants.temptation}}, {{ Constants.sucker }}</td>
+            <td>{{Constants.punishment}}, {{Constants.punishment}}</td>
         </tr>
     </table>
 </div>
+{% endif %}
 
+{% if my_decision == 1 & opponent_decision == 1 %}
+{% endif %}
 
+{% if my_decision == 1 & opponent_decision == 1 %}
+{% endif %}
 
+{% if my_decision == 1 & opponent_decision == 1 %}
+{% endif %}
 
-
-</div>
-
-    <p>
-        <div style="display: flex; justify-content: flex-end">
-        {% next_button %}
-        </div>
-    </p>
 
 {% endblock %}
-
 
 {% block scripts %}
 
