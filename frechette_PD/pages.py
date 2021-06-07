@@ -42,7 +42,7 @@ class Decision(Page):
             return True
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
-    timeout_seconds = 2 * 6000
+    timeout_seconds = 2 * 60
 
     def before_next_page(self):
         """
@@ -52,14 +52,11 @@ class Decision(Page):
         Decisions for the missed round are automatically filled to avoid an NONE type error.
         """
         me = self.player
-        other_players = me.get_others_in_group()
+        other_player = me.get_opponent()
         if self.timeout_happened:
-            other_players[0].left_hanging = 1
-            other_players[1].left_hanging = 1
-            other_players[2].left_hanging = 1
+            other_player.left_hanging = 1
             me.left_hanging = 2
-            me.decision_high = 1
-            me.decision_low = 1
+            me.decision = 1
 
     def vars_for_template(self):
         """
@@ -124,7 +121,7 @@ class Results(Page):
         elif self.subsession.round_number <= self.participant.vars['last_round']:
             return True
     timer_text = 'You are about to be automatically moved to the next results summary page'
-    timeout_seconds = 2 * 6000
+    timeout_seconds = 2 * 60
 
     def vars_for_template(self):
         """
@@ -159,7 +156,7 @@ class Previous(Page):
             return True
 
     timer_text = 'You are about to be automatically moved to the next round decision page'
-    timeout_seconds = 2 * 6000
+    timeout_seconds = 1 * 60
 
     def vars_for_template(self):
         """

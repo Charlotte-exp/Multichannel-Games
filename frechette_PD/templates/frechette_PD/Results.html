@@ -17,50 +17,51 @@
     );
     </script>
 
+    <style>
+    /* (A) SHARED CLASS */
+    .blue_box {
+    padding: 10px;
+    border: 2px solid dodgerblue;
+    height: 50px;
+    width: 40px;
+    border-radius: 5px;
+    background: dodgerblue;
+    color: white;
+    }
+
+    .red_box {
+    padding: 10px;
+    border: 2px solid red;
+    height: 50px;
+    width: 40px;
+    border-radius: 5px;
+    background: red;
+    color: white;
+    }
+
+    .win_box {
+    padding: 10px;
+    border: 2px solid yellow;
+    border-radius: 5px;
+    color: black;
+    }
+
+    .white_box {
+    padding: 10px;
+    border-radius: 5px;
+    color: black;
+    }
+
+    .align {
+    display: flex;
+    display: table cell;
+    vertical-align: middle;
+    }
+    </style>
+
 {% endblock %}
 
 {% block content %}
-<style>
-/* (A) SHARED CLASS */
-.blue_box {
-padding: 10px;
-border: 2px solid dodgerblue;
-height: 50px;
-width: 40px;
-border-radius: 5px;
-background: dodgerblue;
-color: white;
-}
-
-.red_box {
-padding: 10px;
-border: 2px solid red;
-height: 50px;
-width: 40px;
-border-radius: 5px;
-background: red;
-color: white;
-}
-
-.win_box {
-padding: 10px;
-border: 2px solid yellow;
-border-radius: 5px;
-color: black;
-}
-
-.white_box {
-padding: 10px;
-border-radius: 5px;
-color: black;
-}
-
-.align {
-display: flex;
-display: table cell;
-vertical-align: middle;
-}
-</style>
 
 <div class="form-group required">
     <p>
