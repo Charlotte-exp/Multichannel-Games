@@ -42,7 +42,7 @@ class Decision(Page):
             return True
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
-    timeout_seconds = 2 * 60
+    timeout_seconds = 2 * 6000
 
     def before_next_page(self):
         """
@@ -107,14 +107,44 @@ class ResultsWaitPage(WaitPage):
 
 
 class Results(Page):
-    pass
+    """
+    This page is for the round results. It gives feedback on what the opponents decided for this round.
+    It has a timer so that a dropout is automatically pushed to the decision page where the dropout function is.
+    """
+
+    def is_displayed(self):
+        """
+        This page is displayed only if the player is neither left hanging (1) or a dropout (2).
+        And only for the number of rounds assigned to the group by the random number function.
+        """
+        if self.player.left_hanging == 1:
+            return False
+        elif self.player.left_hanging == 2:
+            return False
+        elif self.subsession.round_number <= self.participant.vars['last_round']:
+            return True
+    timer_text = 'You are about to be automatically moved to the next results summary page'
+    timeout_seconds = 2 * 6000
+
+    def vars_for_template(self):
+        """
+        This function is for displaying variables in the HTML file using Django.
+        The variables are inserted into calculation or specifications and given a display name used in the HTML.
+        """
+        me = self.player
+        opponent = me.get_opponent()
+        return {
+            'my_decision': me.decision,
+            'opponent_decision': opponent.decision,
+            'my_payoff': me.payoff,
+        }
 
 
 class Previous(Page):
     """
-        This page is for the round results. It gives feedback on what the opponents decided for this round.
-        It has a timer so that a dropout is automatically pushed to the decision page where the dropout function is.
-        """
+    This page is a reminder of what happened in the previous round.
+    It has a timer so that a dropout is automatically pushed to the decision page where the dropout function is.
+    """
 
     def is_displayed(self):
         """
@@ -276,6 +306,7 @@ page_sequence = [
     Decision,
     ResultsWaitPage,
     Results,
+    Previous,
     End,
     Demographics,
     CommentBox,

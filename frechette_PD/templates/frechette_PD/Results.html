@@ -3,7 +3,7 @@
 
 
 {% block title %}
-    Round Decision {{ subsession.round_number }}
+    Round Outcome
 {% endblock %}
 
 {% block styles %}
@@ -20,42 +20,154 @@
 {% endblock %}
 
 {% block content %}
+<style>
+/* (A) SHARED CLASS */
+.blue_box {
+padding: 10px;
+border: 2px solid dodgerblue;
+height: 50px;
+width: 40px;
+border-radius: 5px;
+background: dodgerblue;
+color: white;
+}
 
-{% if my_decision == 1 & opponent_decision == 1 %}
+.red_box {
+padding: 10px;
+border: 2px solid red;
+height: 50px;
+width: 40px;
+border-radius: 5px;
+background: red;
+color: white;
+}
+
+.win_box {
+padding: 10px;
+border: 2px solid yellow;
+border-radius: 5px;
+color: black;
+}
+
+.white_box {
+padding: 10px;
+border-radius: 5px;
+color: black;
+}
+
+.align {
+display: flex;
+display: table cell;
+vertical-align: middle;
+}
+</style>
+
 <div class="form-group required">
+    <p>
+        The other player made the following choice:
+    </p>
+{% if my_decision == 1 and opponent_decision == 1 %}
     <table class="table table-bordered text-center" style="width: auto; margin: auto">
         <tr>
             <th colspan="2" rowspan="2"></th>
             <th colspan="2">The Other Participant</th>
         </tr>
         <tr>
-            <th>1</th>
-            <th>2</th>
+            <th><div class="red_box">1</div></th>
+            <th><div class="white_box">2</div></th>
         </tr>
         <tr>
-            <th rowspan="2"><span>You</span></th>
-            <td><button name="decision" value="1" class="btn btn-primary btn-large">1</button></td>
-            <td>{{Constants.reward}}, {{Constants.reward}}</td>
-            <td>{{ Constants.sucker }}, {{Constants.temptation}}</td>
+            <th rowspan="2"><div class="white_box">You</div></th>
+            <td><div class="blue_box">1</div></td>
+            <td><div class="win_box">{{Constants.reward}}, {{Constants.reward}}</div></td>
+            <td><div class="white_box">{{ Constants.sucker }}, {{Constants.temptation}}</div></td>
         </tr>
         <tr>
-            <td><button name="decision" value="0" class="btn btn-primary btn-large">2</button></td>
-            <td>{{Constants.temptation}}, {{ Constants.sucker }}</td>
-            <td>{{Constants.punishment}}, {{Constants.punishment}}</td>
+            <td><div class="white_box">2</div></td>
+            <td><div class="white_box">{{Constants.temptation}}, {{ Constants.sucker }}</div></td>
+            <td><div class="white_box">{{Constants.punishment}}, {{Constants.punishment}}</div></td>
         </tr>
     </table>
+{% endif %}
+
+{% if my_decision == 1 and opponent_decision == 0 %}
+    <table class="table table-bordered text-center" style="width: auto; margin: auto">
+        <tr>
+            <th colspan="2" rowspan="2"></th>
+            <th colspan="2">The Other Participant</th>
+        </tr>
+        <tr>
+            <th><div class="white_box">1</div></th>
+            <th><div class="red_box">2</div></th>
+        </tr>
+        <tr>
+            <th rowspan="2"><div class="white_box">You</div></th>
+            <td><div class="blue_box">1</div></td>
+            <td><div class="white_box">{{Constants.reward}}, {{Constants.reward}}</div></td>
+            <td><div class="win_box">{{Constants.sucker }}, {{Constants.temptation}}</div></td>
+        </tr>
+        <tr>
+            <td><div class="white_box">2</div></td>
+            <td><div class="white_box">{{Constants.temptation}}, {{ Constants.sucker }}</div></td>
+            <td><div class="white_box">{{Constants.punishment}}, {{Constants.punishment}}</div></td>
+        </tr>
+    </table>
+{% endif %}
+
+{% if my_decision == 0 and opponent_decision == 1 %}
+    <table class="table table-bordered text-center" style="width: auto; margin: auto">
+        <tr>
+            <th colspan="2" rowspan="2"></th>
+            <th colspan="2">The Other Participant</th>
+        </tr>
+        <tr>
+            <th><div class="red_box">1</div></th>
+            <th><div class="white_box">2</div></th>
+        </tr>
+        <tr>
+            <th rowspan="2"><div class="white_box">You</div></th>
+            <td><div class="white_box">1</div></td>
+            <td><div class="white_box">{{Constants.reward}}, {{Constants.reward}}</div></td>
+            <td><div class="white_box">{{ Constants.sucker }}, {{Constants.temptation}}</div></td>
+        </tr>
+        <tr>
+            <td><div class="blue_box">2</div></td>
+            <td><div class="win_box">{{Constants.temptation}}, {{ Constants.sucker }}</div></td>
+            <td><div class="white_box">{{Constants.punishment}}, {{Constants.punishment}}</div></td>
+        </tr>
+    </table>
+{% endif %}
+
+{% if my_decision == 0 and opponent_decision == 0 %}
+    <table class="table table-bordered text-center" style="width: auto; margin: auto">
+        <tr>
+            <th colspan="2" rowspan="2"></th>
+            <th colspan="2">The Other's Choice'</th>
+        </tr>
+        <tr>
+            <th><div class="white_box">1</div></th>
+            <th><div class="red_box">2</div></th>
+        </tr>
+        <tr>
+            <th rowspan="2"><div class="white_box">Your Choice</div></th>
+            <td><div class="white_box">1</div></td>
+            <td><div class="white_box">{{Constants.reward}}, {{Constants.reward}}</div></td>
+            <td><div class="white_box">{{ Constants.sucker }}, {{Constants.temptation}}</div></td>
+        </tr>
+        <tr>
+            <td><div class="blue_box">2</div></td>
+            <td><div class="white_box">{{Constants.temptation}}, {{ Constants.sucker }}</div></td>
+            <td><div class="win_box">{{Constants.punishment}}, {{Constants.punishment}}</div></td>
+        </tr>
+    </table>
+{% endif %}
 </div>
-{% endif %}
 
-{% if my_decision == 1 & opponent_decision == 1 %}
-{% endif %}
-
-{% if my_decision == 1 & opponent_decision == 1 %}
-{% endif %}
-
-{% if my_decision == 1 & opponent_decision == 1 %}
-{% endif %}
-
+<p>
+    <div style="display: flex; justify-content: flex-end">
+    {% next_button %}
+    </div>
+</p>
 
 {% endblock %}
 

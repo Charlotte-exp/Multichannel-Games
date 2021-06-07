@@ -28,10 +28,10 @@ class Constants(BaseConstants):
     Matrix format payoffs
     temptation = betray, sucker = betrayed, reward = both cooperate, punishment = both defect 
     """
-    temptation = c(30)
-    sucker = c(0)
-    reward = c(20)
-    punishment = c(10)
+    temptation = c(50)
+    sucker = c(12)
+    reward = c(32)
+    punishment = c(25)
 
 
 class Subsession(BaseSubsession):
