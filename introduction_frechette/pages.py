@@ -19,6 +19,14 @@ class Instructions(Page):
     def is_displayed(self):
         return self.round_number == 1
 
+    def vars_for_template(self):
+        """"
+        The currency per point and participation fee are set in settings.py.
+        """
+        return {
+            'currency_per_points': self.session.config['real_world_currency_per_point']
+        }
+
 
 class Results(Page):
     pass
