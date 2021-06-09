@@ -49,14 +49,20 @@
     .white_box {
     padding: 10px;
     border-radius: 5px;
-    color: black;
     }
 
-    .align {
-    display: flex;
-    display: table cell;
-    vertical-align: middle;
+    .play2_box {
+    padding: 10px;
+    border-radius: 5px;
+    color: red;
     }
+
+    .play1_box {
+    padding: 10px;
+    border-radius: 5px;
+    color: dodgerblue;
+    }
+
     </style>
 
 {% endblock %}
@@ -71,22 +77,26 @@
     <table class="table table-bordered text-center" style="width: auto; margin: auto">
         <tr>
             <th colspan="2" rowspan="2"></th>
-            <th colspan="2">The Other Participant</th>
+            <th colspan="2">The Other's Choice</th>
         </tr>
         <tr>
             <th><div class="red_box">1</div></th>
-            <th><div class="white_box">2</div></th>
+            <th><div class="play2_box">2</div></th>
         </tr>
         <tr>
-            <th rowspan="2"><div class="white_box">You</div></th>
+            <th rowspan="2"><div class="white_box">Your Choice</div></th>
             <td><div class="blue_box">1</div></td>
-            <td><div class="win_box">{{Constants.reward}}, {{Constants.reward}}</div></td>
-            <td><div class="white_box">{{ Constants.sucker }}, {{Constants.temptation}}</div></td>
+            <td><div class="win_box"><font color="dodgerblue">{{Constants.reward}}</font>,
+                <font color="red">{{Constants.reward}}</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{ Constants.sucker }}</font>,
+                <font color="red">{{Constants.temptation}}</font></div></td>
         </tr>
         <tr>
-            <td><div class="white_box">2</div></td>
-            <td><div class="white_box">{{Constants.temptation}}, {{ Constants.sucker }}</div></td>
-            <td><div class="white_box">{{Constants.punishment}}, {{Constants.punishment}}</div></td>
+            <td><div class="play1_box">2</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.temptation}}</font>,
+                <font color="red">{{ Constants.sucker }}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.punishment}}</font>,
+                <font color="red">{{Constants.punishment}}</font></div></td>
         </tr>
     </table>
 {% endif %}
@@ -95,22 +105,26 @@
     <table class="table table-bordered text-center" style="width: auto; margin: auto">
         <tr>
             <th colspan="2" rowspan="2"></th>
-            <th colspan="2">The Other Participant</th>
+            <th colspan="2">The Other's Choice</th>
         </tr>
         <tr>
-            <th><div class="white_box">1</div></th>
+            <th><div class="play2_box">1</div></th>
             <th><div class="red_box">2</div></th>
         </tr>
         <tr>
-            <th rowspan="2"><div class="white_box">You</div></th>
+            <th rowspan="2"><div class="white_box">Your Choice</div></th>
             <td><div class="blue_box">1</div></td>
-            <td><div class="white_box">{{Constants.reward}}, {{Constants.reward}}</div></td>
-            <td><div class="win_box">{{Constants.sucker }}, {{Constants.temptation}}</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.reward}}</font>,
+                <font color="red">{{Constants.reward}}</div></td>
+            <td><div class="win_box"><font color="dodgerblue">{{ Constants.sucker }}</font>,
+                <font color="red">{{Constants.temptation}}</font></div></td>
         </tr>
         <tr>
-            <td><div class="white_box">2</div></td>
-            <td><div class="white_box">{{Constants.temptation}}, {{ Constants.sucker }}</div></td>
-            <td><div class="white_box">{{Constants.punishment}}, {{Constants.punishment}}</div></td>
+            <td><div class="play1_box">2</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.temptation}}</font>,
+                <font color="red">{{ Constants.sucker }}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.punishment}}</font>,
+                <font color="red">{{Constants.punishment}}</font></div></td>
         </tr>
     </table>
 {% endif %}
@@ -119,22 +133,26 @@
     <table class="table table-bordered text-center" style="width: auto; margin: auto">
         <tr>
             <th colspan="2" rowspan="2"></th>
-            <th colspan="2">The Other Participant</th>
+            <th colspan="2">The Other's Choice</th>
         </tr>
         <tr>
             <th><div class="red_box">1</div></th>
-            <th><div class="white_box">2</div></th>
+            <th><div class="play2_box">2</div></th>
         </tr>
         <tr>
-            <th rowspan="2"><div class="white_box">You</div></th>
-            <td><div class="white_box">1</div></td>
-            <td><div class="white_box">{{Constants.reward}}, {{Constants.reward}}</div></td>
-            <td><div class="white_box">{{ Constants.sucker }}, {{Constants.temptation}}</div></td>
+            <th rowspan="2"><div class="white_box">Your Choice</div></th>
+            <td><div class="play1_box">1</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.reward}}</font>,
+                <font color="red">{{Constants.reward}}</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{ Constants.sucker }}</font>,
+                <font color="red">{{Constants.temptation}}</font></div></td>
         </tr>
         <tr>
             <td><div class="blue_box">2</div></td>
-            <td><div class="win_box">{{Constants.temptation}}, {{ Constants.sucker }}</div></td>
-            <td><div class="white_box">{{Constants.punishment}}, {{Constants.punishment}}</div></td>
+            <td><div class="win_box"><font color="dodgerblue">{{Constants.temptation}}</font>,
+                <font color="red">{{ Constants.sucker }}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.punishment}}</font>,
+                <font color="red">{{Constants.punishment}}</font></div></td>
         </tr>
     </table>
 {% endif %}
@@ -143,22 +161,26 @@
     <table class="table table-bordered text-center" style="width: auto; margin: auto">
         <tr>
             <th colspan="2" rowspan="2"></th>
-            <th colspan="2">The Other's Choice'</th>
+            <th colspan="2">The Other's Choice</th>
         </tr>
         <tr>
-            <th><div class="white_box">1</div></th>
+            <th><div class="play2_box">1</div></th>
             <th><div class="red_box">2</div></th>
         </tr>
         <tr>
-            <th rowspan="2"><div class="white_box">Your Choice</div></th>
-            <td><div class="white_box">1</div></td>
-            <td><div class="white_box">{{Constants.reward}}, {{Constants.reward}}</div></td>
-            <td><div class="white_box">{{ Constants.sucker }}, {{Constants.temptation}}</div></td>
+            <th rowspan="2"><div class="pwhite_box">Your Choice</div></th>
+            <td><div class="play1_box">1</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.reward}}</font>,
+                <font color="red">{{Constants.reward}}</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{ Constants.sucker }}</font>,
+                <font color="red">{{Constants.temptation}}</font></div></td>
         </tr>
         <tr>
             <td><div class="blue_box">2</div></td>
-            <td><div class="white_box">{{Constants.temptation}}, {{ Constants.sucker }}</div></td>
-            <td><div class="win_box">{{Constants.punishment}}, {{Constants.punishment}}</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.temptation}}</font>,
+                <font color="red">{{ Constants.sucker }}</font></div></td>
+            <td><div class="win_box"><font color="dodgerblue">{{Constants.punishment}}</font>,
+                <font color="red">{{Constants.punishment}}</font></div></td>
         </tr>
     </table>
 {% endif %}

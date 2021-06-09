@@ -2,6 +2,8 @@ from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
 
+import math
+
 
 class Consent(Page):
     def is_displayed(self):
@@ -24,7 +26,8 @@ class Instructions(Page):
         The currency per point and participation fee are set in settings.py.
         """
         return {
-            'currency_per_points': self.session.config['real_world_currency_per_point']
+            'currency_per_points': self.session.config['real_world_currency_per_point'],
+            'delta': math.ceil(Constants.proba_next_round * 100)
         }
 
 
