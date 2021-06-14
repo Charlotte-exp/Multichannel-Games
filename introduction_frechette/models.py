@@ -22,7 +22,7 @@ class Constants(BaseConstants):
     min_rounds = 1
     proba_next_round = 0.75
 
-    session_time = 20
+    session_time = 15
     conversion = '20pts = £0.05'
 
     """

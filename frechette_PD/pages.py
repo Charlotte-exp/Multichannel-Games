@@ -264,7 +264,7 @@ class Payment(Page):
         """
         return {
             'total_payoff': self.participant.payoff,
-            'points_per_currency': 1 / self.session.config['real_world_currency_per_point'],
+            'currency_per_points': self.session.config['real_world_currency_per_point'],
             'participation_fee': self.session.config['participation_fee'],
             'bonus': self.participant.payoff.to_real_world_currency(self.session),
             'final_payment': self.participant.payoff_plus_participation_fee()
