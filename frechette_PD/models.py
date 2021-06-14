@@ -25,7 +25,7 @@ class Constants(BaseConstants):
 
     """ variables for randomish end round, used in the intro app at the mo"""
     min_rounds = 1
-    proba_next_round = 0.5
+    proba_next_round = 0.75
 
     conversion = '20pts = £0.05'
 
@@ -48,7 +48,7 @@ class Subsession(BaseSubsession):
         This function creates a last round number following this method.
         """
         number_of_rounds = Constants.min_rounds
-        while Constants.proba_next_round < random.random():
+        while Constants.proba_next_round > random.random():
             number_of_rounds += 1
         return number_of_rounds
 
