@@ -68,17 +68,19 @@ color: white;
         <li>
             In this experiment you will be asked to make decisions in several rounds.
             You will be randomly paired with another person for a sequence of rounds.
-            Each sequence of rounds is referred to as a match.
         </li>
         <p></p>
         <li>
-            The length of a match is randomly determined.
-            After each round, there is a {{ delta }}% probability that the match will continue for at least another round.
+            The total number of rounds is randomly determined.
+            After each round, there is a {{ delta }}% probability
+            that the interaction with the same person will continue for at least another round.
             {% if Constants.proba_next_round == 0.5 %}
-            This is as if we would roll a four sided dice and end if 1, or 2 comes up and continue if 3, or 4 comes up.
+            This is as if we would roll a four sided dice: if a 1 or a 2 comes up, the game ends after this round,
+            but if a 3 or 4 comes up, the game continue for at least another round.
             {% endif %}
             {% if Constants.proba_next_round == 0.75 %}
-            This is as if we would roll a four sided dice and end if 1 comes up and continue if 2, 3, or 4 comes up.
+            This is as if we would roll a four sided dice: if a 1 comes up, the game ends after this round,
+            but if a 2, 3, or 4 comes up, the game continue for at least another round.
             {% endif %}
             So, for instance, if you are in round 2,
             the probability there will be a third round is {{ delta }}% and if you are in round 9,
@@ -117,9 +119,10 @@ color: white;
     </table>
     </div>
     <p>
-        The first entry in each cell represents your payoff,
-        while the second entry represents the payoff of the person you are matched with.
-        You make your choice by clicking directly on the blue box titled 1 for Option 1, and 2 for Option 2.
+        The first entry in each cell represents your payoff (in points),
+        while the second entry represents the payoff of the person you are interacting with.
+        You make your choice by clicking directly on the blue box titled 1 for Option 1,
+        and 2 for Option 2.
     </p>
     <p>
         At the end of the experiment you will be paid £{{ currency_per_points }} for every point scored for your bonus.
@@ -146,12 +149,9 @@ color: white;
         </li>
     </ul>
     <p>
-        Before we start, let me remind you that:
-    </p>
-    <p>
-        - The length of a match is randomly determined.
-        After each round, there is a {{ delta }}% probability that the match will continue for at least another round.
-        You will play with the same person for the entire match.
+        Before we start, recall again that the total number of rounds is randomly determined.
+        After each round, there is a {{ delta }}% probability that the interaction will continue for at least another round.
+        You will play with the same person for the entire interaction.
     </p>
 
 </div>
