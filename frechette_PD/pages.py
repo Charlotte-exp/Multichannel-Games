@@ -196,6 +196,7 @@ class End(Page):
         The variables are inserted into calculation or specifications and given a display name used in the HTML.
         """
         me = self.player
+        opponent = me.get_opponent()
         return {
             'player_in_all_rounds': me.in_all_rounds(),
 
