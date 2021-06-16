@@ -40,7 +40,7 @@ SESSION_CONFIGS = [
         'display_name': "Control with Dal Bo and Fréchette format",
         'num_demo_participants': 12,
         'app_sequence': ['introduction_frechette', 'frechette_PD'],
-        'use_browser_bots': True
+        'use_browser_bots': False
     },
 ]
 # see the end of this file for the inactive session configs
