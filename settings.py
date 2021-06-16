@@ -7,7 +7,7 @@ from os import environ
 
 SESSION_CONFIG_DEFAULTS = {
     'real_world_currency_per_point': 0.0065,
-    'participation_fee': 2.00,
+    'participation_fee': 1.50,
     'doc': "",
 }
 
@@ -40,7 +40,7 @@ SESSION_CONFIGS = [
         'display_name': "Control with Dal Bo and Fréchette format",
         'num_demo_participants': 12,
         'app_sequence': ['introduction_frechette', 'frechette_PD'],
-        'use_browser_bots': False
+        'use_browser_bots': True
     },
 ]
 # see the end of this file for the inactive session configs

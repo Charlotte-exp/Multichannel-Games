@@ -27,6 +27,7 @@ class PlayerBot(Bot):
         #             if self.participant.vars['subgroup'] == 'low':
         #                 yield pages.Decision, dict(decision_low=0)
             yield pages.Results
+            # yield pages.Previous
 
         if self.round_number == self.participant.vars['last_round']:
             yield pages.End

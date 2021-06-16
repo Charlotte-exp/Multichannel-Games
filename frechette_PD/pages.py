@@ -304,7 +304,7 @@ page_sequence = [
     Decision,
     ResultsWaitPage,
     Results,
-    Previous,
+    # Previous,
     End,
     Demographics,
     CommentBox,

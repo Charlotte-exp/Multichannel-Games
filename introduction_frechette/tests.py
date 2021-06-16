@@ -8,6 +8,6 @@ class PlayerBot(Bot):
     def play_round(self):
         if self.round_number == 1:
             yield pages.Consent
-            yield pages.Welcome
+            # yield pages.Welcome
             yield pages.Instructions
 
