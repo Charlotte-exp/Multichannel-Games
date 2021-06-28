@@ -35,7 +35,7 @@ class Constants(BaseConstants):
     """
     temptation = c(50)
     sucker = c(12)
-    reward = c(32)
+    reward = c(26)
     punishment = c(25)
 
 
