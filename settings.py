@@ -6,8 +6,8 @@ from os import environ
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = {
-    'real_world_currency_per_point': 1/400,
-    'participation_fee': 2.00,
+    'real_world_currency_per_point': 0.0065,
+    'participation_fee': 1.50,
     'doc': "",
 }
 
@@ -36,11 +36,11 @@ SESSION_CONFIGS = [
         'use_browser_bots': False
     },
     {
-        'name': 'control_PD_test',
-        'display_name': "PD fro testing",
-        'num_demo_participants': 4,
-        'app_sequence': ['introduction_control', 'control_PD_test'],
-        'use_browser_bots': True
+        'name': 'frechette_PD',
+        'display_name': "Control with Dal Bo and Fréchette format",
+        'num_demo_participants': 12,
+        'app_sequence': ['introduction_frechette', 'frechette_PD'],
+        'use_browser_bots': False
     },
 ]
 # see the end of this file for the inactive session configs

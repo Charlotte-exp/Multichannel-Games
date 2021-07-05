@@ -1,0 +1,62 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Round Results
+{% endblock %}
+
+
+{% block content %}
+
+<div class="card-body">
+    <p>
+        Your actions from the previous match:
+    </p>
+    <table class="table table-bordered text-center" style="width: 300px; margin: auto">
+        <tr>
+            <td><div class="box">Your Choice</div></td>
+            {% if my_decision == 0 %}
+            <td>{{2}}</td>
+            {% else %}
+            <td>{{my_decision}}</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td><div class="box">Other's Choice</div></td>
+            {% if opponent_decision == 0 %}
+            <td>{{2}}</td>
+            {% else %}
+            <td>{{opponent_decision}}</td>
+            {% endif %}
+        </tr>
+    </table>
+</div>
+
+<p>
+    <div style="display: flex; justify-content: flex-end">
+    {% next_button %}
+    </div>
+</p>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
+
+    <script>
+        $(function () {
+            $('.otree-timer__time-left').on('update.countdown', function (event) {
+                if (event.offset.totalSeconds === 10) {
+                    $('.otree-timer').show();
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

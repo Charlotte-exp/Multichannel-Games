@@ -1,10 +1,6 @@
 from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
-from decimal import *
-
-
-getcontext().rounding = ROUND_CEILING  # is this for rounding up the payment?
 
 
 class PairingWaitPage(WaitPage):
@@ -22,7 +18,7 @@ class PairingWaitPage(WaitPage):
     def is_displayed(self):
         return self.round_number == 1
 
-    template_name = 'crosstalk/Waitroom.html'
+    template_name = 'frechette_PD/Waitroom.html'
 
 
 class Decision(Page):
@@ -31,7 +27,7 @@ class Decision(Page):
     There is a timer to check for dropouts. If one of the players' timer runs out the others are linked back to prolific
     """
     form_model = 'player'
-    form_fields = ['decision_high', 'decision_low']
+    form_fields = ['decision']
 
     def is_displayed(self):
         """
@@ -56,54 +52,29 @@ class Decision(Page):
         Decisions for the missed round are automatically filled to avoid an NONE type error.
         """
         me = self.player
-        other_players = me.get_others_in_group()
+        other_player = me.get_opponent()
         if self.timeout_happened:
-            other_players[0].left_hanging = 1
-            other_players[1].left_hanging = 1
-            other_players[2].left_hanging = 1
+            other_player.left_hanging = 1
             me.left_hanging = 2
-            me.decision_high = 1
-            me.decision_low = 1
+            me.decision = 1
 
-    # player id for for troubleshooting. If I want to display the player in the group of four though I can keep it.
     def vars_for_template(self):
         """
         This function is for displaying variables in the HTML file using Django.
         The variables are inserted into calculation or specifications and given a display name used in the HTML.
         """
         me = self.player
-        opponents = me.get_opponent()
-        opponent_high = opponents[0]
-        opponent_low = opponents[1]
+        opponent = me.get_opponent()
         if self.round_number > 1:
             return {
                 'round_number': self.round_number,
-                'opponent_previous_decision_high': opponent_high.in_round(self.round_number - 1).decision_high,
-                'opponent_previous_decision_low': opponent_low.in_round(self.round_number - 1).decision_low,
-                'previous_decision_high': me.in_round(self.round_number - 1).decision_high,
-                'previous_decision_low': me.in_round(self.round_number - 1).decision_low,
 
-                'cost_high': Constants.c_high,
-                'cost_low': Constants.c_low,
-                'benefit_high': Constants.b_high,
-                'benefit_low': Constants.b_low,
-
-                'my_player_id': me.id_in_group,
-                'opponent_high_id': opponent_high.id_in_group,
-                'opponent_low_id': opponent_low.id_in_group,
+                'opponent_previous_decision': opponent.in_round(self.round_number - 1).decision,
+                'previous_decision': me.in_round(self.round_number - 1).decision,
             }
         else:
             return {
                 'round_number': self.round_number,
-
-                'cost_high': Constants.c_high,
-                'cost_low': Constants.c_low,
-                'benefit_high': Constants.b_high,
-                'benefit_low': Constants.b_low,
-
-                'my_player_id': me.id_in_group,
-                'opponent_high_id': opponent_high.id_in_group,
-                'opponent_low_id': opponent_low.id_in_group,
             }
 
 
@@ -114,10 +85,11 @@ class ResultsWaitPage(WaitPage):
     results page.
     I use a template for some special text rather than just the body_text variable.
     """
+
     def after_all_players_arrive(self):
         """ The function that waits for players to arrive to calculate the payoffs like instructed in models.py """
         for p in self.group.get_players():
-            p.set_payoffs()
+            p.set_payoff()
 
     def is_displayed(self):
         """
@@ -127,7 +99,8 @@ class ResultsWaitPage(WaitPage):
         if self.subsession.round_number <= self.participant.vars['last_round']:
             return True
 
-    template_name = 'crosstalk/ResultsWaitPage.html'
+    # body_text = "Please wait while the other participant makes their decision."
+    template_name = 'control_PD/ResultsWaitPage.html'
 
 
 class Results(Page):
@@ -147,20 +120,8 @@ class Results(Page):
             return False
         elif self.subsession.round_number <= self.participant.vars['last_round']:
             return True
-
-    timer_text = 'You are about to be automatically moved to the next round decision page'
+    timer_text = 'You are about to be automatically moved to the next results summary page'
     timeout_seconds = 2 * 60
-    # my_page_timeout_seconds = 90
-    #
-    # def get_timeout_seconds(self):
-    #     round_number = self.subsession.round_number
-    #     timeout = self.my_page_timeout_seconds
-    #     if round_number <= 2:
-    #         return timeout
-    #     else:
-    #         timeout -= (round_number - 2) * 5
-    #         print(timeout)
-    #         return timeout
 
     def vars_for_template(self):
         """
@@ -168,28 +129,46 @@ class Results(Page):
         The variables are inserted into calculation or specifications and given a display name used in the HTML.
         """
         me = self.player
-        opponents = me.get_opponent()
-        opponent_high = opponents[0]
-        opponent_low = opponents[1]
+        opponent = me.get_opponent()
         return {
-            'my_decision_high': me.decision_high,
-            'my_decision_low': me.decision_low,
-            'opponent_decision_high': opponent_high.decision_high,
-            'opponent_decision_low': opponent_low.decision_low,
+            'my_decision': me.decision,
+            'opponent_decision': opponent.decision,
+            'my_payoff': me.payoff,
+        }
 
-            'my_payoff_high': me.payoff_high,
-            'my_payoff_low': me.payoff_low,
-            'my_result_high': me.payoff_high - Constants.endowment_high,
-            'my_result_low': me.payoff_low - Constants.endowment_low,
 
-            'cost_high': Constants.c_high,
-            'cost_low': Constants.c_low,
-            'benefit_high': Constants.b_high,
-            'benefit_low': Constants.b_low,
+class Previous(Page):
+    """
+    This page is a reminder of what happened in the previous round.
+    It has a timer so that a dropout is automatically pushed to the decision page where the dropout function is.
+    """
 
-            'my_player_id': me.id_in_group,
-            'opponent_id_high': opponent_high.id_in_group,
-            'opponent_id_low': opponent_low.id_in_group,
+    def is_displayed(self):
+        """
+        This page is displayed only if the player is neither left hanging (1) or a dropout (2).
+        And only for the number of rounds assigned to the group by the random number function.
+        """
+        if self.player.left_hanging == 1:
+            return False
+        elif self.player.left_hanging == 2:
+            return False
+        elif self.subsession.round_number <= self.participant.vars['last_round']:
+            return True
+
+    timer_text = 'You are about to be automatically moved to the next round decision page'
+    timeout_seconds = 1 * 60
+
+    def vars_for_template(self):
+        """
+        This function is for displaying variables in the HTML file using Django.
+        The variables are inserted into calculation or specifications and given a display name used in the HTML.
+        """
+        me = self.player
+        opponent = me.get_opponent()
+        return {
+            'my_decision': me.decision,
+            'opponent_decision': opponent.decision,
+            'my_payoff': me.payoff,
         }
 
 
@@ -215,23 +194,13 @@ class End(Page):
         """
         This function is for displaying variables in the HTML file using Django.
         The variables are inserted into calculation or specifications and given a display name used in the HTML.
-        To make the html display each round payoff individually and properly,
-        the list of the payoffs of each opponents had to be zipped together with the player's list each separately
-        so that Django loops through the player's list only once and avoid repetition.
         """
         me = self.player
-        opponents = me.get_opponent()
-        opponent_high = opponents[0]
-        opponent_low = opponents[1]
+        opponent = me.get_opponent()
         return {
             'player_in_all_rounds': me.in_all_rounds(),
-            'opponent_high_in_all_rounds': opponent_high.in_all_rounds(),
-            'opponent_low_in_all_rounds': opponent_low.in_all_rounds(),
-            'player_and_opponent_high': zip(me.in_all_rounds(), opponent_high.in_all_rounds()),
-            'player_and_opponent_low': zip(me.in_all_rounds(), opponent_low.in_all_rounds()),
 
-            'total_payoff_high': sum([p.payoff_high for p in me.in_all_rounds()]),
-            'total_payoff_low': sum([p.payoff_low for p in me.in_all_rounds()]),
+            'total_payoff': sum([p.payoff for p in me.in_all_rounds()]),
         }
 
 
@@ -287,22 +256,19 @@ class Payment(Page):
             return True
 
     def vars_for_template(self):
-        """
+        """"
         The currency per point and participation fee are set in settings.py. However it can only be set in GBP per point
         which is not human friendly. So I need to reverse it for display.
-        The bonus and final payment are not saved in the data sheet automatically, only the total number of points.
-        However, using participant.payoff makes it display in the payment tab so that can use that for the payment.
-        Also the participant.payoff variable is set in oTree to automatically add the payoff from all rounds.
+        The bonus and final payment are not saved in the data sheet automatically.
+        I'd have to save the result in a form field under the player class I guess... but it is annoying.
+        Since I use the oTree variable "payoff" it all gets displayed in the admin interface and I can download that.
         """
-        me = self.player
         return {
-            'total_payoff_high': sum([p.payoff_high for p in me.in_all_rounds()]),
-            'total_payoff_low': sum([p.payoff_low for p in me.in_all_rounds()]),
             'total_payoff': self.participant.payoff,
-            'points_per_currency': 1 / self.session.config['real_world_currency_per_point'],
+            'currency_per_points': self.session.config['real_world_currency_per_point'],
             'participation_fee': self.session.config['participation_fee'],
             'bonus': self.participant.payoff.to_real_world_currency(self.session),
-            'final_payment':  self.participant.payoff_plus_participation_fee()
+            'final_payment': self.participant.payoff_plus_participation_fee()
         }
 
 
@@ -338,6 +304,7 @@ page_sequence = [
     Decision,
     ResultsWaitPage,
     Results,
+    # Previous,
     End,
     Demographics,
     CommentBox,
