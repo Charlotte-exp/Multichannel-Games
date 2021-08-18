@@ -1,0 +1,48 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Final results
+{% endblock %}
+
+{% block content %}
+
+<div class="card-body">
+    {% if my_treatment == 'high' %}
+    Here are your total points across all rounds, including the endowment of {{ Constants.endowment_high }} pts per round.
+    {% else %}
+    Here are your total points across all rounds, including the endowment of {{ Constants.endowment_low }} pts per round.
+    {% endif %}
+
+</div>
+    <table class="table">
+        <tr>
+            <th>Round</th>
+            <th>My outcome</th>
+            <th>Opponent's outcome</th>
+
+        </tr>
+        {% for p in player_in_all_rounds %}
+            <tr>
+                <td>{{ p.round_number }}</td>
+                <td>{{ p.payoff }} pts</td>
+                {% for q in p.get_opponent %}
+                <td>{{ q.payoff}} pts</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    <p>
+        In this Task, across all rounds, you earned a total of <b>{{ total_payoff }}</b> points.
+    </p>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+{% endblock %}
+
+

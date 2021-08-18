@@ -1,0 +1,146 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+
+{% block title %}
+    Round Decision {{ subsession.round_number }}
+{% endblock %}
+
+{% block styles %}
+
+    <script>
+        setTimeout(
+        function () {
+            alert("Please make your decision soon.");
+        },
+        90*1000 // 90 seconds
+    );
+    </script>
+
+{% endblock %}
+
+{% block content %}
+
+{% if round_number > 1 %}
+<div class="card-body">
+    <p>
+        <h4>In the previous round:</h4>
+    </p>
+</div>
+
+<div class="card-body">
+    <div class="card-body small">
+        <div class="card bg-light instructions">
+            <div class="card-body">
+                <p>
+                    <h5>In the previous round</h5>
+                </p>
+                {% if my_treatment == 'high' %}
+                    <p>You chose:</p>
+                    <ul>
+                        {% if previous_decision_high == 1 %}
+                        <li>
+                            to <b>lose {{ cost_high }} pts</b> for Participant 2 to <b>receive {{ benefit_high }} pts</b>.
+                        </li>
+                        {% else %}
+                        <li>
+                            to <b>lose 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <p> Participant 2 chose:</p>
+                    <ul>
+                        {% if opponent_previous_decision_high == 1 %}
+                        <li>
+                            to <b>lose {{ cost_high }} pts</b> for you to <b>receive {{ benefit_high }} pts</b>.
+                        </li>
+                        {% else %}
+                        <li>
+                            to <b>lose 0 pts</b> for you to <b>receive 0 pts</b>.
+                        </li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+                {% if my_treatment == 'low' %}
+                    <p>You chose:</p>
+                    <ul>
+                        {% if previous_decision_low == 1 %}
+                        <li>
+                            to <b>lose {{ cost_low }} pts</b> for Participant 2 to <b>receive {{ benefit_low}} pts</b>.
+                        </li>
+                        {% else %}
+                        <li>
+                            to <b>lose 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <p> Participant 2 chose:</p>
+                    <ul>
+                        {% if opponent_previous_decision_low == 1 %}
+                        <li>
+                            to <b>lose {{ cost_low }} pts</b> for you to <b>receive {{ benefit_low }} pts</b>.
+                        </li>
+                        {% else %}
+                        <li>
+                            to <b>lose 0 pts</b> for you to <b>receive 0 pts</b>.
+                        </li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<div class="card-body">
+    <p>
+        <h4>In this round:</h4>
+        <p>
+        Below are your two options for the task. You need to make a choice to continue.
+    </p>
+    </p>
+</div>
+
+<div class="card bg-light instructions">
+    <div class="card-body">
+        {% if my_treatment == 'high' %}
+            <p>
+                {% formfield player.decision_high label='' %}
+            </p>
+        {% endif %}
+        {% if my_treatment == 'low' %}
+            <p>
+                {% formfield player.decision_low label='' %}
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+{% endblock %}
+
+{% block scripts %}
+
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
+
+    <script>
+        $(function () {
+            $('.otree-timer__time-left').on('update.countdown', function (event) {
+                if (event.offset.totalSeconds === 10) {
+                    $('.otree-timer').show();
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

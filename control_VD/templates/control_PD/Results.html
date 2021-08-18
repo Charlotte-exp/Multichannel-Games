@@ -1,0 +1,162 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Round Results
+{% endblock %}
+
+{% block styles %}
+
+    <script>
+        setTimeout(
+        function () {
+            alert("Don't let the other participant wait too long. Please advance to the next page soon.");
+        },
+        60*1000 // 60 seconds
+    );
+    </script>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="card bg-light instructions">
+        <div class="card-body">
+        {% if my_treatment == 'high' %}
+            <p>
+                <h4>In this round:</h4>
+            </p>
+            <p>You chose:</p>
+            <ul>
+                {% if my_decision_high == 1 %}
+                <li>
+                    to <b>lose {{ cost_high }} pts</b> for Participant 2 to <b>receive {{ benefit_high }} pts</b>.
+                </li>
+                {% else %}
+                <li>
+                    to <b>lose 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
+                </li>
+                {% endif %}
+            </ul>
+            <p> Participant 2 chose:</p>
+            <ul>
+                {% if opponent_decision_high == 1 %}
+                <li>
+                    to <b>lose {{ cost_high }} pts</b> for you to <b>receive {{ benefit_high }} pts</b>.
+                </li>
+                {% else %}
+                <li>
+                    to <b>lose 0 pts</b> for you to <b>receive 0 pts</b>.
+                </li>
+                {% endif %}
+            </ul>
+            <hr size="6" width="50%" align="left" color="black">
+            {% if my_decision_high == 1 and opponent_decision_high == 1 %}
+            <p>
+                Your points in this round:
+                -{{ cost_high }} + {{ benefit_high }} = <b>{{ my_result_high }}</b>
+            </p>
+            {% endif %}
+            {% if my_decision_high == 1 and opponent_decision_high == 0 %}
+            <p>
+                Your points in this round:
+                -{{ cost_high }} + {{ 0 }} = <b>{{ my_result_high }}</b>
+            </p>
+            {% endif %}
+            {% if my_decision_high == 0 and opponent_decision_high == 1 %}
+            <p>
+                Your points in this round:
+                {{ 0 }} + {{ benefit_high }} = <b>{{ my_result_high }}</b>
+            </p>
+            {% endif %}
+            {% if my_decision_high == 0 and opponent_decision_high == 0 %}
+            <p>
+                Your points in this round:
+                {{ 0 }} + {{ 0 }} = <b>{{ my_result_high }}</b>
+            </p>
+            {% endif %}
+        {% endif %}
+        {% if my_treatment == 'low' %}
+            <p>
+                <h4>In this round</h4>
+            </p>
+            <p>You chose:</p>
+                <ul>
+                    {% if my_decision_low == 1 %}
+                    <li>
+                        to <b>lose {{ cost_low }} pts</b> for Participant 2 to <b>receive {{ benefit_low }} pts</b>.
+                    </li>
+                    {% else %}
+                    <li>
+                        to <b>lose 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
+                    </li>
+                    {% endif %}
+                </ul>
+                <p> Participant 2 chose:</p>
+                <ul>
+                    {% if opponent_decision_low == 1 %}
+                    <li>
+                        to <b>lose {{ cost_low }} pts</b> for you to <b>receive {{ benefit_low }} pts</b>.
+                    </li>
+                    {% else %}
+                    <li>
+                        to <b>lose 0 pts</b> for you to <b>receive 0 pts</b>.
+                    </li>
+                    {% endif %}
+                </ul>
+                <hr size="6" width="50%" align="left" color="black">
+                {% if my_decision_low == 1 and opponent_decision_low == 1 %}
+                <p>
+                    Your points in this round:
+                    -{{ cost_low }} + {{ benefit_low }} = <b>{{ my_result_low }}</b>
+                </p>
+                {% endif %}
+                {% if my_decision_low == 1 and opponent_decision_low == 0 %}
+                <p>
+                    Your points in this round:
+                    -{{ cost_low }} + {{ 0 }} = <b>{{ my_result_low }}</b>
+                </p>
+                {% endif %}
+                {% if my_decision_low == 0 and opponent_decision_low == 1 %}
+                <p>
+                    Your points in this round:
+                    {{ 0 }} + {{ benefit_low }} = <b>{{ my_result_low }}</b>
+                </p>
+                {% endif %}
+                {% if my_decision_low == 0 and opponent_decision_low == 0 %}
+                <p>
+                    Your points in this round:
+                    {{ 0 }} + {{ 0 }} = <b>{{ my_result_low }}</b>
+                </p>
+                {% endif %}
+        {% endif %}
+
+    </div>
+</div>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+{% endblock %}
+{% block scripts %}
+
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
+
+    <script>
+        $(function () {
+            $('.otree-timer__time-left').on('update.countdown', function (event) {
+                if (event.offset.totalSeconds === 10) {
+                    $('.otree-timer').show();
+                }
+            });
+        });
+    </script>
+
+{% endblock %}
