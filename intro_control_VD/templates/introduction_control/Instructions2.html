@@ -1,0 +1,195 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+<style>
+
+
+</style>
+
+{% block title %}
+    Example
+{% endblock %}
+
+{% block content %}
+
+
+<div class="card-body"> <!-- creates indentation -->
+    <p>Recall the options for the task </p>
+</div>
+
+<div class="card bg-light instructions"> <!-- Makes the para a box -->
+    <div class="card-body">
+        <p>
+            <h4>In this round:</h4>
+        </p>
+        <ul>
+            {% if my_treatment == 'high' %}
+            <li>
+                You <b>lose {{ Constants.c_high }} pts</b> for Participant 2 to <b>receive {{ Constants.b_high }} pts</b>.
+            </li>
+            {% endif %}
+            {% if my_treatment == 'low' %}
+            <li>
+                You <b>lose {{ Constants.c_low }} pts</b> for Participant 2 to <b>receive {{ Constants.b_low }} pts</b>.
+            </li>
+            {% endif %}
+            <li>
+                You <b>lose 0 pts</b> for Participant 2 to <b>receive 0 pts</b>.
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="card-body"> <!-- creates indentation -->
+    <p></p>
+    <h4>
+        <u>Examples</u>
+    </h4>
+</div>
+
+
+<div class="row">
+    <div class="col">
+        <p><b>EXAMPLE 1:</b> Consider a scenario where Participant 1 and Participant 2 made the following decisions:</p>
+        <div class="card bg-light instructions"> <!-- Makes the para a box -->
+            <div class="card-body">
+            <p>
+                <h4>In this round:</h4>
+            </p>
+            <p>Participant 1 chose:</p>
+            {% if my_treatment == 'high' %}
+            <ul>
+                <li>
+                    to <b>lose {{ Constants.c_high }} pts</b> for Participant 2 to <b>receive {{ Constants.b_high }} pts</b>.
+                </li>
+            </ul>
+            <p>Participant 2 chose:</p>
+            <ul>
+                <li>
+                    to <b>lose 0 pts</b> for Participant 1 to <b>receive 0 pts</b>.
+                </li>
+            </ul>
+            <hr size="6" width="50%" align="left" color="black">
+            <p>
+                Your points in this round:
+                -{{ cost_high }} + {{ 0 }} = <b>{{ sucker_high }}</b>
+            </p>
+            <p>
+                Participant 2's points in this round:
+                {{ 0 }} + {{ benefit_high }} = <b>{{ temptation_high }}</b>
+            </p>
+            {% endif %}
+            {% if my_treatment == 'low' %}
+                <ul>
+                <li>
+                    to <b>lose {{ Constants.c_low }} pts</b> for Participant 2 to <b>receive {{ Constants.b_low }} pts</b>.
+                </li>
+            </ul>
+            <p>Participant 2 chose:</p>
+            <ul>
+                <li>
+                    to <b>lose 0 pts</b> for Participant 1 to <b>receive 0 pts</b>.
+                </li>
+            </ul>
+            <hr size="6" width="50%" align="left" color="black">
+            <p>
+                Your points in this round:
+                -{{ cost_low }} + {{ 0 }} = <b>{{ sucker_low }}</b>
+            </p>
+            <p>
+                Participant 2's points in this round:
+                {{ 0 }} + {{ benefit_low }} = <b>{{ temptation_low }}</b>
+            </p>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <p><b>EXAMPLE 2:</b> Consider a scenario where Participant 1 and Participant 2 made the following decisions:</p>
+        <div class="card bg-light instructions"> <!-- Makes the para a box -->
+            <div class="card-body">
+            <p>
+                <h4>In this round:</h4>
+            </p>
+            <p>Participant 1 chose:</p>
+            {% if my_treatment == 'high' %}
+            <ul>
+                <li>
+                    to <b>lose {{ Constants.c_high }} pts</b> for Participant 2 to <b>receive {{ Constants.b_high }} pts</b>.
+                </li>
+            </ul>
+            <p>Participant 2 chose:</p>
+            <ul>
+                <li>
+                    to <b>lose {{ Constants.c_high }} pts</b> for Participant 1 to <b>receive {{ Constants.b_high }} pts</b>.
+                </li>
+            </ul>
+            <hr size="6" width="50%" align="left" color="black">
+            <p>
+                Your points in this round:
+                -{{ cost_high }} + {{ benefit_high }} = <b>{{ reward_high }}</b>
+            </p>
+            <p>
+                Participant 2's points in this round:
+                -{{ cost_high }} + {{ benefit_high }} = <b>{{ reward_high }}</b>
+            </p>
+            {% endif %}
+            {% if my_treatment == 'low' %}
+                <ul>
+                <li>
+                    to <b>lose {{ Constants.c_low }} pts</b> for Participant 2 to <b>receive {{ Constants.b_low }} pts</b>.
+                </li>
+            </ul>
+            <p>Participant 2 chose:</p>
+            <ul>
+                <li>
+                    to <b>lose {{ Constants.c_low }} pts</b> for Participant 1 to <b>receive {{ Constants.b_low }} pts</b>.
+                </li>
+            </ul>
+            <hr size="6" width="50%" align="left" color="black">
+            <p>
+                Your points in this round:
+                -{{ cost_low }} + {{ benefit_low }} = <b>{{ reward_low }}</b>
+            </p>
+            <p>
+                Participant 2's points in this round:
+                -{{ cost_low }} + {{ benefit_low }} = <b>{{ reward_low }}</b>
+            </p>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    <p></p>
+</div>
+
+<div class="card-body">
+    <p></p>
+</div>
+
+<div class="card-body">
+    <h4>
+        <b>Please answer the following questions to continue:</b>
+    </h4>
+    {% if my_treatment == 'high' %}
+            <p>
+                {% formfield player.q6h %}
+                {% formfield player.q7h %}
+                {% formfield player.q8h %}
+            </p>
+        {% endif %}
+        {% if my_treatment == 'low' %}
+            <p>
+                {% formfield player.q6l %}
+                {% formfield player.q7l %}
+                {% formfield player.q8l %}
+            </p>
+        {% endif %}
+</div>
+
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+{% endblock %}
