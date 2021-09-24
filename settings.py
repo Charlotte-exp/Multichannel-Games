@@ -50,16 +50,8 @@ POINTS_CUSTOM_NAME = ''
 
 ROOMS = [
     {
-        'name': 'multichannel_ct',
-        'display_name': 'Control',
-    },
-{
-        'name': 'multichannel_mu',
-        'display_name': 'Multichannel',
-    },
-{
-        'name': 'multichannel_cr',
-        'display_name': 'Crosstalk',
+        'name': 'Control1',
+        'display_name': 'Control1',
     },
 ]
 
